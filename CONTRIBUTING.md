@@ -1,5 +1,18 @@
 # Contributing
 
+This package was built with AI tools, and patches written that way are welcome — there is no
+policy about it and nothing to declare. What is asked for is the same either way:
+
+- it builds and `make check` passes;
+- a change to `MoonletPlanetRecipe` gets a `CHANGELOG.md` entry, because that struct is
+  somebody's saved planet;
+- a change to the shader comes with its regenerated web shader and, ideally, a look at it in
+  `make studio` — a screenshot in the pull request is worth more than a description of one.
+
+Numbers that came from somewhere real should say where. The ring radii are Cassini's and the
+file says so; the ice model cites the approximation it uses. A magic constant with no
+provenance is the thing hardest for the next person to change.
+
 Everything runs from the package root. `make` on its own lists the targets.
 
 ```sh

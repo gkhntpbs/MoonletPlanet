@@ -257,6 +257,19 @@ See [CHANGELOG.md](CHANGELOG.md). Versions follow [semver](https://semver.org), 
 rule that matters here: the recipe is a **stored format**, so a field that changes meaning
 or disappears is a major version even when the code still compiles.
 
+## Built with AI, and welcome here
+
+This was written with AI tools — the research behind the shader, most of the code, most of
+these words. That is worth saying plainly rather than leaving to be guessed at, and it is not
+an apology: the physics is cited, the tests are real, and CI builds it on a machine that is
+not the author's.
+
+**Contributions written the same way are welcome.** There is no policy against AI-assisted
+patches here and nothing to declare. The bar is the same either way — it has to build, the
+tests have to pass, and anything that changes `MoonletPlanetRecipe` has to say so in the
+changelog, because somebody's saved planet depends on it. See
+[CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Credits
 
 The techniques came from other people's published work. The research that led to this
