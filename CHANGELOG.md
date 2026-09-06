@@ -13,6 +13,18 @@ is the breakage this rule exists to prevent.
 Changing how the shader draws a given recipe is a minor version and is noted under
 **Changed**, because the pixels moved even though the format did not.
 
+## [1.0.1] — 2026-09-06
+
+### Fixed
+- The package did not build on older Swift 6 toolchains. `SharedContext` is a `static let`
+  holding three Metal protocol values that are not marked `Sendable`; a newer compiler let it
+  through and the one on a hosted runner did not, so it built on the machine it was written
+  on and nowhere else. It is `@unchecked Sendable` now, which is accurate — the three are
+  created once, never mutated, and documented as thread-safe.
+
+**`1.0.0` was tagged, found to be unbuildable within the hour, and deleted rather than left
+to be resolved by `from: "1.0.0"`.** Nothing had consumed it. `1.0.1` is the first release.
+
 ## [1.0.0] — 2026-09-06
 
 First release. Extracted from Moonlet's mascot lab, where the planet had lived since August
