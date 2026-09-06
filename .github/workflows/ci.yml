@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  swift:
+    name: Swift
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: swift build
+      - name: Test
+        run: swift test
+      # The images in the README are generated, so a shader change that cannot render is
+      # caught here rather than in whatever screenshot somebody takes next.
+      - name: Render the documentation images
+        run: swift run PlanetGallery
+      - name: Fail if the rendered images were not committed
+        run: git diff --exit-code Documentation/
+
+  web:
+    name: Web
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      # The GLSL is generated from the Metal source. This is the job that stops the two
+      # drifting, which is the only real risk of shipping the same shader twice.
+      - name: Shader is in sync with the Metal source
+        run: cd web && npm run check:source
+      - name: Test
+        run: cd web && npm test
+      - name: Typecheck
+        run: cd web && npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+      # A shader that compiles is not a shader that draws, so this one runs it: real Chrome,
+      # real WebGL2, and an assertion on how much of each canvas came back painted.
+      - uses: browser-actions/setup-chrome@v1
+        id: chrome
+      - name: Browser acceptance
+        run: cd web && npm run accept
+        env:
+          CHROME: ${{ steps.chrome.outputs.chrome-path }}

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MoonletPlanet — WebGL2</title>
+<style>
+  body { margin: 0; background: #090a0d; color: #e8eaf0; font: 13px ui-monospace, monospace; }
+  h1 { font-size: 13px; font-weight: 600; padding: 12px 16px 0; margin: 0; }
+  #status { padding: 6px 16px 12px; color: #8fd8ff; }
+  #grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; padding: 0 16px 24px; }
+  figure { margin: 0; }
+  canvas { width: 100%; aspect-ratio: 1; display: block; }
+  figcaption { padding-top: 4px; color: #a7acb8; font-size: 11px; }
+</style>
+</head>
+<body>
+<h1>MoonletPlanet — WebGL2 acceptance</h1>
+<div id="status">starting…</div>
+<div id="grid"></div>
+<script type="module">
+import { createPlanetRenderer, archetypeRecipes, solarSystem, randomized } from './bundle.js'
+
+const status = document.getElementById('status')
+const grid = document.getElementById('grid')
+
+const subjects = [
+  ['saturn — rings, both shadows', solarSystem.saturn],
+  ['uranus — narrow rings, near face-on', solarSystem.uranus],
+  ['jupiter', solarSystem.jupiter],
+  ['earth — ice caps, 23.4° tilt', solarSystem.earth],
+  ['mars — asymmetric caps', solarSystem.mars],
+  ['pluto — mostly ice', solarSystem.pluto],
+  ['rocky — craters', archetypeRecipes.rocky],
+  ['desert — dunes', archetypeRecipes.desert],
+  ['molten', archetypeRecipes.molten],
+  ['frozen', archetypeRecipes.frozen],
+  ['randomized(seed: 240513)', randomized(archetypeRecipes.gasGiant, 240513)],
+]
+
+const report = { compiled: false, drawn: [], errors: [] }
+const renderers = []
+
+for (const [label, recipe] of subjects) {
+  const figure = document.createElement('figure')
+  const canvas = document.createElement('canvas')
+  const caption = document.createElement('figcaption')
+  caption.textContent = label
+  figure.append(canvas, caption)
+  grid.append(figure)
+  try {
+    const renderer = createPlanetRenderer(canvas)
+    if (!renderer) throw new Error('no WebGL2 context')
+    renderer.render(recipe, 18, 260, 260, 2)
+    renderers.push([label, renderer, recipe, canvas])
+    // Coverage: how much of the canvas the planet actually painted. A shader that compiles
+    // and draws nothing is the failure this page exists to catch.
+    const gl = canvas.getContext('webgl2')
+    const pixels = new Uint8Array(canvas.width * canvas.height * 4)
+    gl.readPixels(0, 0, canvas.width, canvas.height, gl.RGBA, gl.UNSIGNED_BYTE, pixels)
+    let painted = 0
+    for (let i = 3; i < pixels.length; i += 4) if (pixels[i] > 8) painted++
+    report.drawn.push({ label, coverage: +(painted / (canvas.width * canvas.height)).toFixed(4) })
+  } catch (error) {
+    report.errors.push({ label, message: String(error && error.message || error) })
+  }
+}
+
+report.compiled = report.errors.length === 0
+status.textContent = report.compiled
+  ? `compiled and drew ${report.drawn.length} planets — ` + report.drawn.map(d => `${d.label.split(' ')[0]}:${d.coverage}`).join('  ')
+  : 'FAILED — ' + report.errors.map(e => `${e.label}: ${e.message}`).join(' | ')
+status.style.color = report.compiled ? '#8fd8ff' : '#ff7a7a'
+window.__planetReport = report
+// Published into the DOM so a headless run can read it without a devtools protocol.
+const node = document.createElement('script')
+node.id = 'report'
+node.type = 'application/json'
+node.textContent = JSON.stringify(report)
+document.body.append(node)
+console.log('[MoonletPlanet]', JSON.stringify(report))
+
+// Animation is opt-in (`?animate`). A headless run with an open rAF loop never finishes
+// advancing virtual time, so the default is one frame and stop.
+if (new URLSearchParams(location.search).has('animate')) {
+  let t = 18
+  const frame = () => {
+    t += 1 / 60
+    for (const [, renderer, recipe] of renderers) renderer.render(recipe, t, 260, 260, 2)
+    requestAnimationFrame(frame)
+  }
+  requestAnimationFrame(frame)
+}
+document.title = report.compiled ? 'OK ' + report.drawn.length : 'FAIL'
+
+</script>
+</body>
+</html>

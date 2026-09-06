@@ -1,0 +1,1898 @@
+[
+  {
+    "archetype" : 0,
+    "recipe" : {
+      "archetype" : 0,
+      "atmosphereDensity" : 0.52,
+      "atmosphereGlow" : 0.62,
+      "axialTilt" : 0,
+      "bandCount" : 13,
+      "bandSharpness" : 0.62,
+      "cloudCoverage" : 0.92,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.82,
+      "exposure" : 1.08,
+      "featureAmount" : 0.7,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.8778205393504132,
+          "green" : 0.29672514473960765,
+          "opacity" : 1,
+          "red" : 0.8304754074364851
+        },
+        "highlight" : {
+          "blue" : 0.9333231060466927,
+          "green" : 0.3638644723280619,
+          "opacity" : 1,
+          "red" : 0.7028745508503499
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.7041262054117635,
+          "green" : 0.5048012519611204,
+          "opacity" : 1,
+          "red" : 0.20502705565273394
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.09997121581557533,
+          "green" : 0.04257854495271749,
+          "opacity" : 1,
+          "red" : 0.030022534216469905
+        },
+        "storm" : {
+          "blue" : 0.8331598073340631,
+          "green" : 0.12207576274139754,
+          "opacity" : 1,
+          "red" : 0.545398272085273
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.11,
+      "roughness" : 0.72,
+      "seed" : 1,
+      "stormCount" : 5,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.78,
+      "warpStrength" : 0.76
+    },
+    "seed" : 1
+  },
+  {
+    "archetype" : 2,
+    "recipe" : {
+      "archetype" : 2,
+      "atmosphereDensity" : 0.52,
+      "atmosphereGlow" : 0.62,
+      "axialTilt" : 0,
+      "bandCount" : 6,
+      "bandSharpness" : 0.28,
+      "cloudCoverage" : 0.58,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.7,
+      "exposure" : 1.08,
+      "featureAmount" : 0.64,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.8778205393504132,
+          "green" : 0.29672514473960765,
+          "opacity" : 1,
+          "red" : 0.8304754074364851
+        },
+        "highlight" : {
+          "blue" : 0.9333231060466927,
+          "green" : 0.3638644723280619,
+          "opacity" : 1,
+          "red" : 0.7028745508503499
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.7041262054117635,
+          "green" : 0.5048012519611204,
+          "opacity" : 1,
+          "red" : 0.20502705565273394
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.09997121581557533,
+          "green" : 0.04257854495271749,
+          "opacity" : 1,
+          "red" : 0.030022534216469905
+        },
+        "storm" : {
+          "blue" : 0.8331598073340631,
+          "green" : 0.12207576274139754,
+          "opacity" : 1,
+          "red" : 0.545398272085273
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.11,
+      "roughness" : 0.22,
+      "seed" : 1,
+      "stormCount" : 4,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.57,
+      "warpStrength" : 0.54
+    },
+    "seed" : 1
+  },
+  {
+    "archetype" : 4,
+    "recipe" : {
+      "archetype" : 4,
+      "atmosphereDensity" : 0.16,
+      "atmosphereGlow" : 0.2,
+      "axialTilt" : 0,
+      "bandCount" : 3,
+      "bandSharpness" : 0.62,
+      "cloudCoverage" : 0.08,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.82,
+      "exposure" : 1.08,
+      "featureAmount" : 0.82,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.8778205393504132,
+          "green" : 0.29672514473960765,
+          "opacity" : 1,
+          "red" : 0.8304754074364851
+        },
+        "highlight" : {
+          "blue" : 0.9333231060466927,
+          "green" : 0.3638644723280619,
+          "opacity" : 1,
+          "red" : 0.7028745508503499
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.7041262054117635,
+          "green" : 0.5048012519611204,
+          "opacity" : 1,
+          "red" : 0.20502705565273394
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.09997121581557533,
+          "green" : 0.04257854495271749,
+          "opacity" : 1,
+          "red" : 0.030022534216469905
+        },
+        "storm" : {
+          "blue" : 0.8331598073340631,
+          "green" : 0.12207576274139754,
+          "opacity" : 1,
+          "red" : 0.545398272085273
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.025,
+      "roughness" : 0.96,
+      "seed" : 1,
+      "stormCount" : 0,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.7,
+      "warpStrength" : 0.33
+    },
+    "seed" : 1
+  },
+  {
+    "archetype" : 0,
+    "recipe" : {
+      "archetype" : 0,
+      "atmosphereDensity" : 0.52,
+      "atmosphereGlow" : 0.62,
+      "axialTilt" : 0,
+      "bandCount" : 13,
+      "bandSharpness" : 0.62,
+      "cloudCoverage" : 0.92,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.82,
+      "exposure" : 1.08,
+      "featureAmount" : 0.7,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.9665462575679534,
+          "green" : 0.14768069617650395,
+          "opacity" : 1,
+          "red" : 0.4146409178367089
+        },
+        "highlight" : {
+          "blue" : 0.8581133212510399,
+          "green" : 0.9499516351633693,
+          "opacity" : 1,
+          "red" : 0.39303428963027726
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.2857798742706027,
+          "green" : 0.5398180871304779,
+          "opacity" : 1,
+          "red" : 0.15550651912496363
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.05755216169571031,
+          "green" : 0.0787961618331828,
+          "opacity" : 1,
+          "red" : 0.030116505263830383
+        },
+        "storm" : {
+          "blue" : 0.6633380383186122,
+          "green" : 0.7489967852566033,
+          "opacity" : 1,
+          "red" : 0.22955299394378784
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.11,
+      "roughness" : 0.72,
+      "seed" : 7,
+      "stormCount" : 5,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.78,
+      "warpStrength" : 0.76
+    },
+    "seed" : 7
+  },
+  {
+    "archetype" : 2,
+    "recipe" : {
+      "archetype" : 2,
+      "atmosphereDensity" : 0.52,
+      "atmosphereGlow" : 0.62,
+      "axialTilt" : 0,
+      "bandCount" : 6,
+      "bandSharpness" : 0.28,
+      "cloudCoverage" : 0.58,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.7,
+      "exposure" : 1.08,
+      "featureAmount" : 0.64,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.9665462575679534,
+          "green" : 0.14768069617650395,
+          "opacity" : 1,
+          "red" : 0.4146409178367089
+        },
+        "highlight" : {
+          "blue" : 0.8581133212510399,
+          "green" : 0.9499516351633693,
+          "opacity" : 1,
+          "red" : 0.39303428963027726
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.2857798742706027,
+          "green" : 0.5398180871304779,
+          "opacity" : 1,
+          "red" : 0.15550651912496363
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.05755216169571031,
+          "green" : 0.0787961618331828,
+          "opacity" : 1,
+          "red" : 0.030116505263830383
+        },
+        "storm" : {
+          "blue" : 0.6633380383186122,
+          "green" : 0.7489967852566033,
+          "opacity" : 1,
+          "red" : 0.22955299394378784
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.11,
+      "roughness" : 0.22,
+      "seed" : 7,
+      "stormCount" : 4,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.57,
+      "warpStrength" : 0.54
+    },
+    "seed" : 7
+  },
+  {
+    "archetype" : 4,
+    "recipe" : {
+      "archetype" : 4,
+      "atmosphereDensity" : 0.16,
+      "atmosphereGlow" : 0.2,
+      "axialTilt" : 0,
+      "bandCount" : 3,
+      "bandSharpness" : 0.62,
+      "cloudCoverage" : 0.08,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.82,
+      "exposure" : 1.08,
+      "featureAmount" : 0.82,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.9665462575679534,
+          "green" : 0.14768069617650395,
+          "opacity" : 1,
+          "red" : 0.4146409178367089
+        },
+        "highlight" : {
+          "blue" : 0.8581133212510399,
+          "green" : 0.9499516351633693,
+          "opacity" : 1,
+          "red" : 0.39303428963027726
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.2857798742706027,
+          "green" : 0.5398180871304779,
+          "opacity" : 1,
+          "red" : 0.15550651912496363
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.05755216169571031,
+          "green" : 0.0787961618331828,
+          "opacity" : 1,
+          "red" : 0.030116505263830383
+        },
+        "storm" : {
+          "blue" : 0.6633380383186122,
+          "green" : 0.7489967852566033,
+          "opacity" : 1,
+          "red" : 0.22955299394378784
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.025,
+      "roughness" : 0.96,
+      "seed" : 7,
+      "stormCount" : 0,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.7,
+      "warpStrength" : 0.33
+    },
+    "seed" : 7
+  },
+  {
+    "archetype" : 0,
+    "recipe" : {
+      "archetype" : 0,
+      "atmosphereDensity" : 0.52,
+      "atmosphereGlow" : 0.62,
+      "axialTilt" : 0,
+      "bandCount" : 13,
+      "bandSharpness" : 0.62,
+      "cloudCoverage" : 0.92,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.82,
+      "exposure" : 1.08,
+      "featureAmount" : 0.7,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.38326345489069624,
+          "green" : 0.27537537559597614,
+          "opacity" : 1,
+          "red" : 0.8752034578968424
+        },
+        "highlight" : {
+          "blue" : 0.8926818110020134,
+          "green" : 0.5760682292913148,
+          "opacity" : 1,
+          "red" : 0.9213028859828365
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.7378329844948903,
+          "green" : 0.32874040602079,
+          "opacity" : 1,
+          "red" : 0.5125822222999814
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.10759034544838289,
+          "green" : 0.019768070352270073,
+          "opacity" : 1,
+          "red" : 0.06844126236071986
+        },
+        "storm" : {
+          "blue" : 0.727119389124366,
+          "green" : 0.17120660378792718,
+          "opacity" : 1,
+          "red" : 0.7773725129036572
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.11,
+      "roughness" : 0.72,
+      "seed" : 42,
+      "stormCount" : 5,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.78,
+      "warpStrength" : 0.76
+    },
+    "seed" : 42
+  },
+  {
+    "archetype" : 2,
+    "recipe" : {
+      "archetype" : 2,
+      "atmosphereDensity" : 0.52,
+      "atmosphereGlow" : 0.62,
+      "axialTilt" : 0,
+      "bandCount" : 6,
+      "bandSharpness" : 0.28,
+      "cloudCoverage" : 0.58,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.7,
+      "exposure" : 1.08,
+      "featureAmount" : 0.64,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.38326345489069624,
+          "green" : 0.27537537559597614,
+          "opacity" : 1,
+          "red" : 0.8752034578968424
+        },
+        "highlight" : {
+          "blue" : 0.8926818110020134,
+          "green" : 0.5760682292913148,
+          "opacity" : 1,
+          "red" : 0.9213028859828365
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.7378329844948903,
+          "green" : 0.32874040602079,
+          "opacity" : 1,
+          "red" : 0.5125822222999814
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.10759034544838289,
+          "green" : 0.019768070352270073,
+          "opacity" : 1,
+          "red" : 0.06844126236071986
+        },
+        "storm" : {
+          "blue" : 0.727119389124366,
+          "green" : 0.17120660378792718,
+          "opacity" : 1,
+          "red" : 0.7773725129036572
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.11,
+      "roughness" : 0.22,
+      "seed" : 42,
+      "stormCount" : 4,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.57,
+      "warpStrength" : 0.54
+    },
+    "seed" : 42
+  },
+  {
+    "archetype" : 4,
+    "recipe" : {
+      "archetype" : 4,
+      "atmosphereDensity" : 0.16,
+      "atmosphereGlow" : 0.2,
+      "axialTilt" : 0,
+      "bandCount" : 3,
+      "bandSharpness" : 0.62,
+      "cloudCoverage" : 0.08,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.82,
+      "exposure" : 1.08,
+      "featureAmount" : 0.82,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.38326345489069624,
+          "green" : 0.27537537559597614,
+          "opacity" : 1,
+          "red" : 0.8752034578968424
+        },
+        "highlight" : {
+          "blue" : 0.8926818110020134,
+          "green" : 0.5760682292913148,
+          "opacity" : 1,
+          "red" : 0.9213028859828365
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.7378329844948903,
+          "green" : 0.32874040602079,
+          "opacity" : 1,
+          "red" : 0.5125822222999814
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.10759034544838289,
+          "green" : 0.019768070352270073,
+          "opacity" : 1,
+          "red" : 0.06844126236071986
+        },
+        "storm" : {
+          "blue" : 0.727119389124366,
+          "green" : 0.17120660378792718,
+          "opacity" : 1,
+          "red" : 0.7773725129036572
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.025,
+      "roughness" : 0.96,
+      "seed" : 42,
+      "stormCount" : 0,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.7,
+      "warpStrength" : 0.33
+    },
+    "seed" : 42
+  },
+  {
+    "archetype" : 0,
+    "recipe" : {
+      "archetype" : 0,
+      "atmosphereDensity" : 0.52,
+      "atmosphereGlow" : 0.62,
+      "axialTilt" : 0,
+      "bandCount" : 13,
+      "bandSharpness" : 0.62,
+      "cloudCoverage" : 0.92,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.82,
+      "exposure" : 1.08,
+      "featureAmount" : 0.7,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.23657207859366589,
+          "green" : 0.794300864275184,
+          "opacity" : 1,
+          "red" : 0.3685566806253486
+        },
+        "highlight" : {
+          "blue" : 0.6154460146817734,
+          "green" : 0.9082212344946496,
+          "opacity" : 1,
+          "red" : 0.7803514094538191
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.19496152313792353,
+          "green" : 0.5608541765715195,
+          "opacity" : 1,
+          "red" : 0.6001863186214608
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.01841722497413265,
+          "green" : 0.12859058626303643,
+          "opacity" : 1,
+          "red" : 0.10504606053897331
+        },
+        "storm" : {
+          "blue" : 0.40455535843524326,
+          "green" : 0.9761735128929654,
+          "opacity" : 1,
+          "red" : 0.7265188001499003
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.11,
+      "roughness" : 0.72,
+      "seed" : 240513,
+      "stormCount" : 5,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.78,
+      "warpStrength" : 0.76
+    },
+    "seed" : 240513
+  },
+  {
+    "archetype" : 2,
+    "recipe" : {
+      "archetype" : 2,
+      "atmosphereDensity" : 0.52,
+      "atmosphereGlow" : 0.62,
+      "axialTilt" : 0,
+      "bandCount" : 6,
+      "bandSharpness" : 0.28,
+      "cloudCoverage" : 0.58,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.7,
+      "exposure" : 1.08,
+      "featureAmount" : 0.64,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.23657207859366589,
+          "green" : 0.794300864275184,
+          "opacity" : 1,
+          "red" : 0.3685566806253486
+        },
+        "highlight" : {
+          "blue" : 0.6154460146817734,
+          "green" : 0.9082212344946496,
+          "opacity" : 1,
+          "red" : 0.7803514094538191
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.19496152313792353,
+          "green" : 0.5608541765715195,
+          "opacity" : 1,
+          "red" : 0.6001863186214608
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.01841722497413265,
+          "green" : 0.12859058626303643,
+          "opacity" : 1,
+          "red" : 0.10504606053897331
+        },
+        "storm" : {
+          "blue" : 0.40455535843524326,
+          "green" : 0.9761735128929654,
+          "opacity" : 1,
+          "red" : 0.7265188001499003
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.11,
+      "roughness" : 0.22,
+      "seed" : 240513,
+      "stormCount" : 4,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.57,
+      "warpStrength" : 0.54
+    },
+    "seed" : 240513
+  },
+  {
+    "archetype" : 4,
+    "recipe" : {
+      "archetype" : 4,
+      "atmosphereDensity" : 0.16,
+      "atmosphereGlow" : 0.2,
+      "axialTilt" : 0,
+      "bandCount" : 3,
+      "bandSharpness" : 0.62,
+      "cloudCoverage" : 0.08,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.82,
+      "exposure" : 1.08,
+      "featureAmount" : 0.82,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.23657207859366589,
+          "green" : 0.794300864275184,
+          "opacity" : 1,
+          "red" : 0.3685566806253486
+        },
+        "highlight" : {
+          "blue" : 0.6154460146817734,
+          "green" : 0.9082212344946496,
+          "opacity" : 1,
+          "red" : 0.7803514094538191
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.19496152313792353,
+          "green" : 0.5608541765715195,
+          "opacity" : 1,
+          "red" : 0.6001863186214608
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.01841722497413265,
+          "green" : 0.12859058626303643,
+          "opacity" : 1,
+          "red" : 0.10504606053897331
+        },
+        "storm" : {
+          "blue" : 0.40455535843524326,
+          "green" : 0.9761735128929654,
+          "opacity" : 1,
+          "red" : 0.7265188001499003
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.025,
+      "roughness" : 0.96,
+      "seed" : 240513,
+      "stormCount" : 0,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.7,
+      "warpStrength" : 0.33
+    },
+    "seed" : 240513
+  },
+  {
+    "archetype" : 0,
+    "recipe" : {
+      "archetype" : 0,
+      "atmosphereDensity" : 0.52,
+      "atmosphereGlow" : 0.62,
+      "axialTilt" : 0,
+      "bandCount" : 13,
+      "bandSharpness" : 0.62,
+      "cloudCoverage" : 0.92,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.82,
+      "exposure" : 1.08,
+      "featureAmount" : 0.7,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.39046861904416325,
+          "green" : 0.3730673715523675,
+          "opacity" : 1,
+          "red" : 0.7994296092496401
+        },
+        "highlight" : {
+          "blue" : 0.6252659376157047,
+          "green" : 0.5750338080911894,
+          "opacity" : 1,
+          "red" : 0.9638243503858857
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.7518257953261839,
+          "green" : 0.29467898464554454,
+          "opacity" : 1,
+          "red" : 0.7740368490156893
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.110162083302593,
+          "green" : 0.03478022721736224,
+          "opacity" : 1,
+          "red" : 0.16262736136263528
+        },
+        "storm" : {
+          "blue" : 0.3618501088061569,
+          "green" : 0.2785002036705709,
+          "opacity" : 1,
+          "red" : 0.9236182809772637
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.11,
+      "roughness" : 0.72,
+      "seed" : 4242,
+      "stormCount" : 5,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.78,
+      "warpStrength" : 0.76
+    },
+    "seed" : 4242
+  },
+  {
+    "archetype" : 2,
+    "recipe" : {
+      "archetype" : 2,
+      "atmosphereDensity" : 0.52,
+      "atmosphereGlow" : 0.62,
+      "axialTilt" : 0,
+      "bandCount" : 6,
+      "bandSharpness" : 0.28,
+      "cloudCoverage" : 0.58,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.7,
+      "exposure" : 1.08,
+      "featureAmount" : 0.64,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.39046861904416325,
+          "green" : 0.3730673715523675,
+          "opacity" : 1,
+          "red" : 0.7994296092496401
+        },
+        "highlight" : {
+          "blue" : 0.6252659376157047,
+          "green" : 0.5750338080911894,
+          "opacity" : 1,
+          "red" : 0.9638243503858857
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.7518257953261839,
+          "green" : 0.29467898464554454,
+          "opacity" : 1,
+          "red" : 0.7740368490156893
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.110162083302593,
+          "green" : 0.03478022721736224,
+          "opacity" : 1,
+          "red" : 0.16262736136263528
+        },
+        "storm" : {
+          "blue" : 0.3618501088061569,
+          "green" : 0.2785002036705709,
+          "opacity" : 1,
+          "red" : 0.9236182809772637
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.11,
+      "roughness" : 0.22,
+      "seed" : 4242,
+      "stormCount" : 4,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.57,
+      "warpStrength" : 0.54
+    },
+    "seed" : 4242
+  },
+  {
+    "archetype" : 4,
+    "recipe" : {
+      "archetype" : 4,
+      "atmosphereDensity" : 0.16,
+      "atmosphereGlow" : 0.2,
+      "axialTilt" : 0,
+      "bandCount" : 3,
+      "bandSharpness" : 0.62,
+      "cloudCoverage" : 0.08,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.82,
+      "exposure" : 1.08,
+      "featureAmount" : 0.82,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.39046861904416325,
+          "green" : 0.3730673715523675,
+          "opacity" : 1,
+          "red" : 0.7994296092496401
+        },
+        "highlight" : {
+          "blue" : 0.6252659376157047,
+          "green" : 0.5750338080911894,
+          "opacity" : 1,
+          "red" : 0.9638243503858857
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.7518257953261839,
+          "green" : 0.29467898464554454,
+          "opacity" : 1,
+          "red" : 0.7740368490156893
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.110162083302593,
+          "green" : 0.03478022721736224,
+          "opacity" : 1,
+          "red" : 0.16262736136263528
+        },
+        "storm" : {
+          "blue" : 0.3618501088061569,
+          "green" : 0.2785002036705709,
+          "opacity" : 1,
+          "red" : 0.9236182809772637
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.025,
+      "roughness" : 0.96,
+      "seed" : 4242,
+      "stormCount" : 0,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.7,
+      "warpStrength" : 0.33
+    },
+    "seed" : 4242
+  },
+  {
+    "archetype" : 0,
+    "recipe" : {
+      "archetype" : 0,
+      "atmosphereDensity" : 0.52,
+      "atmosphereGlow" : 0.62,
+      "axialTilt" : 0,
+      "bandCount" : 13,
+      "bandSharpness" : 0.62,
+      "cloudCoverage" : 0.92,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.82,
+      "exposure" : 1.08,
+      "featureAmount" : 0.7,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.5881829990756626,
+          "green" : 0.42678598627561953,
+          "opacity" : 1,
+          "red" : 0.8339944337773644
+        },
+        "highlight" : {
+          "blue" : 0.5812764107727686,
+          "green" : 0.59833320653683,
+          "opacity" : 1,
+          "red" : 0.97577655894381
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.6003214735934127,
+          "green" : 0.1838037418869087,
+          "opacity" : 1,
+          "red" : 0.539081424728125
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.11352939717069785,
+          "green" : 0.03901455430760485,
+          "opacity" : 1,
+          "red" : 0.14012788878682972
+        },
+        "storm" : {
+          "blue" : 0.2742190658586157,
+          "green" : 0.29834090457194107,
+          "opacity" : 1,
+          "red" : 0.8321239079049214
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.11,
+      "roughness" : 0.72,
+      "seed" : 65535,
+      "stormCount" : 5,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.78,
+      "warpStrength" : 0.76
+    },
+    "seed" : 65535
+  },
+  {
+    "archetype" : 2,
+    "recipe" : {
+      "archetype" : 2,
+      "atmosphereDensity" : 0.52,
+      "atmosphereGlow" : 0.62,
+      "axialTilt" : 0,
+      "bandCount" : 6,
+      "bandSharpness" : 0.28,
+      "cloudCoverage" : 0.58,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.7,
+      "exposure" : 1.08,
+      "featureAmount" : 0.64,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.5881829990756626,
+          "green" : 0.42678598627561953,
+          "opacity" : 1,
+          "red" : 0.8339944337773644
+        },
+        "highlight" : {
+          "blue" : 0.5812764107727686,
+          "green" : 0.59833320653683,
+          "opacity" : 1,
+          "red" : 0.97577655894381
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.6003214735934127,
+          "green" : 0.1838037418869087,
+          "opacity" : 1,
+          "red" : 0.539081424728125
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.11352939717069785,
+          "green" : 0.03901455430760485,
+          "opacity" : 1,
+          "red" : 0.14012788878682972
+        },
+        "storm" : {
+          "blue" : 0.2742190658586157,
+          "green" : 0.29834090457194107,
+          "opacity" : 1,
+          "red" : 0.8321239079049214
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.11,
+      "roughness" : 0.22,
+      "seed" : 65535,
+      "stormCount" : 4,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.57,
+      "warpStrength" : 0.54
+    },
+    "seed" : 65535
+  },
+  {
+    "archetype" : 4,
+    "recipe" : {
+      "archetype" : 4,
+      "atmosphereDensity" : 0.16,
+      "atmosphereGlow" : 0.2,
+      "axialTilt" : 0,
+      "bandCount" : 3,
+      "bandSharpness" : 0.62,
+      "cloudCoverage" : 0.08,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.82,
+      "exposure" : 1.08,
+      "featureAmount" : 0.82,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.5881829990756626,
+          "green" : 0.42678598627561953,
+          "opacity" : 1,
+          "red" : 0.8339944337773644
+        },
+        "highlight" : {
+          "blue" : 0.5812764107727686,
+          "green" : 0.59833320653683,
+          "opacity" : 1,
+          "red" : 0.97577655894381
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.6003214735934127,
+          "green" : 0.1838037418869087,
+          "opacity" : 1,
+          "red" : 0.539081424728125
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.11352939717069785,
+          "green" : 0.03901455430760485,
+          "opacity" : 1,
+          "red" : 0.14012788878682972
+        },
+        "storm" : {
+          "blue" : 0.2742190658586157,
+          "green" : 0.29834090457194107,
+          "opacity" : 1,
+          "red" : 0.8321239079049214
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.025,
+      "roughness" : 0.96,
+      "seed" : 65535,
+      "stormCount" : 0,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.7,
+      "warpStrength" : 0.33
+    },
+    "seed" : 65535
+  },
+  {
+    "archetype" : 0,
+    "recipe" : {
+      "archetype" : 0,
+      "atmosphereDensity" : 0.52,
+      "atmosphereGlow" : 0.62,
+      "axialTilt" : 0,
+      "bandCount" : 13,
+      "bandSharpness" : 0.62,
+      "cloudCoverage" : 0.92,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.82,
+      "exposure" : 1.08,
+      "featureAmount" : 0.7,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.7577340312702152,
+          "green" : 0.2968497896068677,
+          "opacity" : 1,
+          "red" : 0.6075179008152889
+        },
+        "highlight" : {
+          "blue" : 0.9189688944510712,
+          "green" : 0.5200229242823892,
+          "opacity" : 1,
+          "red" : 0.41839664975473234
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.34767916124344295,
+          "green" : 0.466450711358103,
+          "opacity" : 1,
+          "red" : 0.10478327236017325
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.16043654152551368,
+          "green" : 0.14560777872177902,
+          "opacity" : 1,
+          "red" : 0.044934803477733695
+        },
+        "storm" : {
+          "blue" : 0.9782547815358018,
+          "green" : 0.24693186890889485,
+          "opacity" : 1,
+          "red" : 0.06063691008135459
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.11,
+      "roughness" : 0.72,
+      "seed" : 999999,
+      "stormCount" : 5,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.78,
+      "warpStrength" : 0.76
+    },
+    "seed" : 999999
+  },
+  {
+    "archetype" : 2,
+    "recipe" : {
+      "archetype" : 2,
+      "atmosphereDensity" : 0.52,
+      "atmosphereGlow" : 0.62,
+      "axialTilt" : 0,
+      "bandCount" : 6,
+      "bandSharpness" : 0.28,
+      "cloudCoverage" : 0.58,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.7,
+      "exposure" : 1.08,
+      "featureAmount" : 0.64,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.7577340312702152,
+          "green" : 0.2968497896068677,
+          "opacity" : 1,
+          "red" : 0.6075179008152889
+        },
+        "highlight" : {
+          "blue" : 0.9189688944510712,
+          "green" : 0.5200229242823892,
+          "opacity" : 1,
+          "red" : 0.41839664975473234
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.34767916124344295,
+          "green" : 0.466450711358103,
+          "opacity" : 1,
+          "red" : 0.10478327236017325
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.16043654152551368,
+          "green" : 0.14560777872177902,
+          "opacity" : 1,
+          "red" : 0.044934803477733695
+        },
+        "storm" : {
+          "blue" : 0.9782547815358018,
+          "green" : 0.24693186890889485,
+          "opacity" : 1,
+          "red" : 0.06063691008135459
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.11,
+      "roughness" : 0.22,
+      "seed" : 999999,
+      "stormCount" : 4,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.57,
+      "warpStrength" : 0.54
+    },
+    "seed" : 999999
+  },
+  {
+    "archetype" : 4,
+    "recipe" : {
+      "archetype" : 4,
+      "atmosphereDensity" : 0.16,
+      "atmosphereGlow" : 0.2,
+      "axialTilt" : 0,
+      "bandCount" : 3,
+      "bandSharpness" : 0.62,
+      "cloudCoverage" : 0.08,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.82,
+      "exposure" : 1.08,
+      "featureAmount" : 0.82,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.7577340312702152,
+          "green" : 0.2968497896068677,
+          "opacity" : 1,
+          "red" : 0.6075179008152889
+        },
+        "highlight" : {
+          "blue" : 0.9189688944510712,
+          "green" : 0.5200229242823892,
+          "opacity" : 1,
+          "red" : 0.41839664975473234
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.34767916124344295,
+          "green" : 0.466450711358103,
+          "opacity" : 1,
+          "red" : 0.10478327236017325
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.16043654152551368,
+          "green" : 0.14560777872177902,
+          "opacity" : 1,
+          "red" : 0.044934803477733695
+        },
+        "storm" : {
+          "blue" : 0.9782547815358018,
+          "green" : 0.24693186890889485,
+          "opacity" : 1,
+          "red" : 0.06063691008135459
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.025,
+      "roughness" : 0.96,
+      "seed" : 999999,
+      "stormCount" : 0,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.7,
+      "warpStrength" : 0.33
+    },
+    "seed" : 999999
+  },
+  {
+    "archetype" : 0,
+    "recipe" : {
+      "archetype" : 0,
+      "atmosphereDensity" : 0.52,
+      "atmosphereGlow" : 0.62,
+      "axialTilt" : 0,
+      "bandCount" : 13,
+      "bandSharpness" : 0.62,
+      "cloudCoverage" : 0.92,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.82,
+      "exposure" : 1.08,
+      "featureAmount" : 0.7,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.8074563789537259,
+          "green" : 0.4968107500411182,
+          "opacity" : 1,
+          "red" : 0.276641415763383
+        },
+        "highlight" : {
+          "blue" : 0.8888859847720152,
+          "green" : 0.594218997852396,
+          "opacity" : 1,
+          "red" : 0.35868171282682754
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.5928788720909757,
+          "green" : 0.7741490178684644,
+          "opacity" : 1,
+          "red" : 0.14574541066587007
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.07513222942738751,
+          "green" : 0.07963775176074045,
+          "opacity" : 1,
+          "red" : 0.016535048669575877
+        },
+        "storm" : {
+          "blue" : 0.8285837910610655,
+          "green" : 0.5799314062573642,
+          "opacity" : 1,
+          "red" : 0.38117514840832023
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.11,
+      "roughness" : 0.72,
+      "seed" : 4294967295,
+      "stormCount" : 5,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.78,
+      "warpStrength" : 0.76
+    },
+    "seed" : 4294967295
+  },
+  {
+    "archetype" : 2,
+    "recipe" : {
+      "archetype" : 2,
+      "atmosphereDensity" : 0.52,
+      "atmosphereGlow" : 0.62,
+      "axialTilt" : 0,
+      "bandCount" : 6,
+      "bandSharpness" : 0.28,
+      "cloudCoverage" : 0.58,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.7,
+      "exposure" : 1.08,
+      "featureAmount" : 0.64,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.8074563789537259,
+          "green" : 0.4968107500411182,
+          "opacity" : 1,
+          "red" : 0.276641415763383
+        },
+        "highlight" : {
+          "blue" : 0.8888859847720152,
+          "green" : 0.594218997852396,
+          "opacity" : 1,
+          "red" : 0.35868171282682754
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.5928788720909757,
+          "green" : 0.7741490178684644,
+          "opacity" : 1,
+          "red" : 0.14574541066587007
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.07513222942738751,
+          "green" : 0.07963775176074045,
+          "opacity" : 1,
+          "red" : 0.016535048669575877
+        },
+        "storm" : {
+          "blue" : 0.8285837910610655,
+          "green" : 0.5799314062573642,
+          "opacity" : 1,
+          "red" : 0.38117514840832023
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.11,
+      "roughness" : 0.22,
+      "seed" : 4294967295,
+      "stormCount" : 4,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.57,
+      "warpStrength" : 0.54
+    },
+    "seed" : 4294967295
+  },
+  {
+    "archetype" : 4,
+    "recipe" : {
+      "archetype" : 4,
+      "atmosphereDensity" : 0.16,
+      "atmosphereGlow" : 0.2,
+      "axialTilt" : 0,
+      "bandCount" : 3,
+      "bandSharpness" : 0.62,
+      "cloudCoverage" : 0.08,
+      "cloudSpeed" : 0.65,
+      "detail" : 0.82,
+      "exposure" : 1.08,
+      "featureAmount" : 0.82,
+      "iceAltitude" : 0.22,
+      "iceCoverage" : 0,
+      "lightAzimuth" : 2.2,
+      "lightElevation" : 0.46,
+      "microDetail" : 1,
+      "palette" : {
+        "atmosphere" : {
+          "blue" : 0.8074563789537259,
+          "green" : 0.4968107500411182,
+          "opacity" : 1,
+          "red" : 0.276641415763383
+        },
+        "highlight" : {
+          "blue" : 0.8888859847720152,
+          "green" : 0.594218997852396,
+          "opacity" : 1,
+          "red" : 0.35868171282682754
+        },
+        "ice" : {
+          "blue" : 0.97,
+          "green" : 0.95,
+          "opacity" : 1,
+          "red" : 0.93
+        },
+        "primary" : {
+          "blue" : 0.5928788720909757,
+          "green" : 0.7741490178684644,
+          "opacity" : 1,
+          "red" : 0.14574541066587007
+        },
+        "ring" : {
+          "blue" : 0.83,
+          "green" : 0.9,
+          "opacity" : 1,
+          "red" : 0.94
+        },
+        "shadow" : {
+          "blue" : 0.07513222942738751,
+          "green" : 0.07963775176074045,
+          "opacity" : 1,
+          "red" : 0.016535048669575877
+        },
+        "storm" : {
+          "blue" : 0.8285837910610655,
+          "green" : 0.5799314062573642,
+          "opacity" : 1,
+          "red" : 0.38117514840832023
+        }
+      },
+      "polarAsymmetry" : 0,
+      "ringDetail" : 0.8,
+      "ringInnerRadius" : 1.235,
+      "ringOpacity" : 0,
+      "ringOuterRadius" : 2.27,
+      "rotationPhase" : 0,
+      "rotationSpeed" : 0.025,
+      "roughness" : 0.96,
+      "seed" : 4294967295,
+      "stormCount" : 0,
+      "stormStrength" : 0.86,
+      "turbulence" : 0.7,
+      "warpStrength" : 0.33
+    },
+    "seed" : 4294967295
+  }
+]

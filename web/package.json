@@ -1,0 +1,22 @@
+{
+  "name": "@moonlet/planet",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "generate": "node scripts/generate-shader.mjs",
+    "check:source": "node scripts/generate-shader.mjs --check",
+    "test": "node --experimental-strip-types --test tests/*.test.ts",
+    "typecheck": "tsc",
+    "bundle": "esbuild src/index.ts --bundle --format=esm --outfile=dev/bundle.js",
+    "accept": "node scripts/acceptance.mjs",
+    "studio": "esbuild src/index.ts --bundle --format=esm --outfile=dev/bundle.js --servedir=dev --serve=127.0.0.1:8791"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "typescript": "^5.7.0",
+    "@types/node": "^22.0.0"
+  }
+}
