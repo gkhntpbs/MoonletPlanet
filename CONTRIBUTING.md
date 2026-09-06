@@ -40,8 +40,9 @@ with it and are easy to forget:
 3. **The web shader is generated** from the Metal source. Run `make web` after any change
    and commit the result; `make web-check` is what CI runs to catch the copy that drifted.
 
-Then `make docs` and commit the images — CI fails if the rendered documentation does not
-match the shader that is checked in.
+Then `make docs` and commit the images. CI runs the gallery too, but does not compare the
+bytes: a hosted runner renders on different hardware and often has no Metal device at all,
+so keeping the images current is a habit here rather than something a machine enforces.
 
 ## Changing the recipe
 

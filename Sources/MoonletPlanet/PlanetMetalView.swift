@@ -98,7 +98,14 @@ final class MoonletPlanetRenderer: NSObject, MTKViewDelegate {
     /// Each renderer used to compile its own — which meant a screen showing twelve
     /// mascots compiled the shader twelve times and held twelve pipelines. The state is
     /// per-draw uniforms, so there is nothing per-instance worth duplicating.
-    fileprivate struct SharedContext {
+    ///
+    /// `@unchecked Sendable` and it is safe: the three things it holds are created once and
+    /// never mutated, and `MTLDevice`, `MTLCommandQueue` and `MTLRenderPipelineState` are
+    /// documented as safe to use from multiple threads. The annotation is needed because the
+    /// Metal protocols are not themselves marked `Sendable`, which older toolchains treat as
+    /// an error on a `static let` rather than a warning — so without it this package builds
+    /// on one Mac and not on another.
+    fileprivate struct SharedContext: @unchecked Sendable {
         let device: any MTLDevice
         let commandQueue: any MTLCommandQueue
         let pipeline: any MTLRenderPipelineState

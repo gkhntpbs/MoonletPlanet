@@ -15,12 +15,15 @@ jobs:
         run: swift build
       - name: Test
         run: swift test
-      # The images in the README are generated, so a shader change that cannot render is
-      # caught here rather than in whatever screenshot somebody takes next.
+      # A smoke test that the gallery still runs end to end. Deliberately *not* a byte
+      # comparison against the committed images: a hosted runner renders on different
+      # hardware — often with no Metal device at all — so identical bytes were never a thing
+      # this could ask for. The real "does it draw" check is the web job below, which runs
+      # the same shader in a browser.
       - name: Render the documentation images
         run: swift run PlanetGallery
-      - name: Fail if the rendered images were not committed
-        run: git diff --exit-code Documentation/
+      - name: Discard the render
+        run: git checkout -- Documentation/ || true
 
   web:
     name: Web
@@ -36,8 +39,10 @@ jobs:
         run: cd web && npm run check:source
       - name: Test
         run: cd web && npm test
+      - name: Install
+        run: cd web && npm install --no-audit --no-fund
       - name: Typecheck
-        run: cd web && npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+        run: cd web && npm run typecheck
       # A shader that compiles is not a shader that draws, so this one runs it: real Chrome,
       # real WebGL2, and an assertion on how much of each canvas came back painted.
       - uses: browser-actions/setup-chrome@v1

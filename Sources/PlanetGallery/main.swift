@@ -43,7 +43,13 @@ try? FileManager.default.createDirectory(at: out, withIntermediateDirectories: t
 }
 
 @MainActor func run() {
+    // A machine with no Metal device — a hosted CI runner, usually — renders nothing, and
+    // that is not a failure. It is why CI does not compare these images byte for byte.
     print("metal available:", MoonletPlanetRendering.isMetalAvailable)
+    if !MoonletPlanetRendering.isMetalAvailable {
+        print("no Metal device; nothing to render")
+        exit(0)
+    }
 
     // The hero. One planet, large, worth looking at.
     var hero = MoonletPlanetRecipe.preset(.gasGiant)

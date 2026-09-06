@@ -94,6 +94,6 @@ and the clock, and the npm package is not published.
 - `make web-studio` — the same panel in a browser against the WebGL2 renderer, rebuilding as
   you edit. Both take the same recipe JSON, so a planet copied from one pastes into the
   other.
-- `make docs` renders every image the README uses, and CI fails if they were not committed.
+- `make docs` renders every image the README uses.
 - A `Makefile`, GitHub Actions CI, and `CONTRIBUTING.md` — which says the two things that are
   easy to get wrong: the shader's uniform struct exists twice, and the recipe is stored data.
