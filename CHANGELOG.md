@@ -13,6 +13,15 @@ is the breakage this rule exists to prevent.
 Changing how the shader draws a given recipe is a minor version and is noted under
 **Changed**, because the pixels moved even though the format did not.
 
+## [1.0.2] — 2026-09-06
+
+### Fixed
+- **`hasRing = true` produced invisible rings.** `axialTilt` is the pole *and* the ring angle,
+  and its right default for a planet is zero — upright — which for rings is exactly edge-on: a
+  hairline. Turning rings on now opens an upright planet to an angle they can be seen at, and
+  leaves an already-tilted one alone. This is the seam between two correct defaults, and it
+  only shows up through the `hasRing` convenience rather than through `ringOpacity` directly.
+
 ## [1.0.1] — 2026-09-06
 
 ### Fixed

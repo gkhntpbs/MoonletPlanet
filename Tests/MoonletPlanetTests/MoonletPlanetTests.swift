@@ -264,3 +264,27 @@ import Foundation
     let decoded = try? JSONDecoder().decode(MoonletPlanetRecipe.self, from: JSONEncoder().encode(recipe))
     #expect(decoded?.iceCoverage == 1)
 }
+
+/// Turning rings on gives rings somebody can see.
+///
+/// `axialTilt` is the pole and the ring angle at once, and zero is the right default for a
+/// planet — upright. For rings it is exactly edge-on, so a caller that only says `hasRing =
+/// true` would get a hairline. This is the seam between those two correct defaults.
+@Test func ringsTurnedOnAreVisible() {
+    var recipe = MoonletPlanetRecipe.preset(.gasGiant)
+    #expect(recipe.axialTilt == 0, "a planet with no rings should stand upright")
+    recipe.hasRing = true
+    #expect(recipe.ringOpacity > 0)
+    #expect(recipe.axialTilt > 0.2, "rings on an upright planet are an invisible edge")
+
+    // A planet that already has a tilt keeps it — this opens rings, it does not re-aim worlds.
+    var tilted = MoonletPlanetRecipe.preset(.ocean)
+    tilted.axialTilt = 1.1
+    tilted.hasRing = true
+    #expect(tilted.axialTilt == 1.1)
+
+    // And turning them off leaves the tilt alone, because the tilt was never about the rings.
+    tilted.hasRing = false
+    #expect(tilted.ringOpacity == 0)
+    #expect(tilted.axialTilt == 1.1)
+}

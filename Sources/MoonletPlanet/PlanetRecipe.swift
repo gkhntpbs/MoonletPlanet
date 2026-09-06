@@ -64,9 +64,18 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
     public var rotationPhase: Double
 
     /// Whether this planet has rings at all.
+    ///
+    /// Turning them on opens an upright planet to an angle they can be seen at. `axialTilt`
+    /// is the pole *and* the ring angle, and its right default for a planet is zero —
+    /// upright — which for rings means exactly edge-on: a hairline, and not what anybody
+    /// asking for rings meant. A planet already tilted keeps the tilt it had.
     public var hasRing: Bool {
         get { ringOpacity > 0 }
-        set { ringOpacity = newValue ? max(ringOpacity, 1) : 0 }
+        set {
+            guard newValue else { ringOpacity = 0; return }
+            ringOpacity = max(ringOpacity, 1)
+            if axialTilt == 0 { axialTilt = 0.45 }
+        }
     }
 
     public init(
