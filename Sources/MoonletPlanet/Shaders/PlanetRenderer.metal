@@ -34,6 +34,7 @@ typedef struct {
     float polarAsymmetry;
     float microDetail;
     float rotationPhase;
+    float dayNightSpeed;
     float4 color0;
     float4 color1;
     float4 color2;
@@ -241,6 +242,18 @@ float3 moonletFrozen(float3 n, constant MoonletPlanetUniforms &u, thread float &
 ///
 /// Cells that fail the density test cost one hash and are skipped, which is what keeps a
 /// 27-cell neighbourhood affordable next to the six-octave noise this shader already runs.
+/// Where the star is.
+///
+/// Computed in one place because three call sites need it — the surface relief for rock and
+/// for desert, and the shading itself — and a day/night cycle that only some of them knew
+/// about would light the craters from one direction and the planet from another.
+float3 moonletLight(constant MoonletPlanetUniforms &u) {
+    float azimuth = u.lightAzimuth + u.time * u.dayNightSpeed;
+    return normalize(float3(cos(u.lightElevation) * cos(azimuth),
+                            sin(u.lightElevation),
+                            cos(u.lightElevation) * sin(azimuth)));
+}
+
 float moonletCraters(float3 p, uint seed, float density) {
     float3 base = floor(p);
     float height = 0.0;
@@ -314,9 +327,7 @@ float3 moonletRock(float3 n, constant MoonletPlanetUniforms &u, bool molten, thr
     // One extra sample, a step toward the light, is what turns a height field into a lit
     // surface. Perturbing the shading normal properly would cost three; this costs one and
     // is the difference between a crater that is a hole and a crater that is a smudge.
-    float3 light = normalize(float3(cos(u.lightElevation) * cos(u.lightAzimuth),
-                                    sin(u.lightElevation),
-                                    cos(u.lightElevation) * sin(u.lightAzimuth)));
+    float3 light = moonletLight(u);
     float t2, h2, c2;
     float lit = moonletRockElevation(normalize(n + light * 0.03), u, t2, h2, c2);
     float relief = clamp((lit - elevation) * 3.2, -0.8, 0.8);
@@ -367,9 +378,7 @@ float3 moonletDesert(float3 n, constant MoonletPlanetUniforms &u, thread float &
 
     // The same one-extra-sample relief the rock surface uses. Without it a dune field is a
     // pattern printed on a ball rather than something the light crosses.
-    float3 light = normalize(float3(cos(u.lightElevation) * cos(u.lightAzimuth),
-                                    sin(u.lightElevation),
-                                    cos(u.lightElevation) * sin(u.lightAzimuth)));
+    float3 light = moonletLight(u);
     float s2, b2;
     float lit = moonletDesertElevation(normalize(n + light * 0.03), u, s2, b2);
     float relief = clamp((lit - elevation) * 2.6, -0.7, 0.7);
@@ -467,7 +476,7 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
     bool hitsPlanet = radiusSquared <= 1.0;
     float surfaceZ = sqrt(max(0.0, 1.0 - radiusSquared));
 
-    float3 light = normalize(float3(cos(u.lightElevation) * cos(u.lightAzimuth), sin(u.lightElevation), cos(u.lightElevation) * sin(u.lightAzimuth)));
+    float3 light = moonletLight(u);
 
     // --- rings ---------------------------------------------------------------------
     //

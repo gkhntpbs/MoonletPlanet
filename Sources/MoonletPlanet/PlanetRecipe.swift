@@ -62,6 +62,15 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
     /// it. Set it to look at a particular face; a planet with `rotationSpeed` of zero still
     /// turns when this changes.
     public var rotationPhase: Double
+    /// How fast the star sweeps around the planet, in radians a second. Zero holds the light
+    /// still, which is what every planet did before this existed and remains the default.
+    ///
+    /// This is the *terminator* moving — the planet running through its phases, lit to
+    /// crescent to dark — and it is a different thing from `rotationSpeed`, which turns the
+    /// ground underneath a light that stays put. A world with both has ground that travels
+    /// into its own night, which is what makes city lights appear as land rotates away from
+    /// the star rather than switching on where they already were.
+    public var dayNightSpeed: Double
 
     /// Whether this planet has rings at all.
     ///
@@ -108,7 +117,8 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
         iceAltitude: Double = 0.22,
         polarAsymmetry: Double = 0,
         microDetail: Double = 1,
-        rotationPhase: Double = 0
+        rotationPhase: Double = 0,
+        dayNightSpeed: Double = 0
     ) {
         self.archetype = archetype
         self.seed = seed
@@ -140,6 +150,7 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
         self.polarAsymmetry = polarAsymmetry
         self.microDetail = microDetail
         self.rotationPhase = rotationPhase
+        self.dayNightSpeed = dayNightSpeed
     }
 
     // Stored data again: five fields that did not exist when somebody saved their planet,
@@ -177,6 +188,7 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
         // A planet saved before this existed was drawn with all of it, so its default is on.
         microDetail = try c.decodeIfPresent(Double.self, forKey: .microDetail) ?? 1
         rotationPhase = try c.decodeIfPresent(Double.self, forKey: .rotationPhase) ?? 0
+        dayNightSpeed = try c.decodeIfPresent(Double.self, forKey: .dayNightSpeed) ?? 0
     }
 
     public static func preset(_ archetype: MoonletPlanetArchetype, seed: UInt32 = 240513) -> Self {

@@ -249,6 +249,7 @@ final class MoonletPlanetRenderer: NSObject, MTKViewDelegate {
         u.polarAsymmetry = Float(recipe.polarAsymmetry)
         u.microDetail = Float(recipe.microDetail)
         u.rotationPhase = Float(recipe.rotationPhase)
+        u.dayNightSpeed = Float(recipe.dayNightSpeed)
         u.color0 = palette.highlight.simd
         u.color1 = palette.primary.simd
         u.color2 = palette.shadow.simd

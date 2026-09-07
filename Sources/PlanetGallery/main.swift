@@ -55,6 +55,28 @@ try? FileManager.default.createDirectory(at: out, withIntermediateDirectories: t
         exit(0)
     }
 
+    // One world through its day. Each cell is a different moment rather than a different
+    // recipe, which is why this one does not go through `sheet`.
+    do {
+        var r = MoonletPlanetPreset.earth.style!.recipe
+        r.dayNightSpeed = 1.0
+        let cell = 260, cols = 6, gap = 10
+        let w = cell * cols + gap * (cols + 1), h = cell + gap * 2
+        if let ctx = CGContext(data: nil, width: w, height: h, bitsPerComponent: 8, bytesPerRow: w * 4,
+                               space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                               bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue) {
+            ctx.setFillColor(CGColor(red: 0.035, green: 0.04, blue: 0.05, alpha: 1))
+            ctx.fill(CGRect(x: 0, y: 0, width: w, height: h))
+            for i in 0..<cols {
+                let t = Double(i) * (2 * Double.pi / Double(cols))
+                if let img = MoonletPlanetSnapshotRenderer.image(recipe: r, size: cell * 2, time: t) {
+                    ctx.draw(img, in: CGRect(x: gap + i * (cell + gap), y: gap, width: cell, height: cell))
+                }
+            }
+            if let img = ctx.makeImage() { write(img, "day-cycle") }
+        }
+    }
+
     // The hero. One planet, large, worth looking at.
     var hero = MoonletPlanetRecipe.preset(.gasGiant)
     hero.seed = 240513
