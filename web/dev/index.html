@@ -125,7 +125,11 @@ const fromHex = h => ({
   opacity: 1,
 })
 
-const defaults = { ring: { red: .94, green: .9, blue: .83, opacity: 1 }, ice: { red: .93, green: .95, blue: .97, opacity: 1 } }
+const defaults = {
+  ring: { red: .94, green: .9, blue: .83, opacity: 1 },
+  ice: { red: .93, green: .95, blue: .97, opacity: 1 },
+  life: { red: .28, green: .46, blue: .2, opacity: 1 },
+}
 
 function swatch(label, key) {
   const input = el('input', { type: 'color', value: hex(recipe.palette[key] ?? defaults[key]) })
@@ -151,6 +155,7 @@ archetypeSelect.addEventListener('change', () => {
     ringInnerRadius: recipe.ringInnerRadius, ringOuterRadius: recipe.ringOuterRadius,
     ringDetail: recipe.ringDetail,
     iceCoverage: recipe.iceCoverage, polarAsymmetry: recipe.polarAsymmetry,
+    life: recipe.life, dayNightSpeed: recipe.dayNightSpeed,
   })
   recipe = next
   sync()
@@ -198,6 +203,17 @@ section('Air', [
   slider('Glow', 'atmosphereGlow', 0, 2),
 ])
 
+section('Life', [
+  el('div', { className: 'stack' }, [(() => {
+    const select = el('select', {}, ['Sterile', 'Simple life', 'Civilisation', 'Spacefaring']
+      .map((label, index) => el('option', { value: String(index), textContent: label })))
+    select.addEventListener('change', () => { recipe.life = Number(select.value); sync() })
+    slider.bound.push(() => { select.value = String(recipe.life ?? 0) })
+    return select
+  })()]),
+  el('div', { className: 'swatches' }, [swatch('growth', 'life')]),
+])
+
 section('Ice', [
   slider('Coverage', 'iceCoverage', 0, 1),
   slider('Lapse rate', 'iceAltitude', 0, 1),
@@ -215,6 +231,7 @@ section('Light', [
   slider('Azimuth', 'lightAzimuth', 0, Math.PI * 2),
   slider('Elevation', 'lightElevation', -1.2, 1.2),
   slider('Exposure', 'exposure', 0.2, 4),
+  slider('Day cycle', 'dayNightSpeed', 0, 1.2),
 ])
 
 section('Palette', el('div', { className: 'swatches' }, [

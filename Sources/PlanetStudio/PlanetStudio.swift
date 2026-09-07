@@ -87,6 +87,8 @@ struct StudioView: View {
                         next.axialTilt = recipe.axialTilt
                         next.iceCoverage = recipe.iceCoverage
                         next.polarAsymmetry = recipe.polarAsymmetry
+                        next.life = recipe.life
+                        next.dayNightSpeed = recipe.dayNightSpeed
                         recipe = next
                     }
                     // 0 points the pole up the screen; .pi / 2 points it at the camera. The
@@ -136,6 +138,22 @@ struct StudioView: View {
                     slider("Fine detail", $recipe.microDetail, 0...1.5)
                 }
 
+                section("Life") {
+                    Picker("Life", selection: $recipe.life) {
+                        ForEach(MoonletPlanetLife.allCases) { Text($0.title).tag($0) }
+                    }
+                    .pickerStyle(.segmented)
+                    .labelsHidden()
+                    if recipe.life != .none {
+                        ColorPicker("Growth", selection: colorBinding(\.life))
+                    }
+                    if recipe.life.isLit {
+                        Text("City lights show on the night side. Turn the day up to see them.")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+
                 section("Ice") {
                     // A position for the freezing isotherm, not a cap radius: 0 is a world
                     // with no ice and 1 glaciates it to the equator.
@@ -167,6 +185,9 @@ struct StudioView: View {
                     slider("Azimuth", $recipe.lightAzimuth, 0...(.pi * 2))
                     slider("Elevation", $recipe.lightElevation, -1.2...1.2)
                     slider("Exposure", $recipe.exposure, 0.2...4)
+                    // The terminator sweeping, which is a different thing from the ground
+                    // turning under a light that stays put.
+                    slider("Day cycle", $recipe.dayNightSpeed, 0...1.2)
                 }
 
                 section("Palette") {

@@ -64,6 +64,7 @@ export function randomized(recipe: PlanetRecipe, seed: number): PlanetRecipe {
     atmosphere: colorFromHSB((baseHue + g.in(0.12, 0.34)) % 1, g.in(0.48, 0.88), g.in(0.74, 1)),
     ring: recipe.palette.ring,
     ice: recipe.palette.ice,
+    life: recipe.palette.life,
   }
   return { ...recipe, seed: seed >>> 0, palette }
 }

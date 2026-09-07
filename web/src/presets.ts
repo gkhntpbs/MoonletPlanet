@@ -15,11 +15,13 @@ export const archetypeRecipes = {
   "bandSharpness" : 0.62,
   "cloudCoverage" : 0.92,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.82,
   "exposure" : 1.08,
   "featureAmount" : 0.7,
   "iceAltitude" : 0.22,
   "iceCoverage" : 0,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -41,6 +43,12 @@ export const archetypeRecipes = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.16,
@@ -90,11 +98,13 @@ export const archetypeRecipes = {
   "bandSharpness" : 0.62,
   "cloudCoverage" : 0.92,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.82,
   "exposure" : 1.08,
   "featureAmount" : 0.7,
   "iceAltitude" : 0.22,
   "iceCoverage" : 0,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -116,6 +126,12 @@ export const archetypeRecipes = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.76,
@@ -165,11 +181,13 @@ export const archetypeRecipes = {
   "bandSharpness" : 0.28,
   "cloudCoverage" : 0.58,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.7,
   "exposure" : 1.08,
   "featureAmount" : 0.64,
   "iceAltitude" : 0.22,
   "iceCoverage" : 0,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -191,6 +209,12 @@ export const archetypeRecipes = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.58,
@@ -240,11 +264,13 @@ export const archetypeRecipes = {
   "bandSharpness" : 0.62,
   "cloudCoverage" : 0.3,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.82,
   "exposure" : 1.08,
   "featureAmount" : 0.92,
   "iceAltitude" : 0.22,
   "iceCoverage" : 0,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -266,6 +292,12 @@ export const archetypeRecipes = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.83,
@@ -315,11 +347,13 @@ export const archetypeRecipes = {
   "bandSharpness" : 0.62,
   "cloudCoverage" : 0.08,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.82,
   "exposure" : 1.08,
   "featureAmount" : 0.82,
   "iceAltitude" : 0.22,
   "iceCoverage" : 0,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -341,6 +375,12 @@ export const archetypeRecipes = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.18,
@@ -390,11 +430,13 @@ export const archetypeRecipes = {
   "bandSharpness" : 0.62,
   "cloudCoverage" : 0.18,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.9,
   "exposure" : 1.18,
   "featureAmount" : 0.88,
   "iceAltitude" : 0.22,
   "iceCoverage" : 0,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -416,6 +458,12 @@ export const archetypeRecipes = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.025,
@@ -465,11 +513,13 @@ export const archetypeRecipes = {
   "bandSharpness" : 0.62,
   "cloudCoverage" : 0.08,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.82,
   "exposure" : 1.08,
   "featureAmount" : 0.7,
   "iceAltitude" : 0.22,
   "iceCoverage" : 0,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -491,6 +541,12 @@ export const archetypeRecipes = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.12,
@@ -540,11 +596,13 @@ export const archetypeRecipes = {
   "bandSharpness" : 0.62,
   "cloudCoverage" : 0.92,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.82,
   "exposure" : 1.08,
   "featureAmount" : 0.7,
   "iceAltitude" : 0.22,
   "iceCoverage" : 0,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -566,6 +624,12 @@ export const archetypeRecipes = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.14,
@@ -615,11 +679,13 @@ export const archetypeRecipes = {
   "bandSharpness" : 0.28,
   "cloudCoverage" : 0.42,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.7,
   "exposure" : 1.08,
   "featureAmount" : 0.84,
   "iceAltitude" : 0.22,
   "iceCoverage" : 0,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -641,6 +707,12 @@ export const archetypeRecipes = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.34,
@@ -690,11 +762,13 @@ export const archetypeRecipes = {
   "bandSharpness" : 0.22,
   "cloudCoverage" : 1,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.82,
   "exposure" : 1.08,
   "featureAmount" : 0.7,
   "iceAltitude" : 0.22,
   "iceCoverage" : 0,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -716,6 +790,12 @@ export const archetypeRecipes = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.55,
@@ -768,11 +848,13 @@ export const solarSystem = {
   "bandSharpness" : 0.28,
   "cloudCoverage" : 0.54,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.7,
   "exposure" : 1.08,
   "featureAmount" : 0.72,
   "iceAltitude" : 0.34,
   "iceCoverage" : 0.19,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -794,6 +876,12 @@ export const solarSystem = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.56,
@@ -843,11 +931,13 @@ export const solarSystem = {
   "bandSharpness" : 0.62,
   "cloudCoverage" : 0.08,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.82,
   "exposure" : 1.08,
   "featureAmount" : 0.7,
   "iceAltitude" : 0.18,
   "iceCoverage" : 0.15,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -869,6 +959,12 @@ export const solarSystem = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.96
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.07,
@@ -918,11 +1014,13 @@ export const solarSystem = {
   "bandSharpness" : 0.62,
   "cloudCoverage" : 0.92,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.82,
   "exposure" : 1.08,
   "featureAmount" : 0.7,
   "iceAltitude" : 0.22,
   "iceCoverage" : 0,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -944,6 +1042,12 @@ export const solarSystem = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.16,
@@ -993,11 +1097,13 @@ export const solarSystem = {
   "bandSharpness" : 0.62,
   "cloudCoverage" : 0.92,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.82,
   "exposure" : 1.08,
   "featureAmount" : 0.7,
   "iceAltitude" : 0.22,
   "iceCoverage" : 0,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -1019,6 +1125,12 @@ export const solarSystem = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.36,
@@ -1068,11 +1180,13 @@ export const solarSystem = {
   "bandSharpness" : 0.62,
   "cloudCoverage" : 0.92,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.82,
   "exposure" : 1.08,
   "featureAmount" : 0.7,
   "iceAltitude" : 0.22,
   "iceCoverage" : 0,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -1094,6 +1208,12 @@ export const solarSystem = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.74,
@@ -1143,11 +1263,13 @@ export const solarSystem = {
   "bandSharpness" : 0.62,
   "cloudCoverage" : 0.92,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.82,
   "exposure" : 1.08,
   "featureAmount" : 0.7,
   "iceAltitude" : 0.22,
   "iceCoverage" : 0,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -1169,6 +1291,12 @@ export const solarSystem = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.72,
@@ -1218,11 +1346,13 @@ export const solarSystem = {
   "bandSharpness" : 0.22,
   "cloudCoverage" : 1,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.82,
   "exposure" : 1.08,
   "featureAmount" : 0.7,
   "iceAltitude" : 0.22,
   "iceCoverage" : 0,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -1244,6 +1374,12 @@ export const solarSystem = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.22,
@@ -1293,11 +1429,13 @@ export const solarSystem = {
   "bandSharpness" : 0.62,
   "cloudCoverage" : 0.08,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.82,
   "exposure" : 1.08,
   "featureAmount" : 0.82,
   "iceAltitude" : 0.22,
   "iceCoverage" : 0,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -1319,6 +1457,12 @@ export const solarSystem = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.34,
@@ -1368,11 +1512,13 @@ export const solarSystem = {
   "bandSharpness" : 0.62,
   "cloudCoverage" : 0.08,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.82,
   "exposure" : 1.08,
   "featureAmount" : 0.82,
   "iceAltitude" : 0.22,
   "iceCoverage" : 0,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -1394,6 +1540,12 @@ export const solarSystem = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.47,
@@ -1443,11 +1595,13 @@ export const solarSystem = {
   "bandSharpness" : 0.62,
   "cloudCoverage" : 0.3,
   "cloudSpeed" : 0.65,
+  "dayNightSpeed" : 0,
   "detail" : 0.82,
   "exposure" : 1.08,
   "featureAmount" : 0.92,
   "iceAltitude" : 0.12,
   "iceCoverage" : 0.55,
+  "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
   "microDetail" : 1,
@@ -1469,6 +1623,12 @@ export const solarSystem = {
       "green" : 0.95,
       "opacity" : 1,
       "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
     },
     "primary" : {
       "blue" : 0.38,

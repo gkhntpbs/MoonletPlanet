@@ -10,11 +10,13 @@
       "bandSharpness" : 0.62,
       "cloudCoverage" : 0.92,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.82,
       "exposure" : 1.08,
       "featureAmount" : 0.7,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -36,6 +38,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.7041262054117635,
@@ -89,11 +97,13 @@
       "bandSharpness" : 0.28,
       "cloudCoverage" : 0.58,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.7,
       "exposure" : 1.08,
       "featureAmount" : 0.64,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -115,6 +125,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.7041262054117635,
@@ -168,11 +184,13 @@
       "bandSharpness" : 0.62,
       "cloudCoverage" : 0.08,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.82,
       "exposure" : 1.08,
       "featureAmount" : 0.82,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -194,6 +212,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.7041262054117635,
@@ -247,11 +271,13 @@
       "bandSharpness" : 0.62,
       "cloudCoverage" : 0.92,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.82,
       "exposure" : 1.08,
       "featureAmount" : 0.7,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -273,6 +299,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.2857798742706027,
@@ -326,11 +358,13 @@
       "bandSharpness" : 0.28,
       "cloudCoverage" : 0.58,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.7,
       "exposure" : 1.08,
       "featureAmount" : 0.64,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -352,6 +386,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.2857798742706027,
@@ -405,11 +445,13 @@
       "bandSharpness" : 0.62,
       "cloudCoverage" : 0.08,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.82,
       "exposure" : 1.08,
       "featureAmount" : 0.82,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -431,6 +473,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.2857798742706027,
@@ -484,11 +532,13 @@
       "bandSharpness" : 0.62,
       "cloudCoverage" : 0.92,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.82,
       "exposure" : 1.08,
       "featureAmount" : 0.7,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -510,6 +560,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.7378329844948903,
@@ -563,11 +619,13 @@
       "bandSharpness" : 0.28,
       "cloudCoverage" : 0.58,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.7,
       "exposure" : 1.08,
       "featureAmount" : 0.64,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -589,6 +647,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.7378329844948903,
@@ -642,11 +706,13 @@
       "bandSharpness" : 0.62,
       "cloudCoverage" : 0.08,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.82,
       "exposure" : 1.08,
       "featureAmount" : 0.82,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -668,6 +734,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.7378329844948903,
@@ -721,11 +793,13 @@
       "bandSharpness" : 0.62,
       "cloudCoverage" : 0.92,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.82,
       "exposure" : 1.08,
       "featureAmount" : 0.7,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -747,6 +821,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.19496152313792353,
@@ -800,11 +880,13 @@
       "bandSharpness" : 0.28,
       "cloudCoverage" : 0.58,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.7,
       "exposure" : 1.08,
       "featureAmount" : 0.64,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -826,6 +908,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.19496152313792353,
@@ -879,11 +967,13 @@
       "bandSharpness" : 0.62,
       "cloudCoverage" : 0.08,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.82,
       "exposure" : 1.08,
       "featureAmount" : 0.82,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -905,6 +995,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.19496152313792353,
@@ -958,11 +1054,13 @@
       "bandSharpness" : 0.62,
       "cloudCoverage" : 0.92,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.82,
       "exposure" : 1.08,
       "featureAmount" : 0.7,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -984,6 +1082,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.7518257953261839,
@@ -1037,11 +1141,13 @@
       "bandSharpness" : 0.28,
       "cloudCoverage" : 0.58,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.7,
       "exposure" : 1.08,
       "featureAmount" : 0.64,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -1063,6 +1169,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.7518257953261839,
@@ -1116,11 +1228,13 @@
       "bandSharpness" : 0.62,
       "cloudCoverage" : 0.08,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.82,
       "exposure" : 1.08,
       "featureAmount" : 0.82,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -1142,6 +1256,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.7518257953261839,
@@ -1195,11 +1315,13 @@
       "bandSharpness" : 0.62,
       "cloudCoverage" : 0.92,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.82,
       "exposure" : 1.08,
       "featureAmount" : 0.7,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -1221,6 +1343,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.6003214735934127,
@@ -1274,11 +1402,13 @@
       "bandSharpness" : 0.28,
       "cloudCoverage" : 0.58,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.7,
       "exposure" : 1.08,
       "featureAmount" : 0.64,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -1300,6 +1430,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.6003214735934127,
@@ -1353,11 +1489,13 @@
       "bandSharpness" : 0.62,
       "cloudCoverage" : 0.08,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.82,
       "exposure" : 1.08,
       "featureAmount" : 0.82,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -1379,6 +1517,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.6003214735934127,
@@ -1432,11 +1576,13 @@
       "bandSharpness" : 0.62,
       "cloudCoverage" : 0.92,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.82,
       "exposure" : 1.08,
       "featureAmount" : 0.7,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -1458,6 +1604,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.34767916124344295,
@@ -1511,11 +1663,13 @@
       "bandSharpness" : 0.28,
       "cloudCoverage" : 0.58,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.7,
       "exposure" : 1.08,
       "featureAmount" : 0.64,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -1537,6 +1691,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.34767916124344295,
@@ -1590,11 +1750,13 @@
       "bandSharpness" : 0.62,
       "cloudCoverage" : 0.08,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.82,
       "exposure" : 1.08,
       "featureAmount" : 0.82,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -1616,6 +1778,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.34767916124344295,
@@ -1669,11 +1837,13 @@
       "bandSharpness" : 0.62,
       "cloudCoverage" : 0.92,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.82,
       "exposure" : 1.08,
       "featureAmount" : 0.7,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -1695,6 +1865,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.5928788720909757,
@@ -1748,11 +1924,13 @@
       "bandSharpness" : 0.28,
       "cloudCoverage" : 0.58,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.7,
       "exposure" : 1.08,
       "featureAmount" : 0.64,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -1774,6 +1952,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.5928788720909757,
@@ -1827,11 +2011,13 @@
       "bandSharpness" : 0.62,
       "cloudCoverage" : 0.08,
       "cloudSpeed" : 0.65,
+      "dayNightSpeed" : 0,
       "detail" : 0.82,
       "exposure" : 1.08,
       "featureAmount" : 0.82,
       "iceAltitude" : 0.22,
       "iceCoverage" : 0,
+      "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
       "microDetail" : 1,
@@ -1853,6 +2039,12 @@
           "green" : 0.95,
           "opacity" : 1,
           "red" : 0.93
+        },
+        "life" : {
+          "blue" : 0.2,
+          "green" : 0.46,
+          "opacity" : 1,
+          "red" : 0.28
         },
         "primary" : {
           "blue" : 0.5928788720909757,

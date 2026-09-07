@@ -7,7 +7,8 @@ export type PlanetColor = { red: number; green: number; blue: number; opacity: n
 export type PlanetRecipe = {
   archetype: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
   seed: number
-  palette: Record<'highlight' | 'primary' | 'shadow' | 'storm' | 'atmosphere', PlanetColor> & { ring?: PlanetColor; ice?: PlanetColor }
+  palette: Record<'highlight' | 'primary' | 'shadow' | 'storm' | 'atmosphere', PlanetColor>
+    & { ring?: PlanetColor; ice?: PlanetColor; life?: PlanetColor }
   rotationSpeed: number
   turbulence: number
   detail: number
@@ -48,23 +49,40 @@ export type PlanetRecipe = {
   microDetail?: number
   /** Where the planet is in its own day, in radians, added to whatever the clock turned. */
   rotationPhase?: number
+  /**
+   * How fast the star sweeps around, in radians a second. Zero holds the light still.
+   * This moves the *terminator* — the planet running through its phases — which is a
+   * different thing from `rotationSpeed` turning the ground under a light that stays put.
+   */
+  dayNightSpeed?: number
+  /**
+   * Whether anything lives here. 0 sterile, 1 simple life, 2 a civilisation with city
+   * lights on the night side, 3 one that has put something in orbit.
+   */
+  life?: 0 | 1 | 2 | 3
 }
 
 /** The ring fields postdate the first recipes, so a recipe without them is ringless. */
 const optionalDefaults = {
   ringOpacity: 0, axialTilt: 0, ringInnerRadius: 1.235, ringOuterRadius: 2.27, ringDetail: 0.8,
   iceCoverage: 0, iceAltitude: 0.22, polarAsymmetry: 0, microDetail: 1, rotationPhase: 0,
+  dayNightSpeed: 0,
 } as const
 const defaultRingColor: PlanetColor = { red: 0.94, green: 0.9, blue: 0.83, opacity: 1 }
 const defaultIceColor: PlanetColor = { red: 0.93, green: 0.95, blue: 0.97, opacity: 1 }
+const defaultLifeColor: PlanetColor = { red: 0.28, green: 0.46, blue: 0.2, opacity: 1 }
 
 const scalarKeys = ['rotationSpeed', 'turbulence', 'detail', 'warpStrength', 'bandCount', 'bandSharpness', 'stormCount', 'stormStrength', 'cloudCoverage', 'cloudSpeed', 'atmosphereDensity', 'atmosphereGlow', 'roughness', 'featureAmount', 'lightAzimuth', 'lightElevation', 'exposure'] as const
-const optionalKeys = ['ringOpacity', 'axialTilt', 'ringInnerRadius', 'ringOuterRadius', 'ringDetail', 'iceCoverage', 'iceAltitude', 'polarAsymmetry', 'microDetail', 'rotationPhase'] as const
+const optionalKeys = ['ringOpacity', 'axialTilt', 'ringInnerRadius', 'ringOuterRadius', 'ringDetail', 'iceCoverage', 'iceAltitude', 'polarAsymmetry', 'microDetail', 'rotationPhase', 'dayNightSpeed'] as const
 const colors = { highlight: 'color0', primary: 'color1', shadow: 'color2', storm: 'color3', atmosphere: 'atmosphereColor' } as const
 
 export function validateRecipe(recipe: PlanetRecipe) {
   if (!Number.isInteger(recipe.seed) || recipe.seed < 0 || recipe.seed > 0xffffffff) throw new RangeError('Invalid planet seed')
   if (!Number.isInteger(recipe.archetype) || recipe.archetype < 0 || recipe.archetype > 9) throw new RangeError('Invalid planet archetype')
+  // The shader dispatches on this number, so an out-of-range one renders an unlit world
+  // rather than failing — which is the kind of wrong that is hard to notice.
+  const life = recipe.life ?? 0
+  if (!Number.isInteger(life) || life < 0 || life > 3) throw new RangeError('Invalid planet life')
   for (const key of scalarKeys) if (!Number.isFinite(recipe[key])) throw new RangeError(`Invalid planet ${key}`)
   for (const key of optionalKeys) {
     const value = recipe[key]
@@ -132,6 +150,7 @@ export function createPlanetRenderer(canvas: HTMLCanvasElement) {
       gl.uniform1f(location('time'), time)
       gl.uniform1ui(location('seed'), recipe.seed)
       gl.uniform1ui(location('archetype'), recipe.archetype)
+      gl.uniform1ui(location('life'), recipe.life ?? 0)
       for (const key of scalarKeys) gl.uniform1f(location(key), recipe[key])
       for (const key of optionalKeys) gl.uniform1f(location(key), recipe[key] ?? optionalDefaults[key])
       for (const key of Object.keys(colors) as (keyof typeof colors)[]) {
@@ -142,6 +161,8 @@ export function createPlanetRenderer(canvas: HTMLCanvasElement) {
       gl.uniform4f(location('ringColor'), ring.red, ring.green, ring.blue, ring.opacity)
       const ice = recipe.palette.ice ?? defaultIceColor
       gl.uniform4f(location('iceColor'), ice.red, ice.green, ice.blue, ice.opacity)
+      const life = recipe.palette.life ?? defaultLifeColor
+      gl.uniform4f(location('lifeColor'), life.red, life.green, life.blue, life.opacity)
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
       return true
     },
