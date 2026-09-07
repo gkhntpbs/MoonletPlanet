@@ -22,7 +22,7 @@ import { createPlanetRenderer, solarSystem } from '@moonlet/planet'
 createPlanetRenderer(canvas).render(solarSystem.saturn, 18, 400, 400, devicePixelRatio)
 ```
 
-![A gas giant](Documentation/hero.png)
+<p align="center"><img src="Documentation/hero.png" alt="A gas giant" width="360"></p>
 
 ## Why this exists
 
@@ -185,7 +185,7 @@ everything that makes rings read as rings —
 - the **opposition surge**: rings brighten sharply when the star is behind the observer
 - ringlets fade out per-pixel rather than aliasing, so near edge-on there is no moiré
 
-![Saturn](Documentation/rings.png)
+<p align="center"><img src="Documentation/rings.png" alt="Saturn" width="400"></p>
 
 ## Turning it
 

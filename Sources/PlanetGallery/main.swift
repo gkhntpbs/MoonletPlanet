@@ -6,6 +6,10 @@ import MoonletPlanet
 
 // Renders the images the README uses. Run from the package root:
 //     swift run PlanetGallery
+//
+// The two single-planet images are square, so a README shows them a screen tall unless it
+// says otherwise. They are rendered small and the README constrains them further with an
+// <img width>; the contact sheets are wide strips and need neither.
 // It writes into Documentation/, which is what the README points at, so a change to the
 // shader is one command away from being visible in the docs rather than a stale picture.
 
@@ -55,11 +59,11 @@ try? FileManager.default.createDirectory(at: out, withIntermediateDirectories: t
     var hero = MoonletPlanetRecipe.preset(.gasGiant)
     hero.seed = 240513
     hero.atmosphereGlow = 1.15
-    if let img = MoonletPlanetSnapshotRenderer.image(recipe: hero, size: 1200, time: 18) {
+    if let img = MoonletPlanetSnapshotRenderer.image(recipe: hero, size: 760, time: 18) {
         write(img, "hero")
     }
 
-    if let img = MoonletPlanetSnapshotRenderer.image(recipe: MoonletPlanetPreset.saturn.style!.recipe, size: 1100, time: 18) {
+    if let img = MoonletPlanetSnapshotRenderer.image(recipe: MoonletPlanetPreset.saturn.style!.recipe, size: 760, time: 18) {
         write(img, "rings")
     }
 
