@@ -206,6 +206,19 @@ a hard core with four screen-aligned spikes rather than a halo, so it reads as a
 point. Behind it a short trail along the orbit is what makes a moving thing read as moving in
 a still frame; it is cut at the limb where the station just came out.
 
+```swift
+recipe.stationCount = 2            // 0 turns them off; one by default
+recipe.stationOrbitRadius = 1.3    // planet radii; 1.085 crosses the disc rather than skirting it
+recipe.stationSpeed = 0.4          // radians a second; precession follows it
+recipe.stationInclination = 0.9    // to the equator; ~51°, as the ISS flies
+recipe.stationSize = 1.5           // a multiplier, and never below a pixel
+```
+
+More than one share the orbit's radius, speed and inclination but not its plane or its
+phase — spaced evenly around one circle they would read as beads on a string. The canvas
+zooms out to hold whatever orbit is set, so `drawnExtent` on the recipe is what a view
+should divide by when it sizes the body against a square.
+
 ## A day that passes
 
 ![One world through its day](Documentation/day-cycle.png)

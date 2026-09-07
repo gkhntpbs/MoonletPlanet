@@ -35,6 +35,18 @@ Changing how the shader draws a given recipe is a minor version and is noted und
     transit and over space as something moving, not as a lens flare.
 
   Ice, life and lights all sit on ground, so a gas giant gets none of them.
+- **The stations are settings.** `stationCount`, `stationOrbitRadius`, `stationSpeed`,
+  `stationInclination` and `stationSize`, defaulting to the one station a spacefaring world
+  already flew. More than one share the orbit's radius, speed and inclination but not its
+  plane or phase, so they do not read as beads on a string. Both workbenches have the sliders.
+- **`drawnExtent`** — how far from the disc's centre the shader draws, in planet radii. A
+  view that sizes the body against a square divides by it; it is the number the shader uses
+  for its own framing, so the two cannot disagree.
+
+### Fixed
+- **A station on a ringless planet was cut off at the edge of the square.** The canvas
+  stopped at the limb and the orbit is outside it. The framing now zooms out to hold the
+  orbit, the trail and the glint, the way it already did for rings.
 
 ### Changed
 - The light direction was computed inline in three places and is now one function. A day
