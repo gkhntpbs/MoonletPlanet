@@ -156,6 +156,9 @@ archetypeSelect.addEventListener('change', () => {
     ringDetail: recipe.ringDetail,
     iceCoverage: recipe.iceCoverage, polarAsymmetry: recipe.polarAsymmetry,
     life: recipe.life, dayNightSpeed: recipe.dayNightSpeed,
+    stationCount: recipe.stationCount, stationOrbitRadius: recipe.stationOrbitRadius,
+    stationSpeed: recipe.stationSpeed, stationInclination: recipe.stationInclination,
+    stationSize: recipe.stationSize,
   })
   recipe = next
   sync()
@@ -212,6 +215,15 @@ section('Life', [
     return select
   })()]),
   el('div', { className: 'swatches' }, [swatch('growth', 'life')]),
+])
+
+// Drawn only when life is spacefaring; the sliders stay so the numbers are not lost.
+section('In orbit', [
+  slider('Stations', 'stationCount', 0, 4, 1),
+  slider('Orbit', 'stationOrbitRadius', 1.03, 1.8),
+  slider('Speed', 'stationSpeed', 0, 1.5),
+  slider('Inclination', 'stationInclination', 0, Math.PI / 2),
+  slider('Size', 'stationSize', 0.5, 3),
 ])
 
 section('Ice', [

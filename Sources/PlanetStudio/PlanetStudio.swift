@@ -89,6 +89,11 @@ struct StudioView: View {
                         next.polarAsymmetry = recipe.polarAsymmetry
                         next.life = recipe.life
                         next.dayNightSpeed = recipe.dayNightSpeed
+                        next.stationCount = recipe.stationCount
+                        next.stationOrbitRadius = recipe.stationOrbitRadius
+                        next.stationSpeed = recipe.stationSpeed
+                        next.stationInclination = recipe.stationInclination
+                        next.stationSize = recipe.stationSize
                         recipe = next
                     }
                     // 0 points the pole up the screen; .pi / 2 points it at the camera. The
@@ -151,6 +156,19 @@ struct StudioView: View {
                         Text("City lights show on the night side. Turn the day up to see them.")
                             .font(.caption2)
                             .foregroundStyle(.secondary)
+                    }
+                }
+
+                if recipe.life.hasOrbitalStation {
+                    section("In orbit") {
+                        Stepper("Stations: \(recipe.stationCount)", value: $recipe.stationCount, in: 0...4)
+                            .font(.caption)
+                        // Below 1.03 the trail dips into the limb; past the rings' inner edge
+                        // it flies through them.
+                        slider("Orbit", $recipe.stationOrbitRadius, 1.03...1.8)
+                        slider("Speed", $recipe.stationSpeed, 0...1.5)
+                        slider("Inclination", $recipe.stationInclination, 0...(.pi / 2))
+                        slider("Size", $recipe.stationSize, 0.5...3)
                     }
                 }
 
