@@ -77,6 +77,36 @@ try? FileManager.default.createDirectory(at: out, withIntermediateDirectories: t
         }
     }
 
+    // The station at three moments of one orbit: across the disc, on the limb, and behind the
+    // planet. The times are not guessed — they were solved from the same orbit maths the
+    // shader runs, which is the only way to be sure the middle one is a transit.
+    do {
+        var r = MoonletPlanetPreset.earth.style!.recipe
+        r.life = .advanced
+        let cell = 340, cols = 3, gap = 12
+        let w = cell * cols + gap * (cols + 1), h = cell + gap * 2
+        if let ctx = CGContext(data: nil, width: w, height: h, bitsPerComponent: 8, bytesPerRow: w * 4,
+                               space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                               bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue) {
+            ctx.setFillColor(CGColor(red: 0.035, green: 0.04, blue: 0.05, alpha: 1))
+            ctx.fill(CGRect(x: 0, y: 0, width: w, height: h))
+            for (i, t) in [16.0, 4.2, 10.6].enumerated() {
+                if let img = MoonletPlanetSnapshotRenderer.image(recipe: r, size: cell * 2, time: t) {
+                    ctx.draw(img, in: CGRect(x: gap + i * (cell + gap), y: gap, width: cell, height: cell))
+                }
+            }
+            if let img = ctx.makeImage() { write(img, "station") }
+        }
+    }
+
+    // The four levels of life, seen from the night side where three of them differ.
+    sheet(MoonletPlanetLife.allCases.map { level -> MoonletPlanetRecipe in
+        var r = MoonletPlanetPreset.earth.style!.recipe
+        r.life = level
+        r.lightAzimuth = 5.4
+        return r
+    }, cell: 320, cols: 4, gap: 12, file: "life")
+
     // The hero. One planet, large, worth looking at.
     var hero = MoonletPlanetRecipe.preset(.gasGiant)
     hero.seed = 240513

@@ -156,6 +156,61 @@ the equatorial plane and those were never two independent settings. Bands, ice a
 daily rotation are computed in the planet's own frame, so a tilted world's weather tilts
 with it — Uranus is on its side and looks it.
 
+## Life, if there is any
+
+![Sterile, simple life, a civilisation, and one that has left the ground](Documentation/life.png)
+
+```swift
+var earth = MoonletPlanetPreset.earth.style!.recipe
+earth.life = .complex          // .none .simple .complex .advanced
+earth.dayNightSpeed = 0.25     // so there is a night for it to show on
+```
+
+Four ordered levels, sterile by default, each the one before it plus something.
+
+**`.simple`** is the one worth getting right. Nothing built and nothing lit — just land gone
+faintly green where it is low and wet, because that is where water collects. It is the
+difference between Mars and a Mars with lichen on it, and it shows in daylight rather than at
+night.
+
+**`.complex`** puts cities on the night side. What makes them read as cities rather than as
+speckle is where they are *not*: never on water, thinning inland because population follows
+coasts, and clustered at three scales — which regions are settled at all, the cities in them,
+the towns between. A civilisation that has just learned to light its streets does not light
+all of them, so this level reaches less far than the next.
+
+**`.advanced`** lights the rest of it and puts something in orbit.
+
+The lights are emission added before the tonemap, so they bloom the way a bright thing does,
+and they come up through the last of the dusk rather than switching on at the terminator.
+
+### The station
+
+![The station crossing, on the limb, and hidden](Documentation/station.png)
+
+A great circle inclined to the planet's own equator — not to the screen, which would stop it
+agreeing with the world it goes round the moment the planet is tilted. The inclination is
+roughly the one the ISS flies. It is hidden behind the planet, and it goes out in eclipse,
+which is what a satellite does when it crosses into the shadow.
+
+Its ascending node drifts, because real orbits precess and because without that it traces one
+ellipse for ever: a planet tilted like Earth's shows a nearly face-on orbit that never
+transits at all. With the node moving, the plane turns edge-on and back, so the station
+crosses the disc sometimes and rides the limb the rest of the time.
+
+## A day that passes
+
+![One world through its day](Documentation/day-cycle.png)
+
+```swift
+recipe.dayNightSpeed = 0.3     // radians a second; 0 holds the light still
+```
+
+This moves the **terminator** — the planet running through its phases — which is a different
+thing from `rotationSpeed`, which turns the ground under a light that stays put. A world with
+both has ground that travels into its own night, which is what makes city lights appear as
+land rotates away from the star rather than switch on where they already are.
+
 ## Rings, and they are Saturn's
 
 ![One ring system at five tilts](Documentation/ring-tilts.png)

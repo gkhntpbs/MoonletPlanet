@@ -13,6 +13,32 @@ is the breakage this rule exists to prevent.
 Changing how the shader draws a given recipe is a minor version and is noted under
 **Changed**, because the pixels moved even though the format did not.
 
+## [Unreleased]
+
+### Added
+- **`dayNightSpeed`** — the star sweeps around and the terminator moves, so a world runs
+  through its phases. Zero holds the light still and is the default. It is a different thing
+  from `rotationSpeed`, which turns the ground under a light that stays put; a world with
+  both has ground that travels into its own night.
+- **`MoonletPlanetLife`** — four ordered levels, sterile by default, plus `palette.life`.
+  - `.simple` builds nothing and lights nothing: land goes faintly green where it is low and
+    wet. It shows in daylight, and it is the difference between Mars and a Mars with lichen.
+  - `.complex` puts cities on the night side. Never on water, thinning inland because
+    population follows coasts, and clustered at three scales — settled regions, the cities in
+    them, the towns between. A civilisation that has just learned to light its streets does
+    not light all of them, so this reaches less far than the next level.
+  - `.advanced` lights the rest and puts a station in orbit: a great circle inclined to the
+    planet's own equator at roughly the angle the ISS flies, hidden behind the planet and
+    dark in eclipse. Its ascending node precesses, because real orbits do and because
+    without it a planet tilted like Earth's shows an orbit that never transits at all.
+
+  Ice, life and lights all sit on ground, so a gas giant gets none of them.
+
+### Changed
+- The light direction was computed inline in three places and is now one function. A day
+  cycle only some of them knew about would light the craters from one direction and the
+  planet from another.
+
 ## [1.0.2] — 2026-09-06
 
 ### Fixed
