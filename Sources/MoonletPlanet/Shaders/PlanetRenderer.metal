@@ -35,6 +35,7 @@ typedef struct {
     float microDetail;
     float rotationPhase;
     float dayNightSpeed;
+    uint life;
     float4 color0;
     float4 color1;
     float4 color2;
@@ -42,6 +43,7 @@ typedef struct {
     float4 atmosphereColor;
     float4 ringColor;
     float4 iceColor;
+    float4 lifeColor;
 } MoonletPlanetUniforms;
 
 struct MoonletPlanetVertexOut {
@@ -394,6 +396,55 @@ float3 moonletDesert(float3 n, constant MoonletPlanetUniforms &u, thread float &
     return mix(color, u.color0.rgb * 0.94, dust * u.cloudCoverage * sand * 0.3);
 }
 
+
+/// Where a world is settled, and how brightly, on the side of it facing away from the star.
+///
+/// What makes lights read as cities rather than as speckle is where they are *not*. Never on
+/// water. Thinning inland — population follows coasts and rivers, so the brightest band sits
+/// just inside the shoreline and the interior goes dark. And clustered: a region is either
+/// settled or it is empty, and the towns inside a settled region are scattered around the
+/// cities rather than spread evenly over the continent.
+///
+/// Three scales do that: one that decides which regions are inhabited at all, one for cities,
+/// one for the towns between them.
+float moonletCityLights(float3 n, float elevation, constant MoonletPlanetUniforms &u) {
+    if (u.life < 2u) return 0.0;
+
+    // Land only, and brightest near the shore. `elevation` is already zero over water for the
+    // surfaces that have water, and low ground everywhere else.
+    float land = smoothstep(0.0, 0.1, elevation);
+    float coastal = land * (1.0 - smoothstep(0.05, 0.5, elevation));
+    float habitable = clamp(land * 0.3 + coastal * 1.0, 0.0, 1.0);
+    if (habitable <= 0.002) return 0.0;
+
+    float region = moonletFBM(n * 3.2, u.seed + 521u, u.detail);
+    float settled = smoothstep(0.4, 0.62, region);
+    if (settled <= 0.002) return 0.0;
+
+    float cities = smoothstep(0.62, 0.86, moonletMicro(n * 14.0, u.seed + 527u));
+    float towns = smoothstep(0.58, 0.84, moonletMicro(n * 44.0, u.seed + 523u));
+
+    // A civilisation that has just learned to light its streets does not light all of them.
+    float reach = (u.life == 2u) ? 0.4 : 1.0;
+    return habitable * settled * (cities * 1.15 + towns * 0.5) * reach;
+}
+
+/// What life does to the ground in daylight.
+///
+/// Level one is the interesting one: no lights, nothing built, just a world whose land has
+/// gone faintly green where it is low and wet. It is the difference between Mars and a Mars
+/// with lichen on it, and it should read at a glance without turning the planet into a lawn.
+float3 moonletLivingGround(float3 albedo, float3 n, float elevation, constant MoonletPlanetUniforms &u) {
+    if (u.life == 0u) return albedo;
+    float land = smoothstep(-0.02, 0.16, elevation);
+    // Life pools in the low, wet ground and thins as the land rises.
+    float lowland = land * (1.0 - smoothstep(0.2, 0.85, elevation));
+    float patches = smoothstep(0.4, 0.72, moonletFBM(n * 2.6, u.seed + 541u, u.detail));
+    float spread = clamp(lowland * patches, 0.0, 1.0);
+    float strength = (u.life == 1u) ? 0.34 : (u.life == 2u ? 0.5 : 0.6);
+    return mix(albedo, mix(albedo, u.lifeColor.rgb, 0.75), spread * strength);
+}
+
 /// The radial structure of a ring system, in planet radii, and it is Saturn's.
 ///
 /// The boundaries are measured, not invented: the C ring begins at 1.235 planet radii, the
@@ -584,6 +635,9 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
             albedo = moonletRock(surfaceNormal, u, u.archetype == 5u, elevation);
         }
 
+        // Life sits on ground too, so the gas giants skip both of these.
+        if (!gaseous) albedo = moonletLivingGround(albedo, surfaceNormal, elevation, u);
+
         // Ice sits on ground, so a gas giant gets none — it gets the polar hood instead,
         // which `moonletGas` has already applied.
         if (!gaseous) {
@@ -633,6 +687,27 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
         }
 
         float3 planet = albedo * softLight * mix(0.2, 1.0, day) * mix(1.0, ringShade, 0.9);
+
+        // City lights, added as emission before the tonemap so they bloom the way a bright
+        // thing does rather than being pasted on at full strength afterwards.
+        //
+        // Squared night, so they come up through the last of the dusk instead of switching on
+        // at the terminator — and they are not shadowed by the rings, because a city under a
+        // ring's shadow is a city at night, which is when it is lit.
+        if (!gaseous && u.life >= 2u) {
+            float night = 1.0 - day;
+            float lit = moonletCityLights(surfaceNormal, elevation, u) * night * night;
+            if (lit > 0.0) {
+                // Sodium orange with the cooler light a further-along civilisation builds.
+                float3 warm = float3(1.0, 0.72, 0.36);
+                float3 cool = float3(0.78, 0.86, 1.0);
+                float3 glow = mix(warm, cool, (u.life == 3u) ? 0.35 : 0.12);
+                // Emission, and it has to be strong: the night side is nearly black and the
+                // tonemap below compresses everything, so a value that looks right before it
+                // disappears after.
+                planet += glow * lit * 7.0;
+            }
+        }
         planet += u.color0.rgb * specular * 0.4 * ringShade;
         planet += u.atmosphereColor.rgb * rim * u.atmosphereGlow * (0.3 + day * 0.7);
         planet = 1.0 - exp(-planet * u.exposure);

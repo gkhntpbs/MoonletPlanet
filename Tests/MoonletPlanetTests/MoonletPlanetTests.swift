@@ -288,3 +288,77 @@ import Foundation
     #expect(tilted.ringOpacity == 0)
     #expect(tilted.axialTilt == 1.1)
 }
+
+// MARK: - Life
+
+/// A planet is sterile until somebody says otherwise, including one saved before life existed.
+@Test func lifeIsOptOutOfNothing() throws {
+    #expect(MoonletPlanetRecipe.preset(.ocean).life == .none)
+    for archetype in MoonletPlanetArchetype.allCases {
+        #expect(MoonletPlanetRecipe.preset(archetype).life == .none, "\(archetype) came pre-inhabited")
+    }
+    // The same legacy recipe the ring and ice tests use: no `life` key at all.
+    let legacy = """
+    {
+      "archetype": 2, "seed": 7,
+      "palette": {
+        "highlight": {"red":1,"green":1,"blue":1,"opacity":1},
+        "primary": {"red":0.2,"green":0.3,"blue":0.6,"opacity":1},
+        "shadow": {"red":0.02,"green":0.04,"blue":0.1,"opacity":1},
+        "storm": {"red":0.1,"green":0.5,"blue":0.2,"opacity":1},
+        "atmosphere": {"red":0.5,"green":0.7,"blue":1,"opacity":1}
+      },
+      "rotationSpeed":0.1,"turbulence":0.5,"detail":0.8,"warpStrength":0.5,
+      "bandCount":6,"bandSharpness":0.4,"stormCount":0,"stormStrength":0,
+      "cloudCoverage":0.6,"cloudSpeed":1,"atmosphereDensity":0.7,"atmosphereGlow":1,
+      "roughness":0.4,"featureAmount":0.6,"lightAzimuth":2,"lightElevation":0.4,
+      "exposure":1.2
+    }
+    """
+    let recipe = try JSONDecoder().decode(MoonletPlanetRecipe.self, from: Data(legacy.utf8))
+    #expect(recipe.life == .none, "a world saved before life must not be found inhabited")
+    #expect(recipe.dayNightSpeed == 0, "and its day must not start moving")
+    #expect(recipe.palette.life.opacity == 1)
+}
+
+/// The levels are ordered, and each is the one before it plus something.
+@Test func lifeLevelsAreOrdered() {
+    #expect(MoonletPlanetLife.none < .simple)
+    #expect(MoonletPlanetLife.simple < .complex)
+    #expect(MoonletPlanetLife.complex < .advanced)
+
+    // Nothing is lit until there is somebody to light it, and nothing is in orbit until they
+    // can get there.
+    #expect(MoonletPlanetLife.none.isLit == false)
+    #expect(MoonletPlanetLife.simple.isLit == false, "simple life builds no cities")
+    #expect(MoonletPlanetLife.complex.isLit)
+    #expect(MoonletPlanetLife.advanced.isLit)
+
+    #expect(MoonletPlanetLife.complex.hasOrbitalStation == false)
+    #expect(MoonletPlanetLife.advanced.hasOrbitalStation)
+
+    for level in MoonletPlanetLife.allCases { #expect(!level.title.isEmpty) }
+}
+
+/// The raw values are what the shader dispatches on, so they are a wire format.
+@Test func lifeRawValuesAreStable() {
+    #expect(MoonletPlanetLife.none.rawValue == 0)
+    #expect(MoonletPlanetLife.simple.rawValue == 1)
+    #expect(MoonletPlanetLife.complex.rawValue == 2)
+    #expect(MoonletPlanetLife.advanced.rawValue == 3)
+}
+
+/// Life and the day cycle survive being written down, like everything else.
+@Test func lifeSurvivesACodableRoundTrip() throws {
+    for level in MoonletPlanetLife.allCases {
+        var recipe = MoonletPlanetRecipe.preset(.ocean)
+        recipe.life = level
+        recipe.dayNightSpeed = 0.37
+        recipe.palette.life = MoonletColor(red: 0.4, green: 0.1, blue: 0.5)
+        let decoded = try JSONDecoder().decode(
+            MoonletPlanetRecipe.self,
+            from: JSONEncoder().encode(recipe)
+        )
+        #expect(decoded == recipe, "\(level) did not survive the round trip")
+    }
+}

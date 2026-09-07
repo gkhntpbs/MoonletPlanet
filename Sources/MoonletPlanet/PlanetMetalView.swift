@@ -250,6 +250,7 @@ final class MoonletPlanetRenderer: NSObject, MTKViewDelegate {
         u.microDetail = Float(recipe.microDetail)
         u.rotationPhase = Float(recipe.rotationPhase)
         u.dayNightSpeed = Float(recipe.dayNightSpeed)
+        u.life = recipe.life.rawValue
         u.color0 = palette.highlight.simd
         u.color1 = palette.primary.simd
         u.color2 = palette.shadow.simd
@@ -257,6 +258,7 @@ final class MoonletPlanetRenderer: NSObject, MTKViewDelegate {
         u.atmosphereColor = palette.atmosphere.simd
         u.ringColor = palette.ring.simd
         u.iceColor = palette.ice.simd
+        u.lifeColor = palette.life.simd
         return u
     }
 }

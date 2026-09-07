@@ -71,6 +71,9 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
     /// into its own night, which is what makes city lights appear as land rotates away from
     /// the star rather than switching on where they already were.
     public var dayNightSpeed: Double
+    /// Whether anything lives here. Sterile by default, which is what every planet was before
+    /// this existed.
+    public var life: MoonletPlanetLife
 
     /// Whether this planet has rings at all.
     ///
@@ -118,7 +121,8 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
         polarAsymmetry: Double = 0,
         microDetail: Double = 1,
         rotationPhase: Double = 0,
-        dayNightSpeed: Double = 0
+        dayNightSpeed: Double = 0,
+        life: MoonletPlanetLife = .none
     ) {
         self.archetype = archetype
         self.seed = seed
@@ -151,6 +155,7 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
         self.microDetail = microDetail
         self.rotationPhase = rotationPhase
         self.dayNightSpeed = dayNightSpeed
+        self.life = life
     }
 
     // Stored data again: five fields that did not exist when somebody saved their planet,
@@ -189,6 +194,7 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
         microDetail = try c.decodeIfPresent(Double.self, forKey: .microDetail) ?? 1
         rotationPhase = try c.decodeIfPresent(Double.self, forKey: .rotationPhase) ?? 0
         dayNightSpeed = try c.decodeIfPresent(Double.self, forKey: .dayNightSpeed) ?? 0
+        life = try c.decodeIfPresent(MoonletPlanetLife.self, forKey: .life) ?? .none
     }
 
     public static func preset(_ archetype: MoonletPlanetArchetype, seed: UInt32 = 240513) -> Self {
