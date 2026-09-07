@@ -30,7 +30,9 @@ Changing how the shader draws a given recipe is a minor version and is noted und
   - `.advanced` lights the rest and puts a station in orbit: a great circle inclined to the
     planet's own equator at roughly the angle the ISS flies, hidden behind the planet and
     dark in eclipse. Its ascending node precesses, because real orbits do and because
-    without it a planet tilted like Earth's shows an orbit that never transits at all.
+    without it a planet tilted like Earth's shows an orbit that never transits at all. It is
+    a silhouette with a glint in it and a short trail behind, so over the disc it reads as a
+    transit and over space as something moving, not as a lens flare.
 
   Ice, life and lights all sit on ground, so a gas giant gets none of them.
 

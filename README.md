@@ -198,6 +198,14 @@ ellipse for ever: a planet tilted like Earth's shows a nearly face-on orbit that
 transits at all. With the node moving, the plane turns edge-on and back, so the station
 crosses the disc sometimes and rides the limb the rest of the time.
 
+It is drawn as three things, because a bright dot on its own reads as a lens flare. The body
+is a hub with a bar across it — solar arrays held along the orbit normal, the way the ISS
+truss is — and it is a silhouette: over the day side it is a dark speck with a glint in it,
+which is how a transit actually looks, and over space the glint is all there is. The glint is
+a hard core with four screen-aligned spikes rather than a halo, so it reads as a specular
+point. Behind it a short trail along the orbit is what makes a moving thing read as moving in
+a still frame; it is cut at the limb where the station just came out.
+
 ## A day that passes
 
 ![One world through its day](Documentation/day-cycle.png)
