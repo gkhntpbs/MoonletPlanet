@@ -445,6 +445,39 @@ float3 moonletLivingGround(float3 albedo, float3 n, float elevation, constant Mo
     return mix(albedo, mix(albedo, u.lifeColor.rgb, 0.75), spread * strength);
 }
 
+
+/// Something of theirs in orbit.
+///
+/// A great circle inclined to the planet's own equator, because that is what an orbit is —
+/// tie it to the screen instead and it stops agreeing with the world it is going round the
+/// moment the planet is tilted. The inclination is roughly the one the ISS flies, which is
+/// steep enough to be seen crossing rather than tracing the limb.
+///
+/// Returns the station's position in view space; the caller decides whether it is in front.
+float3 moonletStationPosition(float3 pole, constant MoonletPlanetUniforms &u) {
+    // A basis in the orbital plane. `pole.x` is zero by construction, so this is a safe
+    // perpendicular without a degenerate case to guard.
+    float3 alongEquator = float3(1.0, 0.0, 0.0);
+    float3 acrossEquator = cross(pole, alongEquator);
+
+    // The ascending node drifts. Real orbits precess — the ISS's by about five degrees a day
+    // — and here it is what stops the station tracing the same ellipse for ever: the plane
+    // turns edge-on to the viewer and back, so sometimes it crosses the disc and sometimes it
+    // rides the limb. Without it a planet tilted like Earth's shows an orbit that is nearly
+    // face-on and never transits at all.
+    float node = u.time * 0.08;
+    float3 first = alongEquator * cos(node) + acrossEquator * sin(node);
+    float3 second = acrossEquator * cos(node) - alongEquator * sin(node);
+
+    const float inclination = 0.9;              // ~51 degrees, as the ISS flies
+    float3 up = second * cos(inclination) + pole * sin(inclination);
+
+    // Low orbit: close enough to pass across the disc rather than skirt it.
+    const float radius = 1.085;
+    float angle = u.time * 0.55;
+    return (first * cos(angle) + up * sin(angle)) * radius;
+}
+
 /// The radial structure of a ring system, in planet radii, and it is Saturn's.
 ///
 /// The boundaries are measured, not invented: the C ring begins at 1.235 planet radii, the
@@ -720,6 +753,36 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
     if (ringInFront && ringAlpha > 0.0) {
         color = ringRGB * ringAlpha + color * (1.0 - ringAlpha);
         alpha = ringAlpha + alpha * (1.0 - ringAlpha);
+    }
+
+    // --- the station ---------------------------------------------------------------
+    //
+    // Last, because it is in front of everything it can be in front of: at 1.085 planet radii
+    // it orbits inside the rings' inner edge, so the only thing that can hide it is the
+    // planet.
+    if (u.life >= 3u) {
+        float3 station = moonletStationPosition(ringNormal, u);
+        float2 offset = q - station.xy;
+        float reach = max(0.10, fwidth(q.x) * 10.0);
+        if (dot(offset, offset) < reach * reach) {
+            float behind = dot(station.xy, station.xy) < 1.0 && station.z < sqrt(max(0.0, 1.0 - dot(station.xy, station.xy))) ? 0.0 : 1.0;
+            if (behind > 0.0) {
+                // In eclipse it goes out, the way a satellite does when it crosses into the
+                // planet's shadow.
+                float alongLight = dot(station, light);
+                float perpLight = length(station - alongLight * light);
+                float sunlit = (alongLight < 0.0) ? smoothstep(0.98, 1.2, perpLight) : 1.0;
+
+                float distance = length(offset);
+                // A hard little core and a soft halo. The core is held to at least a pixel so
+                // it does not flicker in and out as it moves across the sampling grid.
+                float core = 1.0 - smoothstep(0.0, max(0.014, fwidth(q.x) * 2.0), distance);
+                float halo = exp(-distance * distance / (reach * reach * 0.22));
+                float3 glow = float3(1.0, 0.95, 0.86) * (core * 2.2 + halo * 0.8) * sunlit;
+                color += glow;
+                alpha = max(alpha, clamp(core + halo * 0.5, 0.0, 1.0));
+            }
+        }
     }
 
     if (alpha <= 0.0) return half4(0);
