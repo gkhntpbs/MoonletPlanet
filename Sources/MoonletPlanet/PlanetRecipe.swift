@@ -74,6 +74,31 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
     /// Whether anything lives here. Sterile by default, which is what every planet was before
     /// this existed.
     public var life: MoonletPlanetLife
+    /// How many of theirs are in orbit, once `life` is `.advanced`; below that level the
+    /// count is kept but nothing is drawn. One by default. More than one share an orbit's
+    /// radius, speed and inclination but not its plane, so they do not read as beads.
+    public var stationCount: Int
+    /// The orbit, in planet radii. 1.085 is low enough to pass across the disc rather than
+    /// skirt it; anything past the rings' inner edge flies through them.
+    public var stationOrbitRadius: Double
+    /// Radians a second around the orbit. Its precession is tied to this, so a slow station
+    /// is slow in everything rather than fast in one thing.
+    public var stationSpeed: Double
+    /// The orbit's angle to the planet's equator, in radians. 0.9 is roughly the 51.6° the
+    /// ISS flies; 0 is an equatorial orbit that only ever transits on a planet seen edge-on.
+    public var stationInclination: Double
+    /// A multiplier on the station's drawn size. It never shrinks below a pixel.
+    public var stationSize: Double
+
+    /// How far from the disc's centre the shader draws, in planet radii — 1 for a bare
+    /// planet, wider for rings or anything in orbit. A view that sizes the body against a
+    /// square has to divide by this or the outermost thing drawn is cut off at the square's
+    /// edge. The shader computes the same number and the two must agree.
+    public var drawnExtent: Double {
+        let rings = hasRing ? max(1, ringOuterRadius * 1.04) : 1
+        let stations = life.hasOrbitalStation && stationCount > 0 ? stationOrbitRadius + 0.1 : 1
+        return max(rings, stations)
+    }
 
     /// Whether this planet has rings at all.
     ///
@@ -122,7 +147,12 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
         microDetail: Double = 1,
         rotationPhase: Double = 0,
         dayNightSpeed: Double = 0,
-        life: MoonletPlanetLife = .none
+        life: MoonletPlanetLife = .none,
+        stationCount: Int = 1,
+        stationOrbitRadius: Double = 1.085,
+        stationSpeed: Double = 0.55,
+        stationInclination: Double = 0.9,
+        stationSize: Double = 1
     ) {
         self.archetype = archetype
         self.seed = seed
@@ -156,6 +186,11 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
         self.rotationPhase = rotationPhase
         self.dayNightSpeed = dayNightSpeed
         self.life = life
+        self.stationCount = stationCount
+        self.stationOrbitRadius = stationOrbitRadius
+        self.stationSpeed = stationSpeed
+        self.stationInclination = stationInclination
+        self.stationSize = stationSize
     }
 
     // Stored data again: five fields that did not exist when somebody saved their planet,
@@ -195,6 +230,12 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
         rotationPhase = try c.decodeIfPresent(Double.self, forKey: .rotationPhase) ?? 0
         dayNightSpeed = try c.decodeIfPresent(Double.self, forKey: .dayNightSpeed) ?? 0
         life = try c.decodeIfPresent(MoonletPlanetLife.self, forKey: .life) ?? .none
+        // The one station a spacefaring world had before these were settings.
+        stationCount = try c.decodeIfPresent(Int.self, forKey: .stationCount) ?? 1
+        stationOrbitRadius = try c.decodeIfPresent(Double.self, forKey: .stationOrbitRadius) ?? 1.085
+        stationSpeed = try c.decodeIfPresent(Double.self, forKey: .stationSpeed) ?? 0.55
+        stationInclination = try c.decodeIfPresent(Double.self, forKey: .stationInclination) ?? 0.9
+        stationSize = try c.decodeIfPresent(Double.self, forKey: .stationSize) ?? 1
     }
 
     public static func preset(_ archetype: MoonletPlanetArchetype, seed: UInt32 = 240513) -> Self {

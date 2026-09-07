@@ -37,6 +37,11 @@ typedef struct {
     float rotationPhase;
     float dayNightSpeed;
     uint32_t life;
+    uint32_t stationCount;
+    float stationOrbitRadius;
+    float stationSpeed;
+    float stationInclination;
+    float stationSize;
     vector_float4 color0;
     vector_float4 color1;
     vector_float4 color2;

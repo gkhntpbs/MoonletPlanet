@@ -36,6 +36,11 @@ typedef struct {
     float rotationPhase;
     float dayNightSpeed;
     uint life;
+    uint stationCount;
+    float stationOrbitRadius;
+    float stationSpeed;
+    float stationInclination;
+    float stationSize;
     float4 color0;
     float4 color1;
     float4 color2;
@@ -454,7 +459,8 @@ float3 moonletLivingGround(float3 albedo, float3 n, float elevation, constant Mo
 /// steep enough to be seen crossing rather than tracing the limb.
 ///
 /// Returns the station's position in view space; the caller decides whether it is in front.
-float3 moonletStationPosition(float3 pole, float time) {
+/// `phase` and `node` set one station apart from the next on the same world.
+float3 moonletStationPosition(float3 pole, float time, float radius, float speed, float inclination, float phase, float nodeOffset) {
     // A basis in the orbital plane. `pole.x` is zero by construction, so this is a safe
     // perpendicular without a degenerate case to guard.
     float3 alongEquator = float3(1.0, 0.0, 0.0);
@@ -465,16 +471,15 @@ float3 moonletStationPosition(float3 pole, float time) {
     // turns edge-on to the viewer and back, so sometimes it crosses the disc and sometimes it
     // rides the limb. Without it a planet tilted like Earth's shows an orbit that is nearly
     // face-on and never transits at all.
-    float node = time * 0.08;
+    // Precession is tied to the orbital speed (0.08 for the 0.55 the first station flew at),
+    // so a slower station is slower in everything rather than fast in one thing.
+    float node = time * speed * 0.145 + nodeOffset;
     float3 first = alongEquator * cos(node) + acrossEquator * sin(node);
     float3 second = acrossEquator * cos(node) - alongEquator * sin(node);
 
-    const float inclination = 0.9;              // ~51 degrees, as the ISS flies
     float3 up = second * cos(inclination) + pole * sin(inclination);
 
-    // Low orbit: close enough to pass across the disc rather than skirt it.
-    const float radius = 1.085;
-    float angle = time * 0.55;
+    float angle = time * speed + phase;
     return (first * cos(angle) + up * sin(angle)) * radius;
 }
 
@@ -559,11 +564,16 @@ float moonletRingProfile(float r, float lod, constant MoonletPlanetUniforms &u, 
 
 fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], constant MoonletPlanetUniforms &u [[buffer(0)]]) {
     // A ringed planet is wider than its own disc, so the canvas is measured in planet radii
-    // and zooms out to hold the rings. Without rings the framing is exactly what it was.
+    // and zooms out to hold the rings. A station orbits outside the disc too, and a canvas
+    // that stops at the limb cuts it off at the edge of the square; the margin past its
+    // orbit is the trail and the glint's spikes. Without either the framing is exactly what
+    // it was. `MoonletPlanetRecipe.drawnExtent` is this same sum, and the two must agree.
     float ringScale = (u.ringOpacity > 0.001) ? max(1.0, u.ringOuterRadius * 1.04) : 1.0;
+    bool hasStations = u.life >= 3u && u.stationCount > 0u;
+    float stationScale = hasStations ? u.stationOrbitRadius + 0.1 : 1.0;
     float2 p = input.uv * 2.0 - 1.0;
     p.x *= u.viewportSize.x / max(u.viewportSize.y, 1.0);
-    p *= ringScale;
+    p *= max(ringScale, stationScale);
 
     // The lighting works in a space where screen-up is -y, so everything geometric works
     // there too. Mixing the two is how the terminator and the ring shadow end up disagreeing
@@ -768,27 +778,37 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
         alpha = ringAlpha + alpha * (1.0 - ringAlpha);
     }
 
-    // --- the station ---------------------------------------------------------------
+    // --- the stations --------------------------------------------------------------
     //
-    // Last, because it is in front of everything it can be in front of: at 1.085 planet radii
-    // it orbits inside the rings' inner edge, so the only thing that can hide it is the
-    // planet.
+    // Last, because they are in front of everything they can be in front of: the default
+    // orbit at 1.085 planet radii is inside the rings' inner edge, so the only thing that can
+    // hide one is the planet.
     //
-    // It is three things, and each is there because a bright dot on its own reads as a lens
+    // Each is three things, and each is there because a bright dot on its own reads as a lens
     // flare. A trail along the orbit behind it is what makes a moving thing read as moving in
     // a still frame. The body is a hub with a bar across it — solar arrays, held along the
     // orbit normal the way the ISS truss is — and it is a silhouette: over the day side the
     // station is a dark speck with a glint in it, which is how a transit actually looks,
     // and over space the glint is all there is. The glint is a cross rather than a halo so
     // it reads as a hard specular point rather than a soft light.
-    if (u.life >= 3u) {
+    //
+    // More than one shares the orbit's radius, speed and inclination but not its plane or
+    // its phase: spaced evenly around one circle they would read as beads on a string.
+    if (hasStations) {
         float px = fwidth(q.x);
-        float3 station = moonletStationPosition(ringNormal, u.time);
-        float2 offset = q - station.xy;
-        // Everything the station draws fits in this, trail included.
+        float radius = u.stationOrbitRadius;
+        float speed = u.stationSpeed;
+        float size = u.stationSize;
+        // Everything one station draws fits in this, trail included.
         const float trailSpan = 0.26;           // radians of orbit, ~0.28 planet radii of arc
-        float reach = trailSpan * 1.085 + max(0.06, px * 12.0);
-        if (dot(offset, offset) < reach * reach) {
+        float reach = trailSpan * radius + max(0.06, px * 12.0) * size;
+        for (uint k = 0u; k < u.stationCount; k++) {
+            float phase = float(k) * 2.399;     // the golden angle, so no two line up
+            float nodeOffset = float(k) * 1.7;
+            float3 station = moonletStationPosition(ringNormal, u.time, radius, speed, u.stationInclination, phase, nodeOffset);
+            float2 offset = q - station.xy;
+            if (dot(offset, offset) >= reach * reach) continue;
+
             // In eclipse it goes out, the way a satellite does when it crosses into the
             // planet's shadow.
             float alongLight = dot(station, light);
@@ -802,12 +822,12 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
             // station and gone by the tail. Each chord is hidden where the orbit is, so the
             // trail is cut at the limb where the station just came out.
             const int samples = 8;
-            float step = trailSpan / 0.55 / float(samples);
-            float trailWidth = max(0.004, px * 1.1);
+            float step = trailSpan / max(speed, 0.05) / float(samples);
+            float trailWidth = max(0.004, px * 1.1) * size;
             float trail = 0.0;
             float3 previous = station;
             for (int i = 1; i <= samples; i++) {
-                float3 past = moonletStationPosition(ringNormal, u.time - float(i) * step);
+                float3 past = moonletStationPosition(ringNormal, u.time - float(i) * step, radius, speed, u.stationInclination, phase, nodeOffset);
                 float along = 0.0;
                 float d = moonletSegmentDistance(q, previous.xy, past.xy, along);
                 float3 at = mix(previous, past, along);
@@ -832,9 +852,11 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
                 float u1 = dot(offset, axis);
                 float v1 = dot(offset, float2(-axis.y, axis.x));
 
-                float hubRadius = max(0.010, px * 1.4);
-                float barHalf = max(0.036 * extent, px * 2.0);
-                float barThick = max(0.0045, px * 0.7);
+                // Sizes scale with the station but never below a pixel, or it flickers in
+                // and out as it crosses the sampling grid.
+                float hubRadius = max(0.010 * size, px * 1.4);
+                float barHalf = max(0.036 * extent * size, px * 2.0);
+                float barThick = max(0.0045 * size, px * 0.7);
                 float edge = px * 0.9;
                 float hub = 1.0 - smoothstep(hubRadius - edge, hubRadius + edge, length(offset));
                 float bar = (1.0 - smoothstep(barHalf - edge, barHalf + edge, abs(u1)))
@@ -848,10 +870,10 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
                 // The glint: a hard core with four short spikes, screen-aligned as a camera
                 // would draw them, and no wider than a few pixels at any size.
                 float spread = length(offset);
-                float coreRadius = max(0.006, px * 1.2);
+                float coreRadius = max(0.006 * size, px * 1.2);
                 float core = exp(-spread * spread / (coreRadius * coreRadius));
-                float spikeLength = max(0.03, px * 7.0);
-                float spikeThin = max(0.002, px * 0.55);
+                float spikeLength = max(0.03 * size, px * 7.0);
+                float spikeThin = max(0.002 * size, px * 0.55);
                 float spikes = exp(-abs(offset.x) / spikeLength) * exp(-offset.y * offset.y / (spikeThin * spikeThin))
                              + exp(-abs(offset.y) / spikeLength) * exp(-offset.x * offset.x / (spikeThin * spikeThin));
                 // A specular point is only there while the star is on it.

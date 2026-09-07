@@ -90,6 +90,15 @@ test('life is refused when it is not one of the four levels', () => {
   assert.throws(() => validateRecipe({ ...base, life: 1.5 as never }), RangeError)
 })
 
+test('a station count outside the shader\'s loop is refused', () => {
+  const base = solarSystem.earth as PlanetRecipe
+  assert.doesNotThrow(() => validateRecipe({ ...base, stationCount: 0 }))
+  assert.doesNotThrow(() => validateRecipe({ ...base, stationCount: 4 }))
+  assert.throws(() => validateRecipe({ ...base, stationCount: -1 }), RangeError)
+  assert.throws(() => validateRecipe({ ...base, stationCount: 1.5 }), RangeError)
+  assert.throws(() => validateRecipe({ ...base, stationCount: 99 }), RangeError)
+})
+
 test('a recipe with no life field is sterile and its day stands still', () => {
   for (const [name, recipe] of Object.entries(solarSystem)) {
     assert.equal(recipe.life ?? 0, 0, `${name} came pre-inhabited`)

@@ -319,6 +319,34 @@ import Foundation
     #expect(recipe.life == .none, "a world saved before life must not be found inhabited")
     #expect(recipe.dayNightSpeed == 0, "and its day must not start moving")
     #expect(recipe.palette.life.opacity == 1)
+    // The one station a spacefaring world flew before it was a setting.
+    #expect(recipe.stationCount == 1)
+    #expect(recipe.stationOrbitRadius == 1.085)
+    #expect(recipe.stationSpeed == 0.55)
+    #expect(recipe.stationInclination == 0.9)
+    #expect(recipe.stationSize == 1)
+}
+
+/// The shader zooms out to hold whatever is drawn outside the disc, and a view that sizes
+/// the body against a square has to know by how much — or the outermost thing is cut off.
+@Test func drawnExtentCoversRingsAndStations() {
+    var recipe = MoonletPlanetRecipe.preset(.ocean)
+    #expect(recipe.drawnExtent == 1, "a bare planet fills its own disc")
+
+    recipe.life = .advanced
+    #expect(recipe.drawnExtent > recipe.stationOrbitRadius, "the station's orbit must fit, trail and glint included")
+    recipe.stationCount = 0
+    #expect(recipe.drawnExtent == 1, "no stations, nothing outside the disc")
+
+    recipe.stationCount = 2
+    recipe.life = .complex
+    #expect(recipe.drawnExtent == 1, "stations are only drawn for a spacefaring world")
+
+    recipe.hasRing = true
+    #expect(recipe.drawnExtent == max(1, recipe.ringOuterRadius * 1.04))
+    recipe.life = .advanced
+    recipe.stationOrbitRadius = 3
+    #expect(recipe.drawnExtent == 3.1, "whichever reaches further wins")
 }
 
 /// The levels are ordered, and each is the one before it plus something.
@@ -354,6 +382,11 @@ import Foundation
         var recipe = MoonletPlanetRecipe.preset(.ocean)
         recipe.life = level
         recipe.dayNightSpeed = 0.37
+        recipe.stationCount = 3
+        recipe.stationOrbitRadius = 1.3
+        recipe.stationSpeed = 0.2
+        recipe.stationInclination = 0.4
+        recipe.stationSize = 1.6
         recipe.palette.life = MoonletColor(red: 0.4, green: 0.1, blue: 0.5)
         let decoded = try JSONDecoder().decode(
             MoonletPlanetRecipe.self,

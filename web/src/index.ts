@@ -60,6 +60,16 @@ export type PlanetRecipe = {
    * lights on the night side, 3 one that has put something in orbit.
    */
   life?: 0 | 1 | 2 | 3
+  /** How many are in orbit once `life` is 3. One by default; below that level nothing is drawn. */
+  stationCount?: number
+  /** The orbit in planet radii. 1.085 is low enough to cross the disc rather than skirt it. */
+  stationOrbitRadius?: number
+  /** Radians a second around the orbit; precession follows it. */
+  stationSpeed?: number
+  /** The orbit's angle to the equator in radians. 0.9 is roughly what the ISS flies. */
+  stationInclination?: number
+  /** A multiplier on the drawn size. It never shrinks below a pixel. */
+  stationSize?: number
 }
 
 /** The ring fields postdate the first recipes, so a recipe without them is ringless. */
@@ -67,13 +77,14 @@ const optionalDefaults = {
   ringOpacity: 0, axialTilt: 0, ringInnerRadius: 1.235, ringOuterRadius: 2.27, ringDetail: 0.8,
   iceCoverage: 0, iceAltitude: 0.22, polarAsymmetry: 0, microDetail: 1, rotationPhase: 0,
   dayNightSpeed: 0,
+  stationOrbitRadius: 1.085, stationSpeed: 0.55, stationInclination: 0.9, stationSize: 1,
 } as const
 const defaultRingColor: PlanetColor = { red: 0.94, green: 0.9, blue: 0.83, opacity: 1 }
 const defaultIceColor: PlanetColor = { red: 0.93, green: 0.95, blue: 0.97, opacity: 1 }
 const defaultLifeColor: PlanetColor = { red: 0.28, green: 0.46, blue: 0.2, opacity: 1 }
 
 const scalarKeys = ['rotationSpeed', 'turbulence', 'detail', 'warpStrength', 'bandCount', 'bandSharpness', 'stormCount', 'stormStrength', 'cloudCoverage', 'cloudSpeed', 'atmosphereDensity', 'atmosphereGlow', 'roughness', 'featureAmount', 'lightAzimuth', 'lightElevation', 'exposure'] as const
-const optionalKeys = ['ringOpacity', 'axialTilt', 'ringInnerRadius', 'ringOuterRadius', 'ringDetail', 'iceCoverage', 'iceAltitude', 'polarAsymmetry', 'microDetail', 'rotationPhase', 'dayNightSpeed'] as const
+const optionalKeys = ['ringOpacity', 'axialTilt', 'ringInnerRadius', 'ringOuterRadius', 'ringDetail', 'iceCoverage', 'iceAltitude', 'polarAsymmetry', 'microDetail', 'rotationPhase', 'dayNightSpeed', 'stationOrbitRadius', 'stationSpeed', 'stationInclination', 'stationSize'] as const
 const colors = { highlight: 'color0', primary: 'color1', shadow: 'color2', storm: 'color3', atmosphere: 'atmosphereColor' } as const
 
 export function validateRecipe(recipe: PlanetRecipe) {
@@ -83,6 +94,8 @@ export function validateRecipe(recipe: PlanetRecipe) {
   // rather than failing — which is the kind of wrong that is hard to notice.
   const life = recipe.life ?? 0
   if (!Number.isInteger(life) || life < 0 || life > 3) throw new RangeError('Invalid planet life')
+  const stations = recipe.stationCount ?? 1
+  if (!Number.isInteger(stations) || stations < 0 || stations > 8) throw new RangeError('Invalid planet stationCount')
   for (const key of scalarKeys) if (!Number.isFinite(recipe[key])) throw new RangeError(`Invalid planet ${key}`)
   for (const key of optionalKeys) {
     const value = recipe[key]
@@ -151,6 +164,7 @@ export function createPlanetRenderer(canvas: HTMLCanvasElement) {
       gl.uniform1ui(location('seed'), recipe.seed)
       gl.uniform1ui(location('archetype'), recipe.archetype)
       gl.uniform1ui(location('life'), recipe.life ?? 0)
+      gl.uniform1ui(location('stationCount'), recipe.stationCount ?? 1)
       for (const key of scalarKeys) gl.uniform1f(location(key), recipe[key])
       for (const key of optionalKeys) gl.uniform1f(location(key), recipe[key] ?? optionalDefaults[key])
       for (const key of Object.keys(colors) as (keyof typeof colors)[]) {

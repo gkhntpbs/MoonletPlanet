@@ -251,6 +251,11 @@ final class MoonletPlanetRenderer: NSObject, MTKViewDelegate {
         u.rotationPhase = Float(recipe.rotationPhase)
         u.dayNightSpeed = Float(recipe.dayNightSpeed)
         u.life = recipe.life.rawValue
+        u.stationCount = UInt32(clamping: max(0, recipe.stationCount))
+        u.stationOrbitRadius = Float(recipe.stationOrbitRadius)
+        u.stationSpeed = Float(recipe.stationSpeed)
+        u.stationInclination = Float(recipe.stationInclination)
+        u.stationSize = Float(recipe.stationSize)
         u.color0 = palette.highlight.simd
         u.color1 = palette.primary.simd
         u.color2 = palette.shadow.simd
