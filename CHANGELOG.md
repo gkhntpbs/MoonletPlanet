@@ -34,10 +34,11 @@ Changing how the shader draws a given recipe is a minor version and is noted und
     a silhouette with a glint in it and a short trail behind, so over the disc it reads as a
     transit and over space as something moving, not as a lens flare.
 
-  - `.interplanetary` keeps all of that and adds traffic: now and then a shuttle lifts off
-    the limb in a gravity turn and climbs into orbit, or comes back down the same arc,
-    glowing. Seen in profile, because a launch from the middle of the disc climbs towards an
-    orthographic camera and does not move. Most cycles are quiet on purpose.
+  - `.interplanetary` keeps all of that and adds traffic: now and then a ship — a hull with
+    a flame behind it on the way up, a bow shock in front on the way down — lifts off the
+    limb in a gravity turn and climbs into orbit, or comes back down the same arc. Seen in
+    profile, because a launch from the middle of the disc climbs towards an orthographic
+    camera and does not move. Most cycles are quiet on purpose, and a gas giant has none.
 
   Ice, life and lights all sit on ground, so a gas giant gets none of them.
 - **The stations are settings.** `stationCount`, `stationOrbitRadius`, `stationSpeed`,

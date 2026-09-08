@@ -181,14 +181,18 @@ all of them, so this level reaches less far than the next.
 
 **`.advanced`** lights the rest of it and puts something in orbit.
 
-**`.interplanetary`** comes and goes. Now and then something lifts off the ground or comes
-back down to it: a bright point with a plume, up off the edge of the world in a gravity turn
-and over into orbit, or the same arc flown backwards and glowing hardest where the air is
-thick. Launches are seen from the limb, in profile, because the camera looks straight at the
-disc and a rocket climbing out of the middle of it climbs towards the lens and does not move
-on screen at all. Most cycles are quiet — a launch every few seconds is an airport, and what
-is wanted is the occasional one that makes somebody look twice. Which pad, which way and
-whether it is going up or coming down are the seed's, like the coastlines.
+**`.interplanetary`** comes and goes. Now and then a ship lifts off the ground or comes back
+down to it. It is a hull — a grey capsule with a lit rim and a window, pointed the way it is
+going, a few pixels long at any size so it is a shape and not a speck — and on the way up a
+cone of flame behind it that flickers, with the pad lit under it and a smoke column along
+the arc it has flown; on the way down the glow is in front, a bow shock, brightest where the
+air is thick. A launch is a gravity turn, up off the edge of the world and over into orbit;
+a descent is the same arc backwards. Launches are seen from the limb, in profile, because
+the camera looks straight at the disc and a rocket climbing out of the middle of it climbs
+towards the lens and does not move on screen at all. Most cycles are quiet — a launch every
+few seconds is an airport, and what is wanted is the occasional one that makes somebody look
+twice. Which pad, which way and whether it is going up or coming down are the seed's, like
+the coastlines. Ships need ground to leave, so a gas giant has none.
 
 The lights are emission added before the tonemap, so they bloom the way a bright thing does,
 and they come up through the last of the dusk rather than switching on at the terminator.
