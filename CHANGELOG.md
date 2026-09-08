@@ -20,7 +20,7 @@ Changing how the shader draws a given recipe is a minor version and is noted und
   through its phases. Zero holds the light still and is the default. It is a different thing
   from `rotationSpeed`, which turns the ground under a light that stays put; a world with
   both has ground that travels into its own night.
-- **`MoonletPlanetLife`** — four ordered levels, sterile by default, plus `palette.life`.
+- **`MoonletPlanetLife`** — five ordered levels, sterile by default, plus `palette.life`.
   - `.simple` builds nothing and lights nothing: land goes faintly green where it is low and
     wet. It shows in daylight, and it is the difference between Mars and a Mars with lichen.
   - `.complex` puts cities on the night side. Never on water, thinning inland because
@@ -34,12 +34,18 @@ Changing how the shader draws a given recipe is a minor version and is noted und
     a silhouette with a glint in it and a short trail behind, so over the disc it reads as a
     transit and over space as something moving, not as a lens flare.
 
+  - `.interplanetary` keeps all of that and adds traffic: now and then a shuttle lifts off
+    the limb in a gravity turn and climbs into orbit, or comes back down the same arc,
+    glowing. Seen in profile, because a launch from the middle of the disc climbs towards an
+    orthographic camera and does not move. Most cycles are quiet on purpose.
+
   Ice, life and lights all sit on ground, so a gas giant gets none of them.
 - **The stations are settings.** `stationCount`, `stationOrbitRadius`, `stationSpeed`,
   `stationInclination` and `stationSize`, defaulting to the one station a spacefaring world
   already flew. More than one share the orbit's radius, speed and inclination but not its
   plane or phase, so they do not read as beads on a string. Both workbenches have the sliders.
-- **`drawnExtent`** — how far from the disc's centre the shader draws, in planet radii. A
+- **`drawnExtent`** — how far from the disc's centre the shader draws, in planet radii —
+  rings, a station's orbit, or traffic climbing past the limb. A
   view that sizes the body against a square divides by it; it is the number the shader uses
   for its own framing, so the two cannot disagree.
 

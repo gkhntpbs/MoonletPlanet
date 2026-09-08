@@ -158,15 +158,15 @@ with it — Uranus is on its side and looks it.
 
 ## Life, if there is any
 
-![Sterile, simple life, a civilisation, and one that has left the ground](Documentation/life.png)
+![Sterile, simple life, a civilisation, one that has left the ground, and one that comes and goes](Documentation/life.png)
 
 ```swift
 var earth = MoonletPlanetPreset.earth.style!.recipe
-earth.life = .complex          // .none .simple .complex .advanced
+earth.life = .complex          // .none .simple .complex .advanced .interplanetary
 earth.dayNightSpeed = 0.25     // so there is a night for it to show on
 ```
 
-Four ordered levels, sterile by default, each the one before it plus something.
+Five ordered levels, sterile by default, each the one before it plus something.
 
 **`.simple`** is the one worth getting right. Nothing built and nothing lit — just land gone
 faintly green where it is low and wet, because that is where water collects. It is the
@@ -180,6 +180,15 @@ the towns between. A civilisation that has just learned to light its streets doe
 all of them, so this level reaches less far than the next.
 
 **`.advanced`** lights the rest of it and puts something in orbit.
+
+**`.interplanetary`** comes and goes. Now and then something lifts off the ground or comes
+back down to it: a bright point with a plume, up off the edge of the world in a gravity turn
+and over into orbit, or the same arc flown backwards and glowing hardest where the air is
+thick. Launches are seen from the limb, in profile, because the camera looks straight at the
+disc and a rocket climbing out of the middle of it climbs towards the lens and does not move
+on screen at all. Most cycles are quiet — a launch every few seconds is an airport, and what
+is wanted is the occasional one that makes somebody look twice. Which pad, which way and
+whether it is going up or coming down are the seed's, like the coastlines.
 
 The lights are emission added before the tonemap, so they bloom the way a bright thing does,
 and they come up through the last of the dusk rather than switching on at the terminator.
