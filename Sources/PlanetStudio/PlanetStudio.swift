@@ -144,11 +144,15 @@ struct StudioView: View {
                 }
 
                 section("Life") {
-                    Picker("Life", selection: $recipe.life) {
-                        ForEach(MoonletPlanetLife.allCases) { Text($0.title).tag($0) }
+                    // A menu rather than segments: five titles do not fit the panel, and a
+                    // segment that reads "Interplane" is worse than a click.
+                    HStack(spacing: 8) {
+                        Text("Level").font(.caption).frame(width: 86, alignment: .leading)
+                        Picker("Life", selection: $recipe.life) {
+                            ForEach(MoonletPlanetLife.allCases) { Text($0.title).tag($0) }
+                        }
+                        .labelsHidden()
                     }
-                    .pickerStyle(.segmented)
-                    .labelsHidden()
                     if recipe.life != .none {
                         ColorPicker("Growth", selection: colorBinding(\.life))
                     }
@@ -161,8 +165,12 @@ struct StudioView: View {
 
                 if recipe.life.hasOrbitalStation {
                     section("In orbit") {
-                        Stepper("Stations: \(recipe.stationCount)", value: $recipe.stationCount, in: 0...4)
-                            .font(.caption)
+                        HStack(spacing: 8) {
+                            Text("Stations").font(.caption).frame(width: 86, alignment: .leading)
+                            Stepper(value: $recipe.stationCount, in: 0...4) {
+                                Text("\(recipe.stationCount)").font(.caption2.monospaced())
+                            }
+                        }
                         // Below 1.03 the trail dips into the limb; past the rings' inner edge
                         // it flies through them.
                         slider("Orbit", $recipe.stationOrbitRadius, 1.03...1.8)
