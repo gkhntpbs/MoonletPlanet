@@ -338,7 +338,10 @@ import Foundation
     recipe.stationCount = 0
     #expect(recipe.drawnExtent == 1, "no stations, nothing outside the disc")
     recipe.life = .interplanetary
-    #expect(recipe.drawnExtent == 1.2, "traffic climbs past the limb even with no station")
+    #expect(recipe.drawnExtent == 1.3, "traffic climbs past the limb even with no station")
+    recipe.archetype = .gasGiant
+    #expect(recipe.drawnExtent == 1, "nothing leaves a world with no ground")
+    recipe.archetype = .ocean
     recipe.life = .advanced
 
     recipe.stationCount = 2

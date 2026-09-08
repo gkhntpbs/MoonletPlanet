@@ -508,35 +508,102 @@ float moonletSegmentDistance(float2 p, float2 a, float2 b, thread float &along) 
 /// at once looked like three stationary lights. Seen in profile, the same arc is the whole
 /// picture: up off the edge of the world and over into orbit.
 float3 moonletShuttlePosition(float3 pad, float3 downrange, float t) {
-    float altitude = 0.13 * pow(t, 1.5);
-    float drift = 0.55 * t * t;
+    float altitude = 0.2 * pow(t, 1.5);
+    float drift = 0.7 * t * t;
     return normalize(pad + downrange * drift) * (1.0 + altitude);
 }
 
-/// One shuttle's contribution at `q`: its glow in rgb, its coverage in alpha.
+/// One shuttle's contribution at `q`: its light in rgb, its coverage in alpha.
 ///
-/// It is a bright point and a plume behind it, sampled as short chords of the arc it has
-/// just flown. Launch plumes burn orange and go out with the engine; a descent is plasma —
-/// whiter, and brightest low down where the air is thick. Neither needs the star: they are
-/// their own light, and on the night side they are the only thing moving.
-float4 moonletShuttle(float2 q, float px, float3 pad, float3 downrange, float t, bool descending) {
+/// It is a ship, and it has to read as one — the first version was a point with a tail,
+/// and a point with a tail is a meteor. So there is a hull: a capsule the length of a few
+/// pixels at any size, pointed the way it is going, grey with a lit rim so it stands against
+/// space as well as against the disc. On a launch the engine is behind it, a cone of flame
+/// with a white core and orange edges that flickers, and a smoke column behind that along
+/// the arc it has flown. On a descent the glow is in front — the bow shock — and the trail
+/// behind is ionised air, whiter. Neither needs the star; they are their own light, and on
+/// the night side they are the only thing moving.
+float4 moonletShuttle(float2 q, float px, float3 pad, float3 downrange, float t, bool descending, float time) {
     float flight = descending ? 1.0 - t : t;
     float3 craft = moonletShuttlePosition(pad, downrange, flight);
     float2 offset = q - craft.xy;
-    if (dot(offset, offset) > 0.09) return float4(0.0);
+    if (dot(offset, offset) > 0.3) return float4(0.0);
+
+    // The ship's own frame: `a` along its heading, `b` across it.
+    float3 ahead = moonletShuttlePosition(pad, downrange, clamp(flight + (descending ? -0.03 : 0.03), 0.0, 1.0));
+    float2 heading = ahead.xy - craft.xy;
+    heading = length(heading) > 1e-5 ? normalize(heading) : float2(0.0, 1.0);
+    float2 across = float2(-heading.y, heading.x);
+    float a = dot(offset, heading);
+    float b = dot(offset, across);
 
     // Up out of nothing, and gone before the arc ends — a light that snaps on is a bug.
-    float envelope = smoothstep(0.0, 0.06, t) * (1.0 - smoothstep(0.82, 1.0, t));
+    float envelope = smoothstep(0.0, 0.05, t) * (1.0 - smoothstep(0.85, 1.0, t));
     // A launch burns hardest off the pad; a descent glows hardest where the air is.
-    float heat = descending ? (1.0 - flight) * 0.7 + 0.3 : 1.0 - flight * 0.45;
-    float3 plumeColor = descending ? float3(1.0, 0.78, 0.6) : float3(1.0, 0.62, 0.3);
+    float heat = descending ? (1.0 - flight) * 0.75 + 0.25 : 1.0 - flight * 0.35;
+    float flicker = 0.85 + 0.15 * sin(time * 47.0 + a * 90.0) * sin(time * 31.0);
 
-    float plume = 0.0;
+    float edge = px * 0.9;
+    float3 light = float3(0.0);
+    float coverage = 0.0;
+
+    // The hull. Held to a few pixels so it is a shape and not a speck.
+    float halfLength = max(0.048, px * 5.0);
+    float halfWidth = max(0.014, px * 1.6);
+    float2 local = float2(max(abs(a) - (halfLength - halfWidth), 0.0), b);
+    float hullDistance = length(local) - halfWidth;
+    float hull = 1.0 - smoothstep(-edge, edge, hullDistance);
+    // A nose that comes to a point: narrow the capsule past its midpoint.
+    float nose = smoothstep(0.0, halfLength, a);
+    hull *= 1.0 - smoothstep(halfWidth * (1.0 - nose * 0.75) - edge, halfWidth * (1.0 - nose * 0.75) + edge, abs(b));
+    // Grey, lit along one side so it has a shape, and warmed at the tail by its own flame.
+    float rim = smoothstep(-halfWidth, halfWidth, b);
+    float3 hullColor = mix(float3(0.22, 0.24, 0.28), float3(0.78, 0.82, 0.9), rim * 0.55 + 0.1);
+    float tailWarmth = descending ? 0.0 : exp(-max(a + halfLength, 0.0) / (halfLength * 0.6)) * 0.6;
+    hullColor = mix(hullColor, float3(1.0, 0.7, 0.4), tailWarmth * heat);
+    // A window, so it is a vessel and not a bullet.
+    float window = 1.0 - smoothstep(halfWidth * 0.35, halfWidth * 0.35 + edge, length(float2(a - halfLength * 0.35, b)));
+    hullColor = mix(hullColor, float3(0.7, 0.9, 1.0), window * 0.9);
+
+    // The flame, on a launch: a cone behind the tail, white at the core, orange at the
+    // edges, its length breathing with the flicker.
+    float3 flameColor = float3(0.0);
+    float flame = 0.0;
+    if (!descending) {
+        float behind = -(a + halfLength);
+        float flameLength = max(0.2, px * 18.0) * flicker;
+        if (behind > 0.0 && behind < flameLength) {
+            float along = behind / flameLength;
+            float width = halfWidth * (0.7 + along * 2.8);
+            float profile = 1.0 - smoothstep(width * 0.5, width, abs(b));
+            float body = (1.0 - along) * (1.0 - along);
+            float core = (1.0 - smoothstep(0.0, width * 0.35, abs(b))) * (1.0 - smoothstep(0.0, 0.5, along));
+            flame = profile * body;
+            flameColor = mix(float3(1.0, 0.45, 0.15), float3(1.0, 0.85, 0.6), core) * flame * 2.6 + float3(1.0, 0.95, 0.85) * core * 1.8;
+        }
+    }
+
+    // The bow shock, on a descent: a cap of plasma pressed against the nose, wider than
+    // the ship, brightest where it hits.
+    float3 shockColor = float3(0.0);
+    float shock = 0.0;
+    if (descending) {
+        float front = a - halfLength * 0.6;
+        float reach = max(0.08, px * 8.0);
+        if (front > -halfLength && front < reach) {
+            float cap = exp(-max(front, 0.0) / (reach * 0.35)) * (1.0 - smoothstep(halfWidth * 1.2, halfWidth * 3.5, abs(b)));
+            shock = cap * heat;
+            shockColor = mix(float3(1.0, 0.5, 0.25), float3(1.0, 0.9, 0.8), cap) * shock * 2.4;
+        }
+    }
+
+    // The trail: the last stretch of the arc, sampled as chords — smoke on the way up,
+    // ionised air on the way down. Each chord is hidden where the arc is, so it is cut at
+    // the limb.
+    float trail = 0.0;
     float3 previous = craft;
-    const int samples = 6;
-    // The plume is the last stretch of the flight: short at launch, where the thing is
-    // barely moving, and long once it is.
-    float span = 0.07 + 0.13 * flight;
+    const int samples = 7;
+    float span = 0.08 + 0.16 * flight;
     for (int i = 1; i <= samples; i++) {
         float back = flight + (descending ? 1.0 : -1.0) * span * float(i) / float(samples);
         float3 past = moonletShuttlePosition(pad, downrange, clamp(back, 0.0, 1.0));
@@ -546,25 +613,25 @@ float4 moonletShuttle(float2 q, float px, float3 pad, float3 downrange, float t,
         if (moonletStationVisible(at)) {
             float age = (float(i - 1) + along) / float(samples);
             float fade = (1.0 - age) * (1.0 - age);
-            float width = max(0.014, px * 1.5) * (0.4 + fade);
-            plume = max(plume, (1.0 - smoothstep(0.0, width, d)) * fade);
+            float width = max(0.03, px * 2.5) * (0.5 + age * 1.8);
+            trail = max(trail, (1.0 - smoothstep(width * 0.3, width, d)) * fade);
         }
         previous = past;
     }
+    float3 trailColor = descending ? float3(0.85, 0.9, 1.0) * trail * 1.1 : float3(1.0, 0.6, 0.35) * trail * 0.9;
 
-    float coreRadius = max(0.012, px * 1.5);
-    float spread = length(offset);
-    float core = exp(-spread * spread / (coreRadius * coreRadius));
-    float halo = exp(-spread / max(0.035, px * 4.0)) * 0.45;
     // Ignition: the pad lights up under a launch and dies away as it climbs.
     float padGlow = 0.0;
     if (!descending) {
         float padDistance = length(q - pad.xy);
-        padGlow = exp(-padDistance * padDistance / 0.0009) * (1.0 - smoothstep(0.0, 0.3, flight)) * 0.8;
+        padGlow = exp(-padDistance * padDistance / 0.006) * (1.0 - smoothstep(0.0, 0.35, flight)) * flicker;
     }
-    float3 glow = (float3(1.0, 0.95, 0.88) * core * 2.4 + plumeColor * (plume * 2.2 + halo + padGlow)) * heat * envelope;
-    float coverage = clamp(core * 1.6 + plume * 0.8 + halo + padGlow, 0.0, 1.0) * envelope;
-    return float4(glow, coverage);
+
+    // Layered nearest first: the hull covers whatever glows behind it.
+    float3 glow = (flameColor + shockColor + trailColor + float3(1.0, 0.7, 0.4) * padGlow * 1.2) * heat;
+    float3 result = mix(glow, hullColor, hull);
+    float alphaSum = max(hull, clamp(flame * 1.4 + shock * 1.3 + trail * 0.9 + padGlow, 0.0, 1.0));
+    return float4(result * envelope, alphaSum * envelope);
 }
 
 /// The radial structure of a ring system, in planet radii, and it is Saturn's.
@@ -642,9 +709,11 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
     float ringScale = (u.ringOpacity > 0.001) ? max(1.0, u.ringOuterRadius * 1.04) : 1.0;
     bool hasStations = u.life >= 3u && u.stationCount > 0u;
     float stationScale = hasStations ? u.stationOrbitRadius + 0.1 : 1.0;
-    // Traffic climbs to 0.12 radii above the ground; the rest is its plume.
-    bool hasTraffic = u.life >= 4u;
-    float trafficScale = hasTraffic ? 1.2 : 1.0;
+    // Traffic climbs to 0.2 radii above the ground and its flame reaches further; and it
+    // needs ground to leave, so a gas giant has none.
+    bool gaseousWorld = u.archetype == 0u || u.archetype == 1u || u.archetype == 7u || u.archetype == 9u;
+    bool hasTraffic = u.life >= 4u && !gaseousWorld;
+    float trafficScale = hasTraffic ? 1.3 : 1.0;
     float2 p = input.uv * 2.0 - 1.0;
     p.x *= u.viewportSize.x / max(u.viewportSize.y, 1.0);
     p *= max(ringScale, max(stationScale, trafficScale));
@@ -974,7 +1043,7 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
             float period = 9.0 + float(slot) * 3.7;
             float cycle = floor(u.time / period);
             float local = u.time - cycle * period;
-            const float duration = 5.5;
+            const float duration = 7.0;
             if (local > duration) continue;
             float3 key = float3(float(slot) * 17.0, cycle, 3.0);
             float roll = moonletHash(key, u.seed);
@@ -993,8 +1062,10 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
             float3 downrange = normalize(along * way + float3(0.0, 0.0, 0.35));
             bool descending = moonletHash(key + 53.0, u.seed) < 0.5;
 
-            float4 shuttle = moonletShuttle(q, px, pad, downrange, local / duration, descending);
-            color += shuttle.rgb;
+            float4 shuttle = moonletShuttle(q, px, pad, downrange, local / duration, descending, u.time);
+            // The hull is opaque and the rest is light: cover with the one, add the other.
+            float hullShare = shuttle.a * (1.0 - smoothstep(0.0, 0.5, length(shuttle.rgb) - 1.2));
+            color = mix(color, shuttle.rgb, hullShare) + shuttle.rgb * (1.0 - hullShare) * 0.9;
             alpha = max(alpha, shuttle.a);
         }
     }

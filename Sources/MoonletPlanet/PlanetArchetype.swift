@@ -20,6 +20,15 @@ public enum MoonletPlanetArchetype: UInt32, CaseIterable, Codable, Identifiable,
 
     public var id: Self { self }
 
+    /// Whether there is ground to stand on. Ice, life, lights and traffic all need it; a gas
+    /// giant gets a polar hood instead of caps and nothing that lives or leaves.
+    public var hasGround: Bool {
+        switch self {
+        case .gasGiant, .iceGiant, .toxic, .cloud: false
+        default: true
+        }
+    }
+
     public var title: String {
         switch self {
         case .gasGiant: "Gas Giant"

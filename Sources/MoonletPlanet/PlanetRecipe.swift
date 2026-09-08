@@ -97,7 +97,7 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
     public var drawnExtent: Double {
         let rings = hasRing ? max(1, ringOuterRadius * 1.04) : 1
         let stations = life.hasOrbitalStation && stationCount > 0 ? stationOrbitRadius + 0.1 : 1
-        let traffic = life.hasTraffic ? 1.2 : 1
+        let traffic = life.hasTraffic && archetype.hasGround ? 1.3 : 1
         return max(rings, max(stations, traffic))
     }
 
