@@ -16,6 +16,9 @@ public enum MoonletPlanetLife: UInt32, CaseIterable, Codable, Identifiable, Send
     /// A civilisation that has left the ground. The night side is bright and something of
     /// theirs is in orbit.
     case advanced
+    /// One that comes and goes. Everything above, and now and then something lifts off the
+    /// ground or comes back down to it.
+    case interplanetary
 
     public var id: Self { self }
 
@@ -25,6 +28,7 @@ public enum MoonletPlanetLife: UInt32, CaseIterable, Codable, Identifiable, Send
         case .simple: "Simple life"
         case .complex: "Civilisation"
         case .advanced: "Spacefaring"
+        case .interplanetary: "Interplanetary"
         }
     }
 
@@ -32,7 +36,10 @@ public enum MoonletPlanetLife: UInt32, CaseIterable, Codable, Identifiable, Send
     public var isLit: Bool { self >= .complex }
 
     /// Whether this level puts something in orbit.
-    public var hasOrbitalStation: Bool { self == .advanced }
+    public var hasOrbitalStation: Bool { self >= .advanced }
+
+    /// Whether this level has shuttles between the ground and orbit.
+    public var hasTraffic: Bool { self == .interplanetary }
 
     public static func < (a: Self, b: Self) -> Bool { a.rawValue < b.rawValue }
 }

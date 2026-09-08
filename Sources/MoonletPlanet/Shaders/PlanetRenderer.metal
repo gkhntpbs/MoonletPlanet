@@ -496,6 +496,77 @@ float moonletSegmentDistance(float2 p, float2 a, float2 b, thread float &along) 
     return length(p - (a + ab * along));
 }
 
+/// Where a shuttle is, `t` of the way through its flight, on a world with this seed.
+///
+/// A launch is a gravity turn: straight up off the pad, then bending downrange as it climbs,
+/// which is the shape every real ascent has and is what makes it read as a rocket rather
+/// than a spark rising. A descent is the same arc flown backwards.
+///
+/// The pad is just inside the limb and downrange runs along it. The camera is orthographic
+/// and looks straight at the disc, so a launch from the middle of it climbs towards the
+/// lens and does not move on screen at all — the first version did that, and three flights
+/// at once looked like three stationary lights. Seen in profile, the same arc is the whole
+/// picture: up off the edge of the world and over into orbit.
+float3 moonletShuttlePosition(float3 pad, float3 downrange, float t) {
+    float altitude = 0.13 * pow(t, 1.5);
+    float drift = 0.55 * t * t;
+    return normalize(pad + downrange * drift) * (1.0 + altitude);
+}
+
+/// One shuttle's contribution at `q`: its glow in rgb, its coverage in alpha.
+///
+/// It is a bright point and a plume behind it, sampled as short chords of the arc it has
+/// just flown. Launch plumes burn orange and go out with the engine; a descent is plasma —
+/// whiter, and brightest low down where the air is thick. Neither needs the star: they are
+/// their own light, and on the night side they are the only thing moving.
+float4 moonletShuttle(float2 q, float px, float3 pad, float3 downrange, float t, bool descending) {
+    float flight = descending ? 1.0 - t : t;
+    float3 craft = moonletShuttlePosition(pad, downrange, flight);
+    float2 offset = q - craft.xy;
+    if (dot(offset, offset) > 0.09) return float4(0.0);
+
+    // Up out of nothing, and gone before the arc ends — a light that snaps on is a bug.
+    float envelope = smoothstep(0.0, 0.06, t) * (1.0 - smoothstep(0.82, 1.0, t));
+    // A launch burns hardest off the pad; a descent glows hardest where the air is.
+    float heat = descending ? (1.0 - flight) * 0.7 + 0.3 : 1.0 - flight * 0.45;
+    float3 plumeColor = descending ? float3(1.0, 0.78, 0.6) : float3(1.0, 0.62, 0.3);
+
+    float plume = 0.0;
+    float3 previous = craft;
+    const int samples = 6;
+    // The plume is the last stretch of the flight: short at launch, where the thing is
+    // barely moving, and long once it is.
+    float span = 0.07 + 0.13 * flight;
+    for (int i = 1; i <= samples; i++) {
+        float back = flight + (descending ? 1.0 : -1.0) * span * float(i) / float(samples);
+        float3 past = moonletShuttlePosition(pad, downrange, clamp(back, 0.0, 1.0));
+        float along = 0.0;
+        float d = moonletSegmentDistance(q, previous.xy, past.xy, along);
+        float3 at = mix(previous, past, along);
+        if (moonletStationVisible(at)) {
+            float age = (float(i - 1) + along) / float(samples);
+            float fade = (1.0 - age) * (1.0 - age);
+            float width = max(0.014, px * 1.5) * (0.4 + fade);
+            plume = max(plume, (1.0 - smoothstep(0.0, width, d)) * fade);
+        }
+        previous = past;
+    }
+
+    float coreRadius = max(0.012, px * 1.5);
+    float spread = length(offset);
+    float core = exp(-spread * spread / (coreRadius * coreRadius));
+    float halo = exp(-spread / max(0.035, px * 4.0)) * 0.45;
+    // Ignition: the pad lights up under a launch and dies away as it climbs.
+    float padGlow = 0.0;
+    if (!descending) {
+        float padDistance = length(q - pad.xy);
+        padGlow = exp(-padDistance * padDistance / 0.0009) * (1.0 - smoothstep(0.0, 0.3, flight)) * 0.8;
+    }
+    float3 glow = (float3(1.0, 0.95, 0.88) * core * 2.4 + plumeColor * (plume * 2.2 + halo + padGlow)) * heat * envelope;
+    float coverage = clamp(core * 1.6 + plume * 0.8 + halo + padGlow, 0.0, 1.0) * envelope;
+    return float4(glow, coverage);
+}
+
 /// The radial structure of a ring system, in planet radii, and it is Saturn's.
 ///
 /// The boundaries are measured, not invented: the C ring begins at 1.235 planet radii, the
@@ -571,9 +642,12 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
     float ringScale = (u.ringOpacity > 0.001) ? max(1.0, u.ringOuterRadius * 1.04) : 1.0;
     bool hasStations = u.life >= 3u && u.stationCount > 0u;
     float stationScale = hasStations ? u.stationOrbitRadius + 0.1 : 1.0;
+    // Traffic climbs to 0.12 radii above the ground; the rest is its plume.
+    bool hasTraffic = u.life >= 4u;
+    float trafficScale = hasTraffic ? 1.2 : 1.0;
     float2 p = input.uv * 2.0 - 1.0;
     p.x *= u.viewportSize.x / max(u.viewportSize.y, 1.0);
-    p *= max(ringScale, stationScale);
+    p *= max(ringScale, max(stationScale, trafficScale));
 
     // The lighting works in a space where screen-up is -y, so everything geometric works
     // there too. Mixing the two is how the terminator and the ring shadow end up disagreeing
@@ -884,6 +958,44 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
 
             color += glint;
             alpha = max(alpha, clamp(coverage, 0.0, 1.0));
+        }
+    }
+
+    // --- traffic -------------------------------------------------------------------
+    //
+    // Now and then something leaves the ground, or comes back to it. Three slots, each on
+    // its own period so the rhythm never repeats, and most cycles are quiet — a world with
+    // a launch every few seconds is an airport, and what is wanted is the occasional one
+    // that makes somebody look twice. Which pad, which direction and which way it is going
+    // are all the seed's, so a world's traffic is as much its own as its coastlines.
+    if (hasTraffic) {
+        float px = fwidth(q.x);
+        for (int slot = 0; slot < 3; slot++) {
+            float period = 9.0 + float(slot) * 3.7;
+            float cycle = floor(u.time / period);
+            float local = u.time - cycle * period;
+            const float duration = 5.5;
+            if (local > duration) continue;
+            float3 key = float3(float(slot) * 17.0, cycle, 3.0);
+            float roll = moonletHash(key, u.seed);
+            // The quiet cycles. Slot by slot rather than all at once, so a busy moment on
+            // one is not a busy moment on all three.
+            if (roll < 0.45) continue;
+
+            // A pad just inside the limb, on the near side, so the flight is seen in
+            // profile and the pad itself is not hidden. Downrange runs along the limb,
+            // either way, leaning a little towards the camera so the arc stays in front.
+            float azimuth = moonletHash(key + 11.0, u.seed) * 6.2831853;
+            float reach = 0.90 + 0.07 * moonletHash(key + 23.0, u.seed);
+            float3 pad = float3(cos(azimuth) * reach, sin(azimuth) * reach, sqrt(max(0.0, 1.0 - reach * reach)));
+            float3 along = normalize(cross(pad, float3(0.0, 0.0, 1.0)));
+            float way = moonletHash(key + 37.0, u.seed) < 0.5 ? -1.0 : 1.0;
+            float3 downrange = normalize(along * way + float3(0.0, 0.0, 0.35));
+            bool descending = moonletHash(key + 53.0, u.seed) < 0.5;
+
+            float4 shuttle = moonletShuttle(q, px, pad, downrange, local / duration, descending);
+            color += shuttle.rgb;
+            alpha = max(alpha, shuttle.a);
         }
     }
 

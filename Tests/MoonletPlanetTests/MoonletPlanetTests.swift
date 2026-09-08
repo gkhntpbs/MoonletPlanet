@@ -337,6 +337,9 @@ import Foundation
     #expect(recipe.drawnExtent > recipe.stationOrbitRadius, "the station's orbit must fit, trail and glint included")
     recipe.stationCount = 0
     #expect(recipe.drawnExtent == 1, "no stations, nothing outside the disc")
+    recipe.life = .interplanetary
+    #expect(recipe.drawnExtent == 1.2, "traffic climbs past the limb even with no station")
+    recipe.life = .advanced
 
     recipe.stationCount = 2
     recipe.life = .complex
@@ -354,6 +357,7 @@ import Foundation
     #expect(MoonletPlanetLife.none < .simple)
     #expect(MoonletPlanetLife.simple < .complex)
     #expect(MoonletPlanetLife.complex < .advanced)
+    #expect(MoonletPlanetLife.advanced < .interplanetary)
 
     // Nothing is lit until there is somebody to light it, and nothing is in orbit until they
     // can get there.
@@ -364,6 +368,9 @@ import Foundation
 
     #expect(MoonletPlanetLife.complex.hasOrbitalStation == false)
     #expect(MoonletPlanetLife.advanced.hasOrbitalStation)
+    #expect(MoonletPlanetLife.interplanetary.hasOrbitalStation, "the station does not leave when the shuttles arrive")
+    #expect(MoonletPlanetLife.advanced.hasTraffic == false)
+    #expect(MoonletPlanetLife.interplanetary.hasTraffic)
 
     for level in MoonletPlanetLife.allCases { #expect(!level.title.isEmpty) }
 }
@@ -374,6 +381,7 @@ import Foundation
     #expect(MoonletPlanetLife.simple.rawValue == 1)
     #expect(MoonletPlanetLife.complex.rawValue == 2)
     #expect(MoonletPlanetLife.advanced.rawValue == 3)
+    #expect(MoonletPlanetLife.interplanetary.rawValue == 4)
 }
 
 /// Life and the day cycle survive being written down, like everything else.

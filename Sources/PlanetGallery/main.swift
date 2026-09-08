@@ -105,7 +105,7 @@ try? FileManager.default.createDirectory(at: out, withIntermediateDirectories: t
         r.life = level
         r.lightAzimuth = 5.4
         return r
-    }, cell: 320, cols: 4, gap: 12, file: "life")
+    }, cell: 256, cols: 5, gap: 12, file: "life")
 
     // The hero. One planet, large, worth looking at.
     var hero = MoonletPlanetRecipe.preset(.gasGiant)

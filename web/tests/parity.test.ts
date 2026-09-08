@@ -82,10 +82,10 @@ test('rings that are inside out are refused rather than drawn', () => {
 test('life is refused when it is not one of the four levels', () => {
   const base = archetypeRecipes.ocean as PlanetRecipe
   assert.doesNotThrow(() => validateRecipe({ ...base, life: 0 }))
-  assert.doesNotThrow(() => validateRecipe({ ...base, life: 3 }))
+  assert.doesNotThrow(() => validateRecipe({ ...base, life: 4 }))
   // The shader dispatches on the number, so an out-of-range one renders an unlit world
   // rather than failing — the kind of wrong that is hard to notice.
-  assert.throws(() => validateRecipe({ ...base, life: 4 as never }), RangeError)
+  assert.throws(() => validateRecipe({ ...base, life: 5 as never }), RangeError)
   assert.throws(() => validateRecipe({ ...base, life: -1 as never }), RangeError)
   assert.throws(() => validateRecipe({ ...base, life: 1.5 as never }), RangeError)
 })

@@ -57,9 +57,10 @@ export type PlanetRecipe = {
   dayNightSpeed?: number
   /**
    * Whether anything lives here. 0 sterile, 1 simple life, 2 a civilisation with city
-   * lights on the night side, 3 one that has put something in orbit.
+   * lights on the night side, 3 one that has put something in orbit, 4 one with shuttles
+   * now and then between the ground and orbit.
    */
-  life?: 0 | 1 | 2 | 3
+  life?: 0 | 1 | 2 | 3 | 4
   /** How many are in orbit once `life` is 3. One by default; below that level nothing is drawn. */
   stationCount?: number
   /** The orbit in planet radii. 1.085 is low enough to cross the disc rather than skirt it. */
@@ -93,7 +94,7 @@ export function validateRecipe(recipe: PlanetRecipe) {
   // The shader dispatches on this number, so an out-of-range one renders an unlit world
   // rather than failing — which is the kind of wrong that is hard to notice.
   const life = recipe.life ?? 0
-  if (!Number.isInteger(life) || life < 0 || life > 3) throw new RangeError('Invalid planet life')
+  if (!Number.isInteger(life) || life < 0 || life > 4) throw new RangeError('Invalid planet life')
   const stations = recipe.stationCount ?? 1
   if (!Number.isInteger(stations) || stations < 0 || stations > 8) throw new RangeError('Invalid planet stationCount')
   for (const key of scalarKeys) if (!Number.isFinite(recipe[key])) throw new RangeError(`Invalid planet ${key}`)

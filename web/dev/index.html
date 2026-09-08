@@ -208,7 +208,7 @@ section('Air', [
 
 section('Life', [
   el('div', { className: 'stack' }, [(() => {
-    const select = el('select', {}, ['Sterile', 'Simple life', 'Civilisation', 'Spacefaring']
+    const select = el('select', {}, ['Sterile', 'Simple life', 'Civilisation', 'Spacefaring', 'Interplanetary']
       .map((label, index) => el('option', { value: String(index), textContent: label })))
     select.addEventListener('change', () => { recipe.life = Number(select.value); sync() })
     slider.bound.push(() => { select.value = String(recipe.life ?? 0) })
