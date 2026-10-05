@@ -43,6 +43,7 @@ typedef struct {
     float stationInclination;
     float stationSize;
     float luminosity;
+    float roll;
     vector_float4 color0;
     vector_float4 color1;
     vector_float4 color2;
@@ -51,6 +52,7 @@ typedef struct {
     vector_float4 ringColor;
     vector_float4 iceColor;
     vector_float4 lifeColor;
+    vector_float4 lightColor;
 } MoonletPlanetUniforms;
 
 #endif

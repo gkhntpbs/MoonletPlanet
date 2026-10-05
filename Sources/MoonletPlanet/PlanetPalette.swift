@@ -73,6 +73,9 @@ public struct MoonletPlanetPalette: Codable, Equatable, Hashable, Sendable {
     /// Surface ice. Not pure white — snow takes the colour of the sky above it, and a flat
     /// #FFFFFF cap is the thing that makes a rendered planet look like a diagram.
     public var ice: MoonletColor
+    /// The colour of the light that falls on the planet. White, which changes nothing, unless
+    /// a `MoonletPlanetSystem` sets it from its star.
+    public var light: MoonletColor
 
     public init(
         highlight: MoonletColor,
@@ -82,7 +85,8 @@ public struct MoonletPlanetPalette: Codable, Equatable, Hashable, Sendable {
         atmosphere: MoonletColor,
         ring: MoonletColor = MoonletColor(red: 0.94, green: 0.90, blue: 0.83),
         ice: MoonletColor = MoonletColor(red: 0.93, green: 0.95, blue: 0.97),
-        life: MoonletColor = MoonletColor(red: 0.28, green: 0.46, blue: 0.20)
+        life: MoonletColor = MoonletColor(red: 0.28, green: 0.46, blue: 0.20),
+        light: MoonletColor = MoonletColor(red: 1, green: 1, blue: 1)
     ) {
         self.highlight = highlight
         self.primary = primary
@@ -92,6 +96,7 @@ public struct MoonletPlanetPalette: Codable, Equatable, Hashable, Sendable {
         self.ring = ring
         self.ice = ice
         self.life = life
+        self.light = light
     }
 
     // A palette is stored data, so a field added after somebody saved theirs has to decode
@@ -110,5 +115,7 @@ public struct MoonletPlanetPalette: Codable, Equatable, Hashable, Sendable {
             ?? MoonletColor(red: 0.93, green: 0.95, blue: 0.97)
         life = try container.decodeIfPresent(MoonletColor.self, forKey: .life)
             ?? MoonletColor(red: 0.28, green: 0.46, blue: 0.20)
+        light = try container.decodeIfPresent(MoonletColor.self, forKey: .light)
+            ?? MoonletColor(red: 1, green: 1, blue: 1)
     }
 }

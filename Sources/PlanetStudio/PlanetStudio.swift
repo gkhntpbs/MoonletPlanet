@@ -29,6 +29,42 @@ struct StudioView: View {
     /// accumulated — an incremental one drifts as soon as a frame is dropped.
     @State private var dragStart: (phase: Double, tilt: Double)?
 
+    // A system is edited through the same panel as a planet: whichever body is selected
+    // is `recipe`, and every change to `recipe` is written back into the system.
+    @State private var mode = Mode.planet
+    @State private var system: MoonletPlanetSystem = {
+        // The studio looks through a real camera; the library's default stays flat.
+        var system = MoonletPlanetSystem.example
+        system.perspective = 0.8
+        system.showsOrbits = true
+        system.sky.isVisible = true
+        return system
+    }()
+    /// How quickly a flicked camera slows, per second. Higher stops it sooner.
+    @State private var coastFriction = 2.2
+    /// The selected body, or `nil` for the star.
+    @State private var selection: Int?
+    /// The body a drag on the stage picked up.
+    @State private var dragging: Int?
+    /// Where the camera was when a drag on empty space began, which turns it.
+    @State private var cameraStart: (azimuth: Double, elevation: Double)?
+    /// The zoom when a pinch began.
+    @State private var zoomStart: Double?
+    @State private var clock = Clock()
+
+    enum Mode: String, CaseIterable { case planet = "Planet", system = "System" }
+
+    /// The studio keeps the system's time itself, so a drag knows where a moving planet is.
+    final class Clock {
+        var started = Date()
+        var now: Double = 0
+        /// The camera's spin after a drag is let go, in radians a second, and when it was
+        /// last applied. It runs down rather than stopping dead, which is most of what
+        /// makes a turned camera feel like a camera.
+        var spin: Double = 0
+        var lastSpin = Date()
+    }
+
     var body: some View {
         HStack(spacing: 0) {
             stage
@@ -38,9 +74,112 @@ struct StudioView: View {
         }
         .background(Color(red: 0.035, green: 0.04, blue: 0.05))
         .preferredColorScheme(.dark)
+        .onChange(of: recipe) { _, new in
+            guard mode == .system else { return }
+            if let index = selection, system.bodies.indices.contains(index) {
+                system.bodies[index].recipe = new
+            } else if selection == nil {
+                system.star = new
+            }
+        }
     }
 
+    @ViewBuilder
     private var stage: some View {
+        if mode == .system { systemStage } else { planetStage }
+    }
+
+    private var systemStage: some View {
+        GeometryReader { proxy in
+            // The view fits the system in the largest square in the middle and fills the rest
+            // with sky; the drag has to measure the same square.
+            let side = min(proxy.size.width, proxy.size.height)
+            let scale = side / 2 / max(system.extent, 1e-6)
+            let centre = CGPoint(x: proxy.size.width / 2, y: proxy.size.height / 2)
+            TimelineView(.animation(paused: paused)) { context in
+                let time = clockTime(context.date)
+                MoonletSystemView(system: system, frozenTime: time)
+                    .frame(width: proxy.size.width, height: proxy.size.height)
+                    .position(centre)
+                    .onChange(of: context.date) { _, now in coast(now) }
+            }
+            .contentShape(Rectangle())
+            // Drag a planet to move it: it picks up whichever planet is nearest where the
+            // drag began, and both its distance and its place on the orbit follow. Drag
+            // anywhere else to walk the camera round the system, all the way round.
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { value in
+                        let point = { (p: CGPoint) in ((p.x - centre.x) / scale, (centre.y - p.y) / scale) }
+                        let time = clock.now
+                        if dragging == nil && cameraStart == nil {
+                            let (sx, sy) = point(value.startLocation)
+                            let hit = system.layout(at: time)
+                                .compactMap { p in p.index.map { ($0, hypot(p.x - sx, p.y - sy) - p.radius) } }
+                                .min { $0.1 < $1.1 }
+                            if let hit, hit.1 < 0.6 {
+                                dragging = hit.0
+                                select(hit.0)
+                            } else {
+                                cameraStart = (system.viewAzimuth, system.viewElevation)
+                            }
+                        }
+                        if let start = cameraStart {
+                            system.viewAzimuth = (start.azimuth - value.translation.width * 0.008)
+                                .remainder(dividingBy: 2 * .pi)
+                            system.viewElevation = min(max(start.elevation + value.translation.height * 0.006, -.pi / 2), .pi / 2)
+                            return
+                        }
+                        guard let index = dragging else { return }
+                        let (x, y) = point(value.location)
+                        system.place(index, atX: x, y: y, time: time)
+                    }
+                    .onEnded { value in
+                        // A flick keeps turning: the drag's speed at release, in the same
+                        // radians per point the drag itself uses.
+                        if cameraStart != nil {
+                            let flick = value.predictedEndTranslation.width - value.translation.width
+                            clock.spin = -flick * 0.008 * 2.5
+                            clock.lastSpin = Date()
+                        }
+                        dragging = nil
+                        cameraStart = nil
+                    }
+            )
+            // Pinch to zoom, as on any camera.
+            .simultaneousGesture(
+                MagnifyGesture()
+                    .onChanged { value in
+                        let start = zoomStart ?? system.zoom
+                        zoomStart = start
+                        system.zoom = min(max(start * value.magnification, 0.5), 4)
+                    }
+                    .onEnded { _ in zoomStart = nil }
+            )
+        }
+        .background(Color(red: 0.035, green: 0.04, blue: 0.05))
+    }
+
+    private func coast(_ now: Date) {
+        let dt = min(now.timeIntervalSince(clock.lastSpin), 0.1)
+        clock.lastSpin = now
+        guard abs(clock.spin) > 0.002, cameraStart == nil else { clock.spin = 0; return }
+        system.viewAzimuth = (system.viewAzimuth + clock.spin * dt).remainder(dividingBy: 2 * .pi)
+        clock.spin *= exp(-dt * coastFriction)
+    }
+
+    private func clockTime(_ date: Date) -> Double {
+        let t = date.timeIntervalSince(clock.started)
+        clock.now = t
+        return t
+    }
+
+    private func select(_ index: Int?) {
+        selection = index
+        if let index { recipe = system.bodies[index].recipe } else { recipe = system.star }
+    }
+
+    private var planetStage: some View {
         ZStack {
             Color(red: 0.035, green: 0.04, blue: 0.05)
             MoonletPlanetView(recipe: recipe, isPaused: paused)
@@ -74,7 +213,16 @@ struct StudioView: View {
     private var controls: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
-                section("Planet") {
+                Picker("Mode", selection: $mode) {
+                    ForEach(Mode.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+                }
+                .pickerStyle(.segmented)
+                .labelsHidden()
+                .onChange(of: mode) { _, new in if new == .system { select(selection) } }
+
+                if mode == .system { systemControls }
+
+                section(mode == .system ? (selection == nil ? "Star" : "Selected planet") : "Planet") {
                     Picker("Archetype", selection: $recipe.archetype) {
                         ForEach(MoonletPlanetArchetype.allCases) { Text($0.title).tag($0) }
                     }
@@ -241,6 +389,124 @@ struct StudioView: View {
             .padding(16)
         }
         .scrollIndicators(.automatic)
+    }
+
+    // MARK: - System
+
+    @ViewBuilder
+    private var systemControls: some View {
+        section("System") {
+            // Every body as a button; the selected one is what the panel below edits.
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 6), count: 2), spacing: 6) {
+                bodyButton("Star", selected: selection == nil) { select(nil) }
+                ForEach(system.bodies.indices, id: \.self) { i in
+                    bodyButton("\(i + 1). \(system.bodies[i].recipe.archetype.title)", selected: selection == i) { select(i) }
+                }
+            }
+            HStack {
+                Menu("Add planet") {
+                    ForEach(MoonletPlanetPreset.allCases.filter { $0 != .custom && $0 != .sun }) { preset in
+                        Button(preset.title) { addPlanet(preset.style!.recipe) }
+                    }
+                    Divider()
+                    ForEach(MoonletPlanetArchetype.allCases.filter { $0 != .star }) { archetype in
+                        Button(archetype.title) { addPlanet(.preset(archetype)) }
+                    }
+                }
+                if let index = selection {
+                    Button("Remove") {
+                        system.bodies.remove(at: index)
+                        select(nil)
+                    }
+                }
+            }
+            Button("Reset camera") {
+                system.viewAzimuth = 0
+                system.viewElevation = 0.35
+                system.zoom = 1
+                clock.spin = 0
+            }
+            Text("Drag a planet to move it; drag empty space to turn the camera.")
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+        }
+        section("Camera") {
+            // All the way round, and from below the plane as well as above it.
+            slider("Turn", $system.viewAzimuth, -(.pi)...(.pi))
+            slider("View angle", $system.viewElevation, -(.pi / 2)...(.pi / 2))
+            // 0 is flat; above it nearer is bigger and every pole stays put as it turns.
+            slider("Depth", $system.perspective, 0...1)
+            slider("Zoom", $system.zoom, 0.5...4)
+            // How soon a flicked camera stops coasting.
+            slider("Coast stop", $coastFriction, 0.3...8)
+        }
+        section("Sky") {
+            Toggle("Stars", isOn: $system.sky.isVisible)
+            if system.sky.isVisible {
+                HStack(spacing: 8) {
+                    Text("Count").font(.caption).frame(width: 86, alignment: .leading)
+                    Stepper(value: $system.sky.starCount, in: 0...5000, step: 100) {
+                        Text("\(system.sky.starCount)").font(.caption2.monospaced())
+                    }
+                }
+                HStack(spacing: 8) {
+                    Text("Sky seed").font(.caption).frame(width: 86, alignment: .leading)
+                    Text("\(system.sky.seed)").font(.caption2.monospaced())
+                    Spacer()
+                    Button("New sky") { system.sky.seed = UInt32.random(in: 1...UInt32.max) }
+                }
+                slider("Brightness", $system.sky.brightness, 0...2)
+                slider("Star size", $system.sky.starSize, 0.3...3)
+                slider("Colour range", $system.sky.warmth, 0...2)
+                slider("Twinkle", $system.sky.twinkle, 0...1)
+                // A Milky Way: a share of the stars gathered in a belt across the sky.
+                slider("Band", $system.sky.bandStrength, 0...1)
+                slider("Band tilt", $system.sky.bandTilt, -(.pi / 2)...(.pi / 2))
+                ColorPicker("Star colour", selection: Binding(get: { system.sky.color.color }, set: { system.sky.color = MoonletColor($0) }))
+            }
+        }
+        section("Orbits") {
+            Toggle("Orbit lines", isOn: $system.showsOrbits)
+            if system.showsOrbits {
+                slider("Line opacity", $system.orbitStyle.opacity, 0...1)
+                slider("Line width", $system.orbitStyle.width, 0.3...4)
+                ColorPicker("Line colour", selection: Binding(get: { system.orbitStyle.color.color }, set: { system.orbitStyle.color = MoonletColor($0) }))
+            }
+            // Every orbit at once; 0 stops them all where they are.
+            slider("All speeds", $system.orbitSpeed, 0...4)
+        }
+        section("Light") {
+            slider("Star tint", $system.lightTint, 0...1)
+            // How much dimmer the outer worlds are; 1 is the inverse-square law.
+            slider("Falloff", $system.lightFalloff, 0...1)
+            slider("Star size", $system.starRadius, 0.3...2)
+        }
+        if let index = selection, system.bodies.indices.contains(index) {
+            section("Orbit") {
+                slider("Distance", $system.bodies[index].distance, (system.starRadius * 1.05)...12)
+                slider("Size", $system.bodies[index].radius, 0.05...1.5)
+                slider("Position", $system.bodies[index].phase, -(.pi)...(.pi))
+                // Zero holds it where it is put.
+                slider("Speed", $system.bodies[index].speed, -0.6...0.6)
+                // Out of the system's plane, and which way across it.
+                slider("Inclination", $system.bodies[index].inclination, -(.pi / 2)...(.pi / 2))
+                slider("Node", $system.bodies[index].node, -(.pi)...(.pi))
+            }
+        }
+    }
+
+    private func bodyButton(_ title: String, selected: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title).font(.caption).lineLimit(1).frame(maxWidth: .infinity).padding(.vertical, 3)
+        }
+        .buttonStyle(.bordered)
+        .tint(selected ? .accentColor : nil)
+    }
+
+    private func addPlanet(_ recipe: MoonletPlanetRecipe) {
+        let furthest = system.bodies.map(\.distance).max() ?? system.starRadius * 1.5
+        system.bodies.append(.init(recipe: recipe, radius: 0.35, distance: furthest + 1.2, phase: Double.random(in: -.pi ... .pi), speed: 0.1))
+        select(system.bodies.count - 1)
     }
 
     // MARK: - Pieces

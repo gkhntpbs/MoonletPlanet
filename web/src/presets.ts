@@ -3,7 +3,7 @@
 // These are the Swift package's own presets. A second hand-written copy is a copy that
 // disagrees with the phone about what Saturn looks like.
 
-import type { PlanetRecipe } from './index.ts'
+import type { PlanetRecipe, PlanetSystem } from './index.ts'
 
 export const archetypeRecipes = {
   gasGiant: {
@@ -51,6 +51,12 @@ export const archetypeRecipes = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.16,
       "green" : 0.34,
@@ -81,6 +87,7 @@ export const archetypeRecipes = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.11,
   "roughness" : 0.72,
@@ -140,6 +147,12 @@ export const archetypeRecipes = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.76,
       "green" : 0.55,
@@ -170,6 +183,7 @@ export const archetypeRecipes = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.11,
   "roughness" : 0.48,
@@ -229,6 +243,12 @@ export const archetypeRecipes = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.58,
       "green" : 0.28,
@@ -259,6 +279,7 @@ export const archetypeRecipes = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.11,
   "roughness" : 0.22,
@@ -318,6 +339,12 @@ export const archetypeRecipes = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.83,
       "green" : 0.7,
@@ -348,6 +375,7 @@ export const archetypeRecipes = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.035,
   "roughness" : 0.9,
@@ -407,6 +435,12 @@ export const archetypeRecipes = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.18,
       "green" : 0.24,
@@ -437,6 +471,7 @@ export const archetypeRecipes = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.025,
   "roughness" : 0.96,
@@ -496,6 +531,12 @@ export const archetypeRecipes = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.025,
       "green" : 0.19,
@@ -526,6 +567,7 @@ export const archetypeRecipes = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.045,
   "roughness" : 0.88,
@@ -585,6 +627,12 @@ export const archetypeRecipes = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.12,
       "green" : 0.31,
@@ -615,6 +663,7 @@ export const archetypeRecipes = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.025,
   "roughness" : 0.96,
@@ -674,6 +723,12 @@ export const archetypeRecipes = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.14,
       "green" : 0.58,
@@ -704,6 +759,7 @@ export const archetypeRecipes = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.11,
   "roughness" : 0.72,
@@ -763,6 +819,12 @@ export const archetypeRecipes = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.34,
       "green" : 0.29,
@@ -793,6 +855,7 @@ export const archetypeRecipes = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.11,
   "roughness" : 0.22,
@@ -852,6 +915,12 @@ export const archetypeRecipes = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.55,
       "green" : 0.68,
@@ -882,6 +951,7 @@ export const archetypeRecipes = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.11,
   "roughness" : 0.72,
@@ -941,6 +1011,12 @@ export const archetypeRecipes = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.04,
       "green" : 0.32,
@@ -971,6 +1047,7 @@ export const archetypeRecipes = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.04,
   "roughness" : 0.7,
@@ -1033,6 +1110,12 @@ export const solarSystem = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.56,
       "green" : 0.22,
@@ -1063,6 +1146,7 @@ export const solarSystem = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.11,
   "roughness" : 0.22,
@@ -1122,6 +1206,12 @@ export const solarSystem = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.07,
       "green" : 0.18,
@@ -1152,6 +1242,7 @@ export const solarSystem = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.025,
   "roughness" : 0.96,
@@ -1211,6 +1302,12 @@ export const solarSystem = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.16,
       "green" : 0.34,
@@ -1241,6 +1338,7 @@ export const solarSystem = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.11,
   "roughness" : 0.72,
@@ -1300,6 +1398,12 @@ export const solarSystem = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.36,
       "green" : 0.58,
@@ -1330,6 +1434,7 @@ export const solarSystem = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 1,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.11,
   "roughness" : 0.72,
@@ -1389,6 +1494,12 @@ export const solarSystem = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.74,
       "green" : 0.72,
@@ -1419,6 +1530,7 @@ export const solarSystem = {
   "ringInnerRadius" : 1.64,
   "ringOpacity" : 1,
   "ringOuterRadius" : 2,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.11,
   "roughness" : 0.48,
@@ -1478,6 +1590,12 @@ export const solarSystem = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.72,
       "green" : 0.23,
@@ -1508,6 +1626,7 @@ export const solarSystem = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.11,
   "roughness" : 0.48,
@@ -1567,6 +1686,12 @@ export const solarSystem = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.22,
       "green" : 0.53,
@@ -1597,6 +1722,7 @@ export const solarSystem = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.11,
   "roughness" : 0.72,
@@ -1656,6 +1782,12 @@ export const solarSystem = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.34,
       "green" : 0.38,
@@ -1686,6 +1818,7 @@ export const solarSystem = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.025,
   "roughness" : 0.96,
@@ -1745,6 +1878,12 @@ export const solarSystem = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.47,
       "green" : 0.46,
@@ -1775,6 +1914,7 @@ export const solarSystem = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.025,
   "roughness" : 0.96,
@@ -1834,6 +1974,12 @@ export const solarSystem = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.38,
       "green" : 0.45,
@@ -1864,6 +2010,7 @@ export const solarSystem = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.035,
   "roughness" : 0.9,
@@ -1923,6 +2070,12 @@ export const solarSystem = {
       "opacity" : 1,
       "red" : 0.28
     },
+    "light" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
     "primary" : {
       "blue" : 0.04,
       "green" : 0.32,
@@ -1953,6 +2106,7 @@ export const solarSystem = {
   "ringInnerRadius" : 1.235,
   "ringOpacity" : 0,
   "ringOuterRadius" : 2.27,
+  "roll" : 0,
   "rotationPhase" : 0,
   "rotationSpeed" : 0.04,
   "roughness" : 0.7,
@@ -1968,6 +2122,459 @@ export const solarSystem = {
   "warpStrength" : 0.6
 } as PlanetRecipe,
 } as const
+
+/// A small system to start from: the Sun, a rocky inner world, Earth, and a ringed giant.
+export const systemExample = {
+  "bodies" : [
+    {
+      "distance" : 1.9,
+      "id" : "40468558-55ED-483E-AD7B-FA9669CA6754",
+      "inclination" : 0,
+      "node" : 0,
+      "phase" : 0.6,
+      "radius" : 0.22,
+      "recipe" : {
+        "archetype" : 4,
+        "atmosphereDensity" : 0,
+        "atmosphereGlow" : 0,
+        "axialTilt" : 0,
+        "bandCount" : 3,
+        "bandSharpness" : 0.62,
+        "cloudCoverage" : 0.08,
+        "cloudSpeed" : 0.65,
+        "dayNightSpeed" : 0,
+        "detail" : 0.82,
+        "exposure" : 1.08,
+        "featureAmount" : 0.82,
+        "iceAltitude" : 0.22,
+        "iceCoverage" : 0,
+        "life" : 0,
+        "lightAzimuth" : 2.2,
+        "lightElevation" : 0.46,
+        "luminosity" : 0.5,
+        "microDetail" : 1,
+        "palette" : {
+          "atmosphere" : {
+            "blue" : 0.3,
+            "green" : 0.42,
+            "opacity" : 1,
+            "red" : 0.58
+          },
+          "highlight" : {
+            "blue" : 0.64,
+            "green" : 0.71,
+            "opacity" : 1,
+            "red" : 0.76
+          },
+          "ice" : {
+            "blue" : 0.97,
+            "green" : 0.95,
+            "opacity" : 1,
+            "red" : 0.93
+          },
+          "life" : {
+            "blue" : 0.2,
+            "green" : 0.46,
+            "opacity" : 1,
+            "red" : 0.28
+          },
+          "light" : {
+            "blue" : 1,
+            "green" : 1,
+            "opacity" : 1,
+            "red" : 1
+          },
+          "primary" : {
+            "blue" : 0.34,
+            "green" : 0.38,
+            "opacity" : 1,
+            "red" : 0.42
+          },
+          "ring" : {
+            "blue" : 0.83,
+            "green" : 0.9,
+            "opacity" : 1,
+            "red" : 0.94
+          },
+          "shadow" : {
+            "blue" : 0.06,
+            "green" : 0.055,
+            "opacity" : 1,
+            "red" : 0.075
+          },
+          "storm" : {
+            "blue" : 0.28,
+            "green" : 0.42,
+            "opacity" : 1,
+            "red" : 0.54
+          }
+        },
+        "polarAsymmetry" : 0,
+        "ringDetail" : 0.8,
+        "ringInnerRadius" : 1.235,
+        "ringOpacity" : 0,
+        "ringOuterRadius" : 2.27,
+        "roll" : 0,
+        "rotationPhase" : 0,
+        "rotationSpeed" : 0.025,
+        "roughness" : 0.96,
+        "seed" : 128667,
+        "stationCount" : 1,
+        "stationInclination" : 0.9,
+        "stationOrbitRadius" : 1.085,
+        "stationSize" : 1,
+        "stationSpeed" : 0.55,
+        "stormCount" : 0,
+        "stormStrength" : 0.86,
+        "turbulence" : 0.7,
+        "warpStrength" : 0.33
+      },
+      "speed" : 0.22
+    },
+    {
+      "distance" : 3,
+      "id" : "23394E79-30D7-44D9-A0CC-654BE590776D",
+      "inclination" : 0,
+      "node" : 0,
+      "phase" : 3.5,
+      "radius" : 0.36,
+      "recipe" : {
+        "archetype" : 2,
+        "atmosphereDensity" : 0.52,
+        "atmosphereGlow" : 0.62,
+        "axialTilt" : 0.409,
+        "bandCount" : 6,
+        "bandSharpness" : 0.28,
+        "cloudCoverage" : 0.54,
+        "cloudSpeed" : 0.65,
+        "dayNightSpeed" : 0,
+        "detail" : 0.7,
+        "exposure" : 1.08,
+        "featureAmount" : 0.72,
+        "iceAltitude" : 0.34,
+        "iceCoverage" : 0.19,
+        "life" : 0,
+        "lightAzimuth" : 2.2,
+        "lightElevation" : 0.46,
+        "luminosity" : 0.5,
+        "microDetail" : 1,
+        "palette" : {
+          "atmosphere" : {
+            "blue" : 1,
+            "green" : 0.62,
+            "opacity" : 1,
+            "red" : 0.22
+          },
+          "highlight" : {
+            "blue" : 1,
+            "green" : 0.95,
+            "opacity" : 1,
+            "red" : 0.86
+          },
+          "ice" : {
+            "blue" : 0.97,
+            "green" : 0.95,
+            "opacity" : 1,
+            "red" : 0.93
+          },
+          "life" : {
+            "blue" : 0.2,
+            "green" : 0.46,
+            "opacity" : 1,
+            "red" : 0.28
+          },
+          "light" : {
+            "blue" : 1,
+            "green" : 1,
+            "opacity" : 1,
+            "red" : 1
+          },
+          "primary" : {
+            "blue" : 0.56,
+            "green" : 0.22,
+            "opacity" : 1,
+            "red" : 0.02
+          },
+          "ring" : {
+            "blue" : 0.83,
+            "green" : 0.9,
+            "opacity" : 1,
+            "red" : 0.94
+          },
+          "shadow" : {
+            "blue" : 0.11,
+            "green" : 0.025,
+            "opacity" : 1,
+            "red" : 0.005
+          },
+          "storm" : {
+            "blue" : 0.18,
+            "green" : 0.48,
+            "opacity" : 1,
+            "red" : 0.08
+          }
+        },
+        "polarAsymmetry" : 0.16,
+        "ringDetail" : 0.8,
+        "ringInnerRadius" : 1.235,
+        "ringOpacity" : 0,
+        "ringOuterRadius" : 2.27,
+        "roll" : 0,
+        "rotationPhase" : 0,
+        "rotationSpeed" : 0.11,
+        "roughness" : 0.22,
+        "seed" : 39916801,
+        "stationCount" : 1,
+        "stationInclination" : 0.9,
+        "stationOrbitRadius" : 1.085,
+        "stationSize" : 1,
+        "stationSpeed" : 0.55,
+        "stormCount" : 4,
+        "stormStrength" : 0.86,
+        "turbulence" : 0.57,
+        "warpStrength" : 0.54
+      },
+      "speed" : 0.13
+    },
+    {
+      "distance" : 4.4,
+      "id" : "AF1400E0-2C2C-4935-ACD8-0C092ADF26A8",
+      "inclination" : 0,
+      "node" : 0,
+      "phase" : 5.75,
+      "radius" : 0.5,
+      "recipe" : {
+        "archetype" : 0,
+        "atmosphereDensity" : 0.52,
+        "atmosphereGlow" : 0.62,
+        "axialTilt" : 0.47,
+        "bandCount" : 18,
+        "bandSharpness" : 0.62,
+        "cloudCoverage" : 0.92,
+        "cloudSpeed" : 0.65,
+        "dayNightSpeed" : 0,
+        "detail" : 0.82,
+        "exposure" : 1.08,
+        "featureAmount" : 0.7,
+        "iceAltitude" : 0.22,
+        "iceCoverage" : 0,
+        "life" : 0,
+        "lightAzimuth" : 2.2,
+        "lightElevation" : 0.46,
+        "luminosity" : 0.5,
+        "microDetail" : 1,
+        "palette" : {
+          "atmosphere" : {
+            "blue" : 0.55,
+            "green" : 0.72,
+            "opacity" : 1,
+            "red" : 0.82
+          },
+          "highlight" : {
+            "blue" : 0.7,
+            "green" : 0.91,
+            "opacity" : 1,
+            "red" : 1
+          },
+          "ice" : {
+            "blue" : 0.97,
+            "green" : 0.95,
+            "opacity" : 1,
+            "red" : 0.93
+          },
+          "life" : {
+            "blue" : 0.2,
+            "green" : 0.46,
+            "opacity" : 1,
+            "red" : 0.28
+          },
+          "light" : {
+            "blue" : 1,
+            "green" : 1,
+            "opacity" : 1,
+            "red" : 1
+          },
+          "primary" : {
+            "blue" : 0.36,
+            "green" : 0.58,
+            "opacity" : 1,
+            "red" : 0.76
+          },
+          "ring" : {
+            "blue" : 0.78,
+            "green" : 0.88,
+            "opacity" : 1,
+            "red" : 0.93
+          },
+          "shadow" : {
+            "blue" : 0.11,
+            "green" : 0.14,
+            "opacity" : 1,
+            "red" : 0.21
+          },
+          "storm" : {
+            "blue" : 0.54,
+            "green" : 0.76,
+            "opacity" : 1,
+            "red" : 0.9
+          }
+        },
+        "polarAsymmetry" : 0,
+        "ringDetail" : 0.9,
+        "ringInnerRadius" : 1.235,
+        "ringOpacity" : 1,
+        "ringOuterRadius" : 2.27,
+        "roll" : 0,
+        "rotationPhase" : 0,
+        "rotationSpeed" : 0.11,
+        "roughness" : 0.72,
+        "seed" : 138759,
+        "stationCount" : 1,
+        "stationInclination" : 0.9,
+        "stationOrbitRadius" : 1.085,
+        "stationSize" : 1,
+        "stationSpeed" : 0.55,
+        "stormCount" : 1,
+        "stormStrength" : 0.86,
+        "turbulence" : 0.34,
+        "warpStrength" : 0.76
+      },
+      "speed" : 0.07
+    }
+  ],
+  "lightFalloff" : 0,
+  "lightTint" : 0.6,
+  "orbitSpeed" : 1,
+  "orbitStyle" : {
+    "color" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
+    "opacity" : 0.28,
+    "width" : 1
+  },
+  "perspective" : 0,
+  "showsOrbits" : false,
+  "sky" : {
+    "bandStrength" : 0,
+    "bandTilt" : 1,
+    "brightness" : 1,
+    "color" : {
+      "blue" : 1,
+      "green" : 1,
+      "opacity" : 1,
+      "red" : 1
+    },
+    "isVisible" : false,
+    "seed" : 0,
+    "starCount" : 900,
+    "starSize" : 1,
+    "twinkle" : 0,
+    "warmth" : 1
+  },
+  "star" : {
+    "archetype" : 10,
+    "atmosphereDensity" : 0.4,
+    "atmosphereGlow" : 0.8,
+    "axialTilt" : 0.126,
+    "bandCount" : 0,
+    "bandSharpness" : 0,
+    "cloudCoverage" : 0,
+    "cloudSpeed" : 0.6,
+    "dayNightSpeed" : 0,
+    "detail" : 0.78,
+    "exposure" : 1.1,
+    "featureAmount" : 0.6,
+    "iceAltitude" : 0.22,
+    "iceCoverage" : 0,
+    "life" : 0,
+    "lightAzimuth" : 2.2,
+    "lightElevation" : 0.46,
+    "luminosity" : 0.5,
+    "microDetail" : 1,
+    "palette" : {
+      "atmosphere" : {
+        "blue" : 0.15,
+        "green" : 0.55,
+        "opacity" : 1,
+        "red" : 1
+      },
+      "highlight" : {
+        "blue" : 0.82,
+        "green" : 0.96,
+        "opacity" : 1,
+        "red" : 1
+      },
+      "ice" : {
+        "blue" : 0.97,
+        "green" : 0.95,
+        "opacity" : 1,
+        "red" : 0.93
+      },
+      "life" : {
+        "blue" : 0.2,
+        "green" : 0.46,
+        "opacity" : 1,
+        "red" : 0.28
+      },
+      "light" : {
+        "blue" : 1,
+        "green" : 1,
+        "opacity" : 1,
+        "red" : 1
+      },
+      "primary" : {
+        "blue" : 0.04,
+        "green" : 0.32,
+        "opacity" : 1,
+        "red" : 0.95
+      },
+      "ring" : {
+        "blue" : 0.83,
+        "green" : 0.9,
+        "opacity" : 1,
+        "red" : 0.94
+      },
+      "shadow" : {
+        "blue" : 0.01,
+        "green" : 0.04,
+        "opacity" : 1,
+        "red" : 0.55
+      },
+      "storm" : {
+        "blue" : 0.12,
+        "green" : 0.72,
+        "opacity" : 1,
+        "red" : 1
+      }
+    },
+    "polarAsymmetry" : 0,
+    "ringDetail" : 0.8,
+    "ringInnerRadius" : 1.235,
+    "ringOpacity" : 0,
+    "ringOuterRadius" : 2.27,
+    "roll" : 0,
+    "rotationPhase" : 0,
+    "rotationSpeed" : 0.04,
+    "roughness" : 0.7,
+    "seed" : 1989000,
+    "stationCount" : 1,
+    "stationInclination" : 0.9,
+    "stationOrbitRadius" : 1.085,
+    "stationSize" : 1,
+    "stationSpeed" : 0.55,
+    "stormCount" : 2,
+    "stormStrength" : 0.5,
+    "turbulence" : 0.6,
+    "warpStrength" : 0.6
+  },
+  "starRadius" : 1,
+  "viewAzimuth" : 0,
+  "viewElevation" : 0.35,
+  "zoom" : 1
+} as PlanetSystem
 
 /// Kept for the callers that had it before every preset was exported.
 export const gasGiantRecipe: PlanetRecipe = archetypeRecipes.gasGiant

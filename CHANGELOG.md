@@ -16,12 +16,44 @@ Changing how the shader draws a given recipe is a minor version and is noted und
 ## [Unreleased]
 
 ### Added
+- **`MoonletPlanetSystem`** and **`MoonletSystemView`** — a star and the worlds around it,
+  each lit from where the star actually is: a planet passing in front of its star shows its
+  night side. Orbits have a distance, a size, a phase and a speed (zero holds a planet where
+  it is put), the camera sits `viewElevation` above the plane, and `lightTint` gives the
+  planets the star's colour. `layout(at:)` returns lit copies, so a planet's own recipe is
+  never changed. `MoonletPlanetSnapshotRenderer.image(system:size:time:)` renders one.
+  The web port has the same as `layoutSystem`, `placeBody` and `renderer.renderSystem`,
+  held to the Swift by `tests/systems.json`, and a `dev/system.html` workbench.
+- **`viewAzimuth`** and **`showsOrbits`** on a system — the camera walks all the way round
+  it (and below it, with a negative `viewElevation`), and each orbit can be drawn as a faint
+  line whose far half is behind the star and near half in front of it.
+- **`perspective`** on a system — 0, the default, is flat as before. Above it the system
+  is seen through a real camera: nearer worlds are larger, orbits narrow towards the back,
+  and each world's pole and rings tip towards the camera as it rises over the plane.
+  `MoonletSystemView(showsStarfield:)` adds distant stars that turn with the camera. Both
+  are in the web port too: `perspective` on the system, and
+  `renderSystem(…, { showsStarfield: true })`.
+- **Everything about a system is a setting.** `zoom`; `lightFalloff`, 0 as before and 1 the
+  inverse-square law; `orbitSpeed` on every orbit at once; `orbitStyle` — the lines' opacity,
+  width and colour; and `sky`, a `MoonletSky`: whether it shows, how many stars, which sky
+  (`seed`), their brightness, size, colour and range of colour, `twinkle`, and a Milky Way
+  `bandStrength` and `bandTilt`. Each orbit has an `inclination` out of the plane and the
+  `node` it crosses it at. Every one defaults to what was drawn before and decodes to that
+  when missing. Both ports, held together by `tests/systems.json`; both workbenches have
+  every one of them, and the web one edits the selected planet's whole recipe too.
+- **`roll`** on a recipe — turns the drawn body on screen inside the shader. A system sets it
+  so a pole can lean sideways; turning the view instead stretched a Metal view into an
+  ellipse. 0 is upright and changes no pixel.
+- **`palette.light`** — the colour of the light on a planet. White by default, which
+  multiplies to exactly the pixels every planet had before.
+
 - **`MoonletPlanetArchetype.star`** (raw value 10) and **`MoonletPlanetPreset.sun`** — a body
-  that makes its own light. Granulation, sunspots in the two activity belts with faculae
-  round them, limb darkening that reddens as well as dims, and a streamered corona outside
-  the disc. The light controls do nothing to it; the palette is re-read as hot gas, cooler
-  gas, spots, faculae and corona, and `stormCount` is how many spots. `drawnExtent` is 1.4
-  so the corona fits. The web port accepts archetype 10.
+  that makes its own light: a ball of fire, churning plasma with white-hot veins, flames off
+  the limb and a bloom round it. The light controls do nothing to it; the palette is read as
+  a fire ramp — shadow deep red, primary orange, storm yellow, highlight white-hot, and
+  atmosphere the glow. `stormCount` is how many cooler cells it has. `drawnExtent` is 1.6 so
+  the flames fit. The web port accepts archetype 10.
+- **`luminosity`** — stars only: 0 a ball of fire, 0.5 hot and bright, 1 nothing but light.
 - **`dayNightSpeed`** — the star sweeps around and the terminator moves, so a world runs
   through its phases. Zero holds the light still and is the default. It is a different thing
   from `rotationSpeed`, which turns the ground under a light that stays put; a world with
@@ -57,6 +89,12 @@ Changing how the shader draws a given recipe is a minor version and is noted und
   for its own framing, so the two cannot disagree.
 
 ### Fixed
+- A planet in a system was lit from the wrong side vertically, and turned the wrong way as the
+  camera went round: the shader's y runs down the screen, which was assumed rather than
+  measured. Both ports are fixed, and a test now checks the lit side in rendered pixels.
+- The atmosphere glow `MoonletPlanetView` fills behind a planet was sized from the view's
+  frame, which for a ringed planet is the rings' width — so it showed as a pale disc reaching
+  past the rings. It is sized from the disc now.
 - **A station on a ringless planet was cut off at the edge of the square.** The canvas
   stopped at the limb and the orbit is outside it. The framing now zooms out to hold the
   orbit, the trail and the glint, the way it already did for rings.

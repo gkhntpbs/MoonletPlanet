@@ -94,6 +94,9 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
     /// a white centre and a bloom; 1 burns it all away to a ball of light. Ignored by
     /// every other archetype.
     public var luminosity: Double
+    /// Turns the whole drawn body on screen, counter-clockwise, in radians. A system sets it
+    /// to lean a pole sideways, which `axialTilt` alone cannot; 0 is upright.
+    public var roll: Double
 
     /// How far from the disc's centre the shader draws, in planet radii — 1 for a bare
     /// planet, wider for rings or anything in orbit. A view that sizes the body against a
@@ -160,7 +163,8 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
         stationSpeed: Double = 0.55,
         stationInclination: Double = 0.9,
         stationSize: Double = 1,
-        luminosity: Double = 0.5
+        luminosity: Double = 0.5,
+        roll: Double = 0
     ) {
         self.archetype = archetype
         self.seed = seed
@@ -200,6 +204,7 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
         self.stationInclination = stationInclination
         self.stationSize = stationSize
         self.luminosity = luminosity
+        self.roll = roll
     }
 
     // Stored data again: five fields that did not exist when somebody saved their planet,
@@ -246,6 +251,7 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
         stationInclination = try c.decodeIfPresent(Double.self, forKey: .stationInclination) ?? 0.9
         stationSize = try c.decodeIfPresent(Double.self, forKey: .stationSize) ?? 1
         luminosity = try c.decodeIfPresent(Double.self, forKey: .luminosity) ?? 0.5
+        roll = try c.decodeIfPresent(Double.self, forKey: .roll) ?? 0
     }
 
     public static func preset(_ archetype: MoonletPlanetArchetype, seed: UInt32 = 240513) -> Self {

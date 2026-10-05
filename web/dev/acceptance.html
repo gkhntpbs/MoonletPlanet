@@ -18,7 +18,7 @@
 <div id="status">starting…</div>
 <div id="grid"></div>
 <script type="module">
-import { createPlanetRenderer, archetypeRecipes, solarSystem, randomized } from './bundle.js'
+import { createPlanetRenderer, archetypeRecipes, solarSystem, randomized, systemExample } from './bundle.js'
 
 const status = document.getElementById('status')
 const grid = document.getElementById('grid')
@@ -36,6 +36,10 @@ const subjects = [
   ['frozen', archetypeRecipes.frozen],
   ['star — corona', archetypeRecipes.star],
   ['sun', solarSystem.sun],
+  ['system — lit from its star', systemExample],
+  ['system — orbits, camera turned', { ...systemExample, showsOrbits: true, viewAzimuth: 2, viewElevation: -0.5 }],
+  ['system — perspective, starfield', { ...systemExample, showsOrbits: true, perspective: 0.8, viewAzimuth: 1, viewElevation: 0.6 }],
+  ['system — red star, edge-on', { ...systemExample, viewElevation: 0.05, lightTint: 1, star: { ...systemExample.star, palette: { ...systemExample.star.palette, primary: { red: 0.9, green: 0.08, blue: 0.02, opacity: 1 } } } }],
   ['randomized(seed: 240513)', randomized(archetypeRecipes.gasGiant, 240513)],
   ['life — spacefaring, night side', { ...solarSystem.earth, life: 3, lightAzimuth: 5.4 }],
   ['life — interplanetary, a launch', { ...solarSystem.earth, life: 4, lightAzimuth: 5.4 }],
@@ -54,7 +58,9 @@ for (const [label, recipe] of subjects) {
   try {
     const renderer = createPlanetRenderer(canvas)
     if (!renderer) throw new Error('no WebGL2 context')
-    renderer.render(recipe, 18, 260, 260, 2)
+    // A system has bodies; everything else is one recipe.
+    if (recipe.bodies) renderer.renderSystem(recipe, 0, 260, 260, 2, { showsStarfield: label.includes('starfield') })
+    else renderer.render(recipe, 18, 260, 260, 2)
     renderers.push([label, renderer, recipe, canvas])
     // Coverage: how much of the canvas the planet actually painted. A shader that compiles
     // and draws nothing is the failure this page exists to catch.

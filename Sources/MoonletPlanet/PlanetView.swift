@@ -96,6 +96,9 @@ public struct MoonletPlanetView: View {
         // fills the same falloff once, underneath, and costs a gradient.
         .background {
             if showsAtmosphere {
+                // Sized from the disc, not the frame. A ringed planet's frame is the rings'
+                // width, and a glow sized from it was a pale disc reaching past the rings.
+                let disc = side / max(recipe.drawnExtent, 1)
                 Circle()
                     .fill(
                         RadialGradient(
@@ -105,11 +108,11 @@ public struct MoonletPlanetView: View {
                                 .clear
                             ],
                             center: .center,
-                            startRadius: side * 0.5,
-                            endRadius: side * 0.6
+                            startRadius: disc * 0.5,
+                            endRadius: disc * 0.6
                         )
                     )
-                    .frame(width: side * 1.2, height: side * 1.2)
+                    .frame(width: disc * 1.2, height: disc * 1.2)
             }
         }
     }

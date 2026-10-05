@@ -46,6 +46,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.7041262054117635,
           "green" : 0.5048012519611204,
@@ -76,6 +82,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.11,
       "roughness" : 0.72,
@@ -139,6 +146,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.7041262054117635,
           "green" : 0.5048012519611204,
@@ -169,6 +182,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.11,
       "roughness" : 0.22,
@@ -232,6 +246,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.7041262054117635,
           "green" : 0.5048012519611204,
@@ -262,6 +282,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.025,
       "roughness" : 0.96,
@@ -325,6 +346,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.2857798742706027,
           "green" : 0.5398180871304779,
@@ -355,6 +382,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.11,
       "roughness" : 0.72,
@@ -418,6 +446,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.2857798742706027,
           "green" : 0.5398180871304779,
@@ -448,6 +482,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.11,
       "roughness" : 0.22,
@@ -511,6 +546,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.2857798742706027,
           "green" : 0.5398180871304779,
@@ -541,6 +582,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.025,
       "roughness" : 0.96,
@@ -604,6 +646,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.7378329844948903,
           "green" : 0.32874040602079,
@@ -634,6 +682,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.11,
       "roughness" : 0.72,
@@ -697,6 +746,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.7378329844948903,
           "green" : 0.32874040602079,
@@ -727,6 +782,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.11,
       "roughness" : 0.22,
@@ -790,6 +846,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.7378329844948903,
           "green" : 0.32874040602079,
@@ -820,6 +882,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.025,
       "roughness" : 0.96,
@@ -883,6 +946,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.19496152313792353,
           "green" : 0.5608541765715195,
@@ -913,6 +982,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.11,
       "roughness" : 0.72,
@@ -976,6 +1046,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.19496152313792353,
           "green" : 0.5608541765715195,
@@ -1006,6 +1082,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.11,
       "roughness" : 0.22,
@@ -1069,6 +1146,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.19496152313792353,
           "green" : 0.5608541765715195,
@@ -1099,6 +1182,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.025,
       "roughness" : 0.96,
@@ -1162,6 +1246,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.7518257953261839,
           "green" : 0.29467898464554454,
@@ -1192,6 +1282,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.11,
       "roughness" : 0.72,
@@ -1255,6 +1346,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.7518257953261839,
           "green" : 0.29467898464554454,
@@ -1285,6 +1382,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.11,
       "roughness" : 0.22,
@@ -1348,6 +1446,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.7518257953261839,
           "green" : 0.29467898464554454,
@@ -1378,6 +1482,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.025,
       "roughness" : 0.96,
@@ -1441,6 +1546,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.6003214735934127,
           "green" : 0.1838037418869087,
@@ -1471,6 +1582,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.11,
       "roughness" : 0.72,
@@ -1534,6 +1646,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.6003214735934127,
           "green" : 0.1838037418869087,
@@ -1564,6 +1682,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.11,
       "roughness" : 0.22,
@@ -1627,6 +1746,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.6003214735934127,
           "green" : 0.1838037418869087,
@@ -1657,6 +1782,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.025,
       "roughness" : 0.96,
@@ -1720,6 +1846,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.34767916124344295,
           "green" : 0.466450711358103,
@@ -1750,6 +1882,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.11,
       "roughness" : 0.72,
@@ -1813,6 +1946,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.34767916124344295,
           "green" : 0.466450711358103,
@@ -1843,6 +1982,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.11,
       "roughness" : 0.22,
@@ -1906,6 +2046,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.34767916124344295,
           "green" : 0.466450711358103,
@@ -1936,6 +2082,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.025,
       "roughness" : 0.96,
@@ -1999,6 +2146,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.5928788720909757,
           "green" : 0.7741490178684644,
@@ -2029,6 +2182,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.11,
       "roughness" : 0.72,
@@ -2092,6 +2246,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.5928788720909757,
           "green" : 0.7741490178684644,
@@ -2122,6 +2282,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.11,
       "roughness" : 0.22,
@@ -2185,6 +2346,12 @@
           "opacity" : 1,
           "red" : 0.28
         },
+        "light" : {
+          "blue" : 1,
+          "green" : 1,
+          "opacity" : 1,
+          "red" : 1
+        },
         "primary" : {
           "blue" : 0.5928788720909757,
           "green" : 0.7741490178684644,
@@ -2215,6 +2382,7 @@
       "ringInnerRadius" : 1.235,
       "ringOpacity" : 0,
       "ringOuterRadius" : 2.27,
+      "roll" : 0,
       "rotationPhase" : 0,
       "rotationSpeed" : 0.025,
       "roughness" : 0.96,

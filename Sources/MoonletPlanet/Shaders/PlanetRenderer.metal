@@ -42,6 +42,7 @@ typedef struct {
     float stationInclination;
     float stationSize;
     float luminosity;
+    float roll;
     float4 color0;
     float4 color1;
     float4 color2;
@@ -50,6 +51,7 @@ typedef struct {
     float4 ringColor;
     float4 iceColor;
     float4 lifeColor;
+    float4 lightColor;
 } MoonletPlanetUniforms;
 
 struct MoonletPlanetVertexOut {
@@ -770,6 +772,12 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
     // there too. Mixing the two is how the terminator and the ring shadow end up disagreeing
     // about which side the star is on.
     float2 q = float2(p.x, -p.y);
+    // The whole body turned on screen, done here rather than by rotating the view: a Metal
+    // view turned by its host is stretched to fit, and a planet drawn round comes out an
+    // ellipse. At zero this multiplies by one and changes nothing.
+    float cosRoll = cos(u.roll);
+    float sinRoll = sin(u.roll);
+    q = float2(q.x * cosRoll + q.y * sinRoll, -q.x * sinRoll + q.y * cosRoll);
     float radiusSquared = dot(q, q);
     bool hitsPlanet = radiusSquared <= 1.0;
     float surfaceZ = sqrt(max(0.0, 1.0 - radiusSquared));
@@ -822,11 +830,11 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
                 // Single-scattering brightness. This is what keeps the ringlets visible
                 // where the alpha above has already saturated to one.
                 float scatter = 1.0 - exp(-tau * 1.9);
-                ringRGB = base * (0.16 + 0.84 * abs(lightSide)) * surge * (0.25 + 0.9 * scatter);
+                ringRGB = base * (0.16 + 0.84 * abs(lightSide)) * surge * (0.25 + 0.9 * scatter) * u.lightColor.rgb;
             } else {
                 // The unlit face, seen by transmitted light: the thin C ring glows and the
                 // thick B ring goes dark, which is the reverse of how they look lit.
-                ringRGB = base * (0.08 + 0.3 * abs(lightSide)) * exp(-tau * 0.85);
+                ringRGB = base * (0.08 + 0.3 * abs(lightSide)) * exp(-tau * 0.85) * u.lightColor.rgb;
             }
 
             // The planet's shadow across the rings, a cylinder because the star is far away.
@@ -944,7 +952,9 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
             }
         }
 
-        float3 planet = albedo * softLight * mix(0.2, 1.0, day) * mix(1.0, ringShade, 0.9);
+        // The star's own colour, white unless the planet is lit by one in a system: a red
+        // dwarf's world is lit red. Multiplied in rather than mixed, so white changes nothing.
+        float3 planet = albedo * softLight * mix(0.2, 1.0, day) * mix(1.0, ringShade, 0.9) * u.lightColor.rgb;
 
         // City lights, added as emission before the tonemap so they bloom the way a bright
         // thing does rather than being pasted on at full strength afterwards.
@@ -966,7 +976,7 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
                 planet += glow * lit * 7.0;
             }
         }
-        planet += u.color0.rgb * specular * 0.4 * ringShade;
+        planet += u.color0.rgb * specular * 0.4 * ringShade * u.lightColor.rgb;
         planet += u.atmosphereColor.rgb * rim * u.atmosphereGlow * (0.3 + day * 0.7);
         // A star is its own light: no terminator, no specular, nothing in its shadow. It
         // replaces everything above rather than skipping it, which keeps one path.

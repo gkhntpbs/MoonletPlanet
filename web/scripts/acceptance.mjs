@@ -102,6 +102,8 @@ for (const { label, coverage } of report.drawn) {
   // and traffic reaches 1.3: π/4 / 1.3² ≈ 0.46. A star zooms out to 1.6 for its flames, so
   // its disc alone is π/4 / 1.6² ≈ 0.31.
   const floor = label.includes('rings') || label.includes('saturn') || label.includes('uranus') ? 0.15
+    // A system is mostly space: the star's disc and a few small worlds, and that is all.
+    : label.includes('system') ? 0.03
     : label.includes('star') || label.includes('sun') ? 0.3
     : label.includes('interplanetary') ? 0.42 : label.includes('spacefaring') ? 0.5 : 0.7
   const ok = coverage >= floor

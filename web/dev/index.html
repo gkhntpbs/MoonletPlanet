@@ -171,6 +171,8 @@ randomButton.addEventListener('click', () => {
   sync()
 })
 
+panel.append(el('div', { style: 'margin-bottom:10px' }, [el('a', { href: './system.html', textContent: 'A whole system →', style: 'color: var(--accent)' })]))
+
 section('Planet', [
   el('div', { className: 'stack' }, [archetypeSelect, randomButton]),
   slider('Axial tilt', 'axialTilt', 0, Math.PI / 2),

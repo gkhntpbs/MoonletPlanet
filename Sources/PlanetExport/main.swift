@@ -24,7 +24,7 @@ var lines = [
     "// These are the Swift package's own presets. A second hand-written copy is a copy that",
     "// disagrees with the phone about what Saturn looks like.",
     "",
-    "import type { PlanetRecipe } from './index.ts'",
+    "import type { PlanetRecipe, PlanetSystem } from './index.ts'",
     ""
 ]
 
@@ -40,6 +40,10 @@ for preset in MoonletPlanetPreset.allCases where preset != .custom {
     lines.append("  \(preset.rawValue): \(json(preset.style!.recipe)) as PlanetRecipe,")
 }
 lines.append("} as const")
+lines.append("")
+let systemJSON = String(data: try! encoder.encode(MoonletPlanetSystem.example), encoding: .utf8)!
+lines.append("/// A small system to start from: the Sun, a rocky inner world, Earth, and a ringed giant.")
+lines.append("export const systemExample = \(systemJSON) as PlanetSystem")
 lines.append("")
 lines.append("/// Kept for the callers that had it before every preset was exported.")
 lines.append("export const gasGiantRecipe: PlanetRecipe = archetypeRecipes.gasGiant")
@@ -68,3 +72,77 @@ let parityURL = root.appendingPathComponent("web/tests/parity.json")
 try FileManager.default.createDirectory(at: parityURL.deletingLastPathComponent(), withIntermediateDirectories: true)
 try encoder.encode(cases).write(to: parityURL)
 print("wrote web/tests/parity.json (\(cases.count) cases)")
+
+// Where a system puts its planets and which way it lights them, at a few times and from a
+// few angles. The port has to land every planet on the same spot.
+struct SystemCase: Encodable {
+    struct Body: Encodable {
+        let index: Int?
+        let x, y, depth, radius, lightAzimuth, lightElevation, rotationPhase, axialTilt, roll, exposure: Double
+        let orbit: [Double]
+        let light: MoonletColor
+    }
+    let system: MoonletPlanetSystem
+    let time: Double
+    let extent: Double
+    let layout: [Body]
+    /// The first stars of the field in a 500-point square: x, y, radius, alpha.
+    let starfield: [Double]
+}
+/// Every setting a system has, turned away from its default, so the port is held to all of them.
+func everythingSet(_ variant: Int) -> MoonletPlanetSystem {
+    var s = MoonletPlanetSystem.example
+    s.perspective = [0, 0.7, 1][variant]
+    s.viewElevation = [0.4, -0.7, 1.3][variant]
+    s.viewAzimuth = [1.1, -2.2, 3.0][variant]
+    s.zoom = [1.6, 0.8, 2.5][variant]
+    s.lightFalloff = [0.5, 1, 0.2][variant]
+    s.orbitSpeed = [2, 0.3, 0][variant]
+    s.bodies[0].inclination = [0.4, -0.9, 0.2][variant]
+    s.bodies[0].node = [1.0, 2.5, -0.4][variant]
+    s.bodies[2].inclination = [-0.25, 0.6, 1.2][variant]
+    s.bodies[2].node = [-1.1, 0.3, 2.0][variant]
+    s.sky = .init(isVisible: true, starCount: [400, 2500, 900][variant], seed: [7, 4_000_000_000, 123][variant],
+                  brightness: [1.3, 0.6, 2][variant], starSize: [1.5, 0.7, 2.5][variant], warmth: [0, 2, 1.4][variant],
+                  color: .init(red: 0.9, green: 0.85, blue: 1), twinkle: [0.5, 1, 0][variant],
+                  bandStrength: [0.4, 1, 0.7][variant], bandTilt: [0.3, -1.2, 0.9][variant])
+    return s
+}
+func makeCase(_ system: MoonletPlanetSystem, _ time: Double) -> SystemCase {
+    let layout = system.layout(at: time).map { p -> SystemCase.Body in
+        var orbit: [Double] = []
+        if let i = p.index { for q in system.orbitPoints(i, count: 8) { orbit += [q.x, q.y, q.depth] } }
+        return SystemCase.Body(index: p.index, x: p.x, y: p.y, depth: p.depth, radius: p.radius,
+                               lightAzimuth: p.recipe.lightAzimuth, lightElevation: p.recipe.lightElevation,
+                               rotationPhase: p.recipe.rotationPhase, axialTilt: p.recipe.axialTilt, roll: p.recipe.roll,
+                               exposure: p.recipe.exposure, orbit: orbit, light: p.recipe.palette.light)
+    }
+    var starfield: [Double] = []
+    for s in system.skyStars(width: 500, height: 500, time: time).prefix(24) {
+        starfield += [s.x, s.y, s.radius, s.alpha, s.red, s.green, s.blue]
+    }
+    return SystemCase(system: system, time: time, extent: system.extent, layout: layout, starfield: starfield)
+}
+var systemCases: [SystemCase] = []
+for (elevation, azimuth, perspective) in [(0, 0, 0), (0.35, 0, 0), (1.2, 2.3, 0), (-0.6, -1.4, 0),
+                                          (0.3, 0.7, 0.8), (1.1, -2.6, 1), (-0.9, 4.1, 0.4)] {
+    for time in [0, 3.7, 41] {
+        var system = MoonletPlanetSystem.example
+        system.perspective = perspective
+        system.bodies[1].recipe.axialTilt = 0.41
+        system.bodies[1].recipe.rotationPhase = 1.3
+        system.viewElevation = elevation
+        system.viewAzimuth = azimuth
+        system.lightTint = abs(elevation) / 1.2
+        systemCases.append(makeCase(system, time))
+    }
+}
+for variant in 0..<3 {
+    for time in [0, 5.5, 33] {
+        let system = everythingSet(variant)
+        systemCases.append(makeCase(system, time))
+    }
+}
+let systemsURL = root.appendingPathComponent("web/tests/systems.json")
+try encoder.encode(systemCases).write(to: systemsURL)
+print("wrote web/tests/systems.json (\(systemCases.count) cases)")

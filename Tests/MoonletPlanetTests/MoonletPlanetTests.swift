@@ -433,3 +433,309 @@ import Foundation
         #expect(decoded == recipe, "\(level) did not survive the round trip")
     }
 }
+
+// MARK: - Systems
+
+/// The light is the direction to the star, in the shader's own light space.
+@Test func aPlanetInASystemIsLitFromItsStar() throws {
+    func light(_ r: MoonletPlanetRecipe) -> (x: Double, y: Double, z: Double) {
+        (cos(r.lightElevation) * cos(r.lightAzimuth), sin(r.lightElevation), cos(r.lightElevation) * sin(r.lightAzimuth))
+    }
+    var system = MoonletPlanetSystem(viewElevation: 0)
+    system.bodies = [.init(recipe: .preset(.rocky), distance: 3, phase: 0, speed: 0)]
+    // To the star's right, seen edge-on: lit from the left.
+    var planet = try #require(system.layout(at: 0).first { $0.index == 0 })
+    var l = light(planet.recipe)
+    #expect(abs(l.x + 1) < 1e-9 && abs(l.y) < 1e-9 && abs(l.z) < 1e-9)
+    #expect(planet.x == 3)
+
+    // In front of the star: lit from behind, so the camera sees its night side.
+    system.bodies[0].phase = -.pi / 2
+    planet = try #require(system.layout(at: 0).first { $0.index == 0 })
+    l = light(planet.recipe)
+    #expect(abs(l.z + 1) < 1e-9, "lit from behind")
+    #expect(planet.depth > 0, "and in front of the star")
+
+    // Looking down on the plane, a world behind the star is above it on screen and lit from
+    // below — which in the shader's space, whose y runs down the screen, is +y.
+    system.viewElevation = 0.5
+    system.bodies[0].phase = .pi / 2
+    planet = try #require(system.layout(at: 0).first { $0.index == 0 })
+    #expect(planet.y > 0)
+    #expect(light(planet.recipe).y > 0)
+}
+
+/// Moving round the orbit with time, and drawn back to front.
+@Test func aSystemMovesAndDrawsBackToFront() {
+    var system = MoonletPlanetSystem.example
+    for i in system.bodies.indices { system.bodies[i].speed = 0.5 }
+    let a = system.layout(at: 0), b = system.layout(at: 1)
+    #expect(a.count == system.bodies.count + 1, "every planet and the star")
+    #expect(a.map(\.depth) == a.map(\.depth).sorted(), "back to front")
+    #expect(a.first { $0.index == 0 }!.x != b.first { $0.index == 0 }!.x)
+    // The planets' own recipes are not touched; the light lives on the copies.
+    #expect(system.bodies[0].recipe == MoonletPlanetPreset.mercury.style!.recipe)
+    for p in a where p.index != nil { #expect(p.recipe.dayNightSpeed == 0) }
+}
+
+/// The view has to hold the furthest thing drawn, rings and all, and the star's flames.
+@Test func aSystemsExtentHoldsEverything() {
+    var system = MoonletPlanetSystem()
+    #expect(system.extent == system.starRadius * system.star.drawnExtent)
+    system.bodies = [.init(recipe: MoonletPlanetPreset.saturn.style!.recipe, radius: 0.5, distance: 5)]
+    #expect(system.extent == 5 + 0.5 * MoonletPlanetPreset.saturn.style!.recipe.drawnExtent)
+    for p in system.layout(at: 3) {
+        #expect(abs(p.x) + p.radius * p.recipe.drawnExtent <= system.extent + 1e-9)
+        #expect(abs(p.y) + p.radius * p.recipe.drawnExtent <= system.extent + 1e-9)
+    }
+}
+
+/// A white light is the light every planet had before, and a tinted one is the star's.
+@Test func theLightTakesTheStarsColourOnlyWhenAsked() throws {
+    #expect(MoonletPlanetRecipe.preset(.ocean).palette.light == MoonletColor(red: 1, green: 1, blue: 1))
+    var system = MoonletPlanetSystem()
+    system.lightTint = 0
+    #expect(system.lightColor == MoonletColor(red: 1, green: 1, blue: 1))
+    system.lightTint = 1
+    let c = system.lightColor
+    #expect(max(c.red, c.green, c.blue) == 1, "a colour, not a brightness")
+    #expect(c.blue < c.red, "an orange star lights warm")
+
+    // A palette saved before light existed is lit white.
+    let data = try JSONEncoder().encode(MoonletPlanetRecipe.preset(.ocean).palette)
+    var object = try JSONSerialization.jsonObject(with: data) as! [String: Any]
+    object.removeValue(forKey: "light")
+    let old = try JSONSerialization.data(withJSONObject: object)
+    #expect(try JSONDecoder().decode(MoonletPlanetPalette.self, from: old).light == MoonletColor(red: 1, green: 1, blue: 1))
+}
+
+@Test func aSystemSurvivesACodableRoundTrip() throws {
+    let system = MoonletPlanetSystem.example
+    let decoded = try JSONDecoder().decode(MoonletPlanetSystem.self, from: JSONEncoder().encode(system))
+    #expect(decoded == system)
+}
+
+/// Dragging a planet to a point puts it at that point, whenever the drag happens.
+@Test func aPlanetDraggedToAPointIsThere() throws {
+    var system = MoonletPlanetSystem.example
+    system.viewElevation = 0.6
+    system.place(1, atX: -2.5, y: 0.8, time: 7)
+    let p = try #require(system.layout(at: 7).first { $0.index == 1 })
+    #expect(abs(p.x + 2.5) < 1e-9 && abs(p.y - 0.8) < 1e-9)
+
+    // Edge-on there is no depth on screen; it slides along its orbit and keeps its distance.
+    system.viewElevation = 0
+    let distance = system.bodies[1].distance
+    system.place(1, atX: 1, y: 0, time: 7)
+    let q = try #require(system.layout(at: 7).first { $0.index == 1 })
+    #expect(abs(q.x - 1) < 1e-9)
+    #expect(system.bodies[1].distance == distance)
+}
+
+/// Walking the camera round the system half a turn puts every planet on the other side.
+@Test func turningTheCameraTurnsTheSystem() throws {
+    var system = MoonletPlanetSystem.example
+    let before = system.layout(at: 2)
+    system.viewAzimuth = .pi
+    let after = system.layout(at: 2)
+    for i in system.bodies.indices {
+        let a = try #require(before.first { $0.index == i }), b = try #require(after.first { $0.index == i })
+        #expect(abs(a.x + b.x) < 1e-9 && abs(a.depth + b.depth) < 1e-9)
+    }
+    // And a planet dragged with the camera turned lands where it was dropped.
+    system.viewAzimuth = 1.1
+    system.place(0, atX: 1.5, y: 0.4, time: 2)
+    let p = try #require(system.layout(at: 2).first { $0.index == 0 })
+    #expect(abs(p.x - 1.5) < 1e-9 && abs(p.y - 0.4) < 1e-9)
+}
+
+/// An orbit line goes through the planet, wherever the camera is.
+@Test func anOrbitLinePassesThroughItsPlanet() throws {
+    var system = MoonletPlanetSystem.example
+    system.viewElevation = 0.7
+    let points = system.orbitPoints(1, count: 3600)
+    let p = try #require(system.layout(at: 5).first { $0.index == 1 })
+    let nearest = points.map { hypot($0.x - p.x, $0.y - p.y) }.min()!
+    #expect(nearest < 0.01)
+    // A system saved before the camera turned comes back facing forward, without lines.
+    var object = try JSONSerialization.jsonObject(with: JSONEncoder().encode(system)) as! [String: Any]
+    object.removeValue(forKey: "viewAzimuth"); object.removeValue(forKey: "showsOrbits")
+    let old = try JSONDecoder().decode(MoonletPlanetSystem.self, from: JSONSerialization.data(withJSONObject: object))
+    #expect(old.viewAzimuth == 0 && !old.showsOrbits)
+}
+
+/// With perspective, nearer is bigger, poles tip with the camera, and everything still fits.
+@Test func aSystemInPerspectiveIsSeenByARealCamera() throws {
+    var flat = MoonletPlanetSystem.example
+    flat.viewElevation = 0.5
+    for i in flat.bodies.indices { flat.bodies[i].radius = 0.3 }
+    var deep = flat
+    deep.perspective = 1
+    let near = try #require(deep.layout(at: 0).max { $0.depth < $1.depth })
+    let far = try #require(deep.layout(at: 0).min { $0.depth < $1.depth })
+    #expect(near.radius > 0.3 && far.radius < 0.3, "nearer is bigger and further is smaller")
+    #expect(flat.layout(at: 0).first { $0.index == 2 }!.recipe.axialTilt == flat.bodies[2].recipe.axialTilt, "flat changes nothing")
+    for t in stride(from: 0.0, through: 60, by: 3) {
+        for p in deep.layout(at: t) {
+            #expect(max(abs(p.x), abs(p.y)) + p.radius * p.recipe.drawnExtent <= deep.extent + 1e-9)
+        }
+    }
+    // Dragging in perspective still puts it under the pointer, closely.
+    deep.place(1, atX: -2, y: 0.9, time: 0)
+    let moved = try #require(deep.layout(at: 0).first { $0.index == 1 })
+    #expect(hypot(moved.x + 2, moved.y - 0.9) < 0.01)
+}
+
+/// Walking the camera round a system must not turn anything in it: every body's pole and
+/// its prime meridian, read back out of what the shader is handed, point the same way in
+/// the system from every angle, and the light still comes from the star.
+@Test func aRealCameraLeavesEveryBodyWhereItIs() throws {
+    var system = MoonletPlanetSystem.example
+    system.perspective = 0.8
+    system.bodies[1].recipe.axialTilt = 0.41
+    system.bodies[1].recipe.rotationPhase = 1.3
+    func world(_ p: MoonletPlanetSystem.Placement, in s: MoonletPlanetSystem) -> (pole: (Double, Double, Double), meridian: (Double, Double, Double)) {
+        // Rebuilt in the shader's space (y down the screen) and rolled there, as the shader does.
+        let t = p.recipe.axialTilt, f = p.recipe.rotationPhase, r = p.roll
+        let roll = { (v: (Double, Double, Double)) in (v.0 * cos(r) - v.1 * sin(r), v.0 * sin(r) + v.1 * cos(r), v.2) }
+        let out = { (v: (Double, Double, Double)) in s.fromView(MoonletPlanetSystem.toShader(roll(v))) }
+        let pole = out((0, cos(t), sin(t)))
+        let meridian = out((cos(f), -sin(f) * sin(t), sin(f) * cos(t)))
+        return ((pole.x, pole.y, pole.z), (meridian.x, meridian.y, meridian.z))
+    }
+    let close = { (a: (Double, Double, Double), b: (Double, Double, Double)) in abs(a.0 - b.0) + abs(a.1 - b.1) + abs(a.2 - b.2) < 1e-9 }
+    for index in [nil, 0, 1, 2] as [Int?] {
+        let original = index.map { system.bodies[$0].recipe } ?? system.star
+        let expected = MoonletPlanetSystem.frame(of: original)
+        for azimuth in stride(from: -3.0, through: 3.0, by: 0.75) {
+            for elevation in [-1.2, -0.4, 0.0, 0.35, 0.9, 1.5] {
+                system.viewAzimuth = azimuth
+                system.viewElevation = elevation
+                let layout = system.layout(at: 0)
+                let p = try #require(layout.first { $0.index == index })
+                let w = world(p, in: system)
+                #expect(close(w.pole, (expected.pole.x, expected.pole.y, expected.pole.z)), "pole of \(String(describing: index)) at \(azimuth), \(elevation)")
+                #expect(close(w.meridian, (expected.meridian.x, expected.meridian.y, expected.meridian.z)), "meridian of \(String(describing: index)) at \(azimuth), \(elevation)")
+                if let index {
+                    // The light, rolled back and out of the camera, points at the star.
+                    let r = p.recipe, roll = p.roll
+                    let l = (cos(r.lightElevation) * cos(r.lightAzimuth), sin(r.lightElevation), cos(r.lightElevation) * sin(r.lightAzimuth))
+                    let lw = system.fromView(MoonletPlanetSystem.toShader((l.0 * cos(roll) - l.1 * sin(roll), l.0 * sin(roll) + l.1 * cos(roll), l.2)))
+                    let body = system.bodies[index]
+                    let n = (-cos(body.phase), 0.0, -sin(body.phase))
+                    #expect(close((lw.x, lw.y, lw.z), n), "light on \(index) at \(azimuth), \(elevation)")
+                }
+            }
+        }
+    }
+}
+
+/// The ground truth, in pixels rather than in the conventions the code assumes: a world on
+/// screen below its star is lit on its top half, one to its left on its right half, and a
+/// ring turned by `roll` turns the way Core Graphics turns things.
+@MainActor @Test func aPlanetIsLitOnTheSideFacingItsStarInPixels() throws {
+    guard MoonletPlanetRendering.isMetalAvailable else { return }
+    func sample(_ recipe: MoonletPlanetRecipe) -> (top: Double, bottom: Double, left: Double, right: Double) {
+        let img = MoonletPlanetSnapshotRenderer.image(recipe: recipe, size: 120, time: 0)!
+        let data = img.dataProvider!.data! as Data
+        func at(_ x: Int, _ y: Int) -> Double {
+            let i = y * img.bytesPerRow + x * 4
+            return Double(data[i]) + Double(data[i + 1]) + Double(data[i + 2])
+        }
+        // Image rows run top to bottom.
+        return (at(60, 22), at(60, 98), at(22, 60), at(98, 60))
+    }
+    for perspective in [0.0, 0.8] {
+        var system = MoonletPlanetSystem.example
+        system.perspective = perspective
+        system.bodies[0].recipe.atmosphereDensity = 0
+        system.bodies[0].speed = 0
+        // Seen from high above, in front of the star: below it on screen.
+        system.viewElevation = 1.2
+        system.bodies[0].phase = -.pi / 2
+        var p = try #require(system.layout(at: 0).first { $0.index == 0 })
+        #expect(p.y < 0)
+        var b = sample(p.recipe)
+        #expect(b.top > b.bottom * 2, "lit from the star above it, perspective \(perspective)")
+        // Edge-on, to the star's left: lit on its right.
+        system.viewElevation = 0
+        system.bodies[0].phase = .pi
+        p = try #require(system.layout(at: 0).first { $0.index == 0 })
+        b = sample(p.recipe)
+        #expect(b.right > b.left * 2, "lit from the star to its right, perspective \(perspective)")
+    }
+}
+
+/// Every setting added to a system defaults to drawing what was drawn before it, and a
+/// system saved without them decodes to exactly the system it was.
+@Test func newSystemSettingsDefaultToTheOldDrawing() throws {
+    var system = MoonletPlanetSystem.example
+    system.perspective = 0.6
+    var object = try JSONSerialization.jsonObject(with: JSONEncoder().encode(system)) as! [String: Any]
+    for key in ["zoom", "lightFalloff", "orbitSpeed", "orbitStyle", "sky"] { object.removeValue(forKey: key) }
+    var bodies = object["bodies"] as! [[String: Any]]
+    for i in bodies.indices { bodies[i].removeValue(forKey: "inclination"); bodies[i].removeValue(forKey: "node") }
+    object["bodies"] = bodies
+    let old = try JSONDecoder().decode(MoonletPlanetSystem.self, from: JSONSerialization.data(withJSONObject: object))
+    #expect(old == system)
+    #expect(old.zoom == 1 && old.lightFalloff == 0 && old.orbitSpeed == 1 && !old.sky.isVisible)
+}
+
+/// An inclined orbit leaves the plane, still goes through its planet, and a drag along it lands.
+@Test func anInclinedOrbitLeavesThePlane() throws {
+    var system = MoonletPlanetSystem.example
+    system.viewElevation = 0
+    system.bodies[1].inclination = 0.6
+    system.bodies[1].node = 0.3
+    let points = system.orbitPoints(1, count: 720)
+    #expect(points.map(\.y).max()! > 1, "edge-on, an inclined orbit is not a line")
+    let p = try #require(system.layout(at: 4).first { $0.index == 1 })
+    #expect(points.map { hypot($0.x - p.x, $0.y - p.y) }.min()! < 0.02)
+    // Dragged to a point on its own orbit, it goes there.
+    let target = points[200]
+    system.place(1, atX: target.x, y: target.y, time: 4)
+    let q = try #require(system.layout(at: 4).first { $0.index == 1 })
+    #expect(hypot(q.x - target.x, q.y - target.y) < 1e-3)
+    // And it is still lit from its star.
+    #expect(system.bodies[1].distance == MoonletPlanetSystem.example.bodies[1].distance)
+}
+
+/// Zoom shows less of the system, larger; falloff dims the outer worlds; the orbit speed
+/// multiplies every orbit.
+@Test func zoomFalloffAndOrbitSpeedDoWhatTheySay() throws {
+    var system = MoonletPlanetSystem.example
+    let wide = system.extent
+    system.zoom = 2
+    #expect(abs(system.extent - wide / 2) < 1e-9)
+    system.lightFalloff = 1
+    let layout = system.layout(at: 0)
+    let inner = try #require(layout.first { $0.index == 0 }), outer = try #require(layout.first { $0.index == 2 })
+    #expect(inner.recipe.exposure > system.bodies[0].recipe.exposure, "closer than three star radii is brighter")
+    #expect(outer.recipe.exposure < system.bodies[2].recipe.exposure, "further is dimmer")
+    system.orbitSpeed = 0
+    #expect(system.layout(at: 0).map(\.x) == system.layout(at: 50).map(\.x), "stopped")
+}
+
+/// The sky: the default is the sky as it was drawn, a seed is another sky, a band gathers
+/// the stars, and brightness and size scale what they say.
+@Test func theSkyIsSettable() {
+    var system = MoonletPlanetSystem.example
+    let base = system.skyStars(width: 400, height: 400)
+    #expect(!base.isEmpty)
+    system.sky.seed = 7
+    #expect(system.skyStars(width: 400, height: 400) != base, "another seed, another sky")
+    system.sky.seed = 0
+    system.sky.brightness = 0.5
+    system.sky.starSize = 2
+    let dim = system.skyStars(width: 400, height: 400)
+    #expect(dim.count == base.count)
+    for (a, b) in zip(base, dim) {
+        #expect(abs(b.alpha - a.alpha * 0.5) < 1e-9)
+        #expect(abs(b.radius - a.radius * 2) < 1e-9)
+    }
+    // A full band puts every star within a thin belt of its great circle.
+    system.sky = .init(bandStrength: 1, bandTilt: 0)
+    for star in system.sky.directions() { #expect(abs(star.y) <= 0.111) }
+    system.sky.starCount = 50
+    #expect(system.sky.directions().count == 50)
+}
