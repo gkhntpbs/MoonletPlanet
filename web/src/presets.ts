@@ -24,6 +24,7 @@ export const archetypeRecipes = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -112,6 +113,7 @@ export const archetypeRecipes = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -200,6 +202,7 @@ export const archetypeRecipes = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -288,6 +291,7 @@ export const archetypeRecipes = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -376,6 +380,7 @@ export const archetypeRecipes = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -464,6 +469,7 @@ export const archetypeRecipes = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -552,6 +558,7 @@ export const archetypeRecipes = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -640,6 +647,7 @@ export const archetypeRecipes = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -728,6 +736,7 @@ export const archetypeRecipes = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -816,6 +825,7 @@ export const archetypeRecipes = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -886,6 +896,95 @@ export const archetypeRecipes = {
   "turbulence" : 0.44,
   "warpStrength" : 0.76
 } as PlanetRecipe,
+  star: {
+  "archetype" : 10,
+  "atmosphereDensity" : 0.4,
+  "atmosphereGlow" : 0.8,
+  "axialTilt" : 0,
+  "bandCount" : 0,
+  "bandSharpness" : 0,
+  "cloudCoverage" : 0,
+  "cloudSpeed" : 0.6,
+  "dayNightSpeed" : 0,
+  "detail" : 0.78,
+  "exposure" : 1.1,
+  "featureAmount" : 0.6,
+  "iceAltitude" : 0.22,
+  "iceCoverage" : 0,
+  "life" : 0,
+  "lightAzimuth" : 2.2,
+  "lightElevation" : 0.46,
+  "luminosity" : 0.5,
+  "microDetail" : 1,
+  "palette" : {
+    "atmosphere" : {
+      "blue" : 0.15,
+      "green" : 0.55,
+      "opacity" : 1,
+      "red" : 1
+    },
+    "highlight" : {
+      "blue" : 0.82,
+      "green" : 0.96,
+      "opacity" : 1,
+      "red" : 1
+    },
+    "ice" : {
+      "blue" : 0.97,
+      "green" : 0.95,
+      "opacity" : 1,
+      "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
+    },
+    "primary" : {
+      "blue" : 0.04,
+      "green" : 0.32,
+      "opacity" : 1,
+      "red" : 0.95
+    },
+    "ring" : {
+      "blue" : 0.83,
+      "green" : 0.9,
+      "opacity" : 1,
+      "red" : 0.94
+    },
+    "shadow" : {
+      "blue" : 0.01,
+      "green" : 0.04,
+      "opacity" : 1,
+      "red" : 0.55
+    },
+    "storm" : {
+      "blue" : 0.12,
+      "green" : 0.72,
+      "opacity" : 1,
+      "red" : 1
+    }
+  },
+  "polarAsymmetry" : 0,
+  "ringDetail" : 0.8,
+  "ringInnerRadius" : 1.235,
+  "ringOpacity" : 0,
+  "ringOuterRadius" : 2.27,
+  "rotationPhase" : 0,
+  "rotationSpeed" : 0.04,
+  "roughness" : 0.7,
+  "seed" : 240513,
+  "stationCount" : 1,
+  "stationInclination" : 0.9,
+  "stationOrbitRadius" : 1.085,
+  "stationSize" : 1,
+  "stationSpeed" : 0.55,
+  "stormCount" : 2,
+  "stormStrength" : 0.5,
+  "turbulence" : 0.6,
+  "warpStrength" : 0.6
+} as PlanetRecipe,
 } as const
 
 export const solarSystem = {
@@ -907,6 +1006,7 @@ export const solarSystem = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -995,6 +1095,7 @@ export const solarSystem = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -1083,6 +1184,7 @@ export const solarSystem = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -1171,6 +1273,7 @@ export const solarSystem = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -1259,6 +1362,7 @@ export const solarSystem = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -1347,6 +1451,7 @@ export const solarSystem = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -1435,6 +1540,7 @@ export const solarSystem = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -1523,6 +1629,7 @@ export const solarSystem = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -1611,6 +1718,7 @@ export const solarSystem = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -1699,6 +1807,7 @@ export const solarSystem = {
   "life" : 0,
   "lightAzimuth" : 2.2,
   "lightElevation" : 0.46,
+  "luminosity" : 0.5,
   "microDetail" : 1,
   "palette" : {
     "atmosphere" : {
@@ -1768,6 +1877,95 @@ export const solarSystem = {
   "stormStrength" : 0.52,
   "turbulence" : 0.36,
   "warpStrength" : 0.28
+} as PlanetRecipe,
+  sun: {
+  "archetype" : 10,
+  "atmosphereDensity" : 0.4,
+  "atmosphereGlow" : 0.8,
+  "axialTilt" : 0.126,
+  "bandCount" : 0,
+  "bandSharpness" : 0,
+  "cloudCoverage" : 0,
+  "cloudSpeed" : 0.6,
+  "dayNightSpeed" : 0,
+  "detail" : 0.78,
+  "exposure" : 1.1,
+  "featureAmount" : 0.6,
+  "iceAltitude" : 0.22,
+  "iceCoverage" : 0,
+  "life" : 0,
+  "lightAzimuth" : 2.2,
+  "lightElevation" : 0.46,
+  "luminosity" : 0.5,
+  "microDetail" : 1,
+  "palette" : {
+    "atmosphere" : {
+      "blue" : 0.15,
+      "green" : 0.55,
+      "opacity" : 1,
+      "red" : 1
+    },
+    "highlight" : {
+      "blue" : 0.82,
+      "green" : 0.96,
+      "opacity" : 1,
+      "red" : 1
+    },
+    "ice" : {
+      "blue" : 0.97,
+      "green" : 0.95,
+      "opacity" : 1,
+      "red" : 0.93
+    },
+    "life" : {
+      "blue" : 0.2,
+      "green" : 0.46,
+      "opacity" : 1,
+      "red" : 0.28
+    },
+    "primary" : {
+      "blue" : 0.04,
+      "green" : 0.32,
+      "opacity" : 1,
+      "red" : 0.95
+    },
+    "ring" : {
+      "blue" : 0.83,
+      "green" : 0.9,
+      "opacity" : 1,
+      "red" : 0.94
+    },
+    "shadow" : {
+      "blue" : 0.01,
+      "green" : 0.04,
+      "opacity" : 1,
+      "red" : 0.55
+    },
+    "storm" : {
+      "blue" : 0.12,
+      "green" : 0.72,
+      "opacity" : 1,
+      "red" : 1
+    }
+  },
+  "polarAsymmetry" : 0,
+  "ringDetail" : 0.8,
+  "ringInnerRadius" : 1.235,
+  "ringOpacity" : 0,
+  "ringOuterRadius" : 2.27,
+  "rotationPhase" : 0,
+  "rotationSpeed" : 0.04,
+  "roughness" : 0.7,
+  "seed" : 1989000,
+  "stationCount" : 1,
+  "stationInclination" : 0.9,
+  "stationOrbitRadius" : 1.085,
+  "stationSize" : 1,
+  "stationSpeed" : 0.55,
+  "stormCount" : 2,
+  "stormStrength" : 0.5,
+  "turbulence" : 0.6,
+  "warpStrength" : 0.6
 } as PlanetRecipe,
 } as const
 

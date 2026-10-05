@@ -17,6 +17,9 @@ public enum MoonletPlanetArchetype: UInt32, CaseIterable, Codable, Identifiable,
     case toxic
     case lush
     case cloud
+    /// Not a planet at all, but drawn by the same shader: a body that makes its own light.
+    /// The light controls do nothing to it, and the atmosphere settings shape its corona.
+    case star
 
     public var id: Self { self }
 
@@ -24,7 +27,7 @@ public enum MoonletPlanetArchetype: UInt32, CaseIterable, Codable, Identifiable,
     /// giant gets a polar hood instead of caps and nothing that lives or leaves.
     public var hasGround: Bool {
         switch self {
-        case .gasGiant, .iceGiant, .toxic, .cloud: false
+        case .gasGiant, .iceGiant, .toxic, .cloud, .star: false
         default: true
         }
     }
@@ -41,6 +44,7 @@ public enum MoonletPlanetArchetype: UInt32, CaseIterable, Codable, Identifiable,
         case .toxic: "Toxic World"
         case .lush: "Lush World"
         case .cloud: "Cloud World"
+        case .star: "Star"
         }
     }
 }
@@ -57,6 +61,7 @@ public enum MoonletPlanetPreset: String, CaseIterable, Codable, Identifiable, Se
     case mercury
     case moon
     case pluto
+    case sun
 
     public var id: Self { self }
 
@@ -88,6 +93,8 @@ public enum MoonletPlanetPreset: String, CaseIterable, Codable, Identifiable, Se
             .init(name: "Moon", recipe: .solarPreset(.moon))
         case .pluto:
             .init(name: "Pluto", recipe: .solarPreset(.pluto))
+        case .sun:
+            .init(name: "Sun", recipe: .solarPreset(.sun))
         }
     }
 }

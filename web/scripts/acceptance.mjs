@@ -99,8 +99,10 @@ for (const { label, coverage } of report.drawn) {
   // A planet with no rings fills a circle inscribed in its square: π/4 ≈ 0.785. A ringed
   // one zooms out to hold the rings, so it covers less — but never nothing. A spacefaring
   // one zooms out to hold its station's orbit, 1.185 radii by default: π/4 / 1.185² ≈ 0.56,
-  // and traffic reaches 1.3: π/4 / 1.3² ≈ 0.46.
+  // and traffic reaches 1.3: π/4 / 1.3² ≈ 0.46. A star zooms out to 1.6 for its flames, so
+  // its disc alone is π/4 / 1.6² ≈ 0.31.
   const floor = label.includes('rings') || label.includes('saturn') || label.includes('uranus') ? 0.15
+    : label.includes('star') || label.includes('sun') ? 0.3
     : label.includes('interplanetary') ? 0.42 : label.includes('spacefaring') ? 0.5 : 0.7
   const ok = coverage >= floor
   if (!ok) failed = true

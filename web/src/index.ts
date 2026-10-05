@@ -5,7 +5,8 @@ export { randomized, colorFromHSB } from './random.ts'
 
 export type PlanetColor = { red: number; green: number; blue: number; opacity: number }
 export type PlanetRecipe = {
-  archetype: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+  /** 10 is a star: it makes its own light, and the atmosphere settings shape its corona. */
+  archetype: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
   seed: number
   palette: Record<'highlight' | 'primary' | 'shadow' | 'storm' | 'atmosphere', PlanetColor>
     & { ring?: PlanetColor; ice?: PlanetColor; life?: PlanetColor }
@@ -71,6 +72,11 @@ export type PlanetRecipe = {
   stationInclination?: number
   /** A multiplier on the drawn size. It never shrinks below a pixel. */
   stationSize?: number
+  /**
+   * Stars only: 0 a ball of fire, 0.5 hot and bright with a bloom, 1 nothing but light.
+   * Ignored by every other archetype.
+   */
+  luminosity?: number
 }
 
 /** The ring fields postdate the first recipes, so a recipe without them is ringless. */
@@ -79,18 +85,19 @@ const optionalDefaults = {
   iceCoverage: 0, iceAltitude: 0.22, polarAsymmetry: 0, microDetail: 1, rotationPhase: 0,
   dayNightSpeed: 0,
   stationOrbitRadius: 1.085, stationSpeed: 0.55, stationInclination: 0.9, stationSize: 1,
+  luminosity: 0.5,
 } as const
 const defaultRingColor: PlanetColor = { red: 0.94, green: 0.9, blue: 0.83, opacity: 1 }
 const defaultIceColor: PlanetColor = { red: 0.93, green: 0.95, blue: 0.97, opacity: 1 }
 const defaultLifeColor: PlanetColor = { red: 0.28, green: 0.46, blue: 0.2, opacity: 1 }
 
 const scalarKeys = ['rotationSpeed', 'turbulence', 'detail', 'warpStrength', 'bandCount', 'bandSharpness', 'stormCount', 'stormStrength', 'cloudCoverage', 'cloudSpeed', 'atmosphereDensity', 'atmosphereGlow', 'roughness', 'featureAmount', 'lightAzimuth', 'lightElevation', 'exposure'] as const
-const optionalKeys = ['ringOpacity', 'axialTilt', 'ringInnerRadius', 'ringOuterRadius', 'ringDetail', 'iceCoverage', 'iceAltitude', 'polarAsymmetry', 'microDetail', 'rotationPhase', 'dayNightSpeed', 'stationOrbitRadius', 'stationSpeed', 'stationInclination', 'stationSize'] as const
+const optionalKeys = ['ringOpacity', 'axialTilt', 'ringInnerRadius', 'ringOuterRadius', 'ringDetail', 'iceCoverage', 'iceAltitude', 'polarAsymmetry', 'microDetail', 'rotationPhase', 'dayNightSpeed', 'stationOrbitRadius', 'stationSpeed', 'stationInclination', 'stationSize', 'luminosity'] as const
 const colors = { highlight: 'color0', primary: 'color1', shadow: 'color2', storm: 'color3', atmosphere: 'atmosphereColor' } as const
 
 export function validateRecipe(recipe: PlanetRecipe) {
   if (!Number.isInteger(recipe.seed) || recipe.seed < 0 || recipe.seed > 0xffffffff) throw new RangeError('Invalid planet seed')
-  if (!Number.isInteger(recipe.archetype) || recipe.archetype < 0 || recipe.archetype > 9) throw new RangeError('Invalid planet archetype')
+  if (!Number.isInteger(recipe.archetype) || recipe.archetype < 0 || recipe.archetype > 10) throw new RangeError('Invalid planet archetype')
   // The shader dispatches on this number, so an out-of-range one renders an unlit world
   // rather than failing — which is the kind of wrong that is hard to notice.
   const life = recipe.life ?? 0

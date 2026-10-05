@@ -41,6 +41,7 @@ typedef struct {
     float stationSpeed;
     float stationInclination;
     float stationSize;
+    float luminosity;
     float4 color0;
     float4 color1;
     float4 color2;
@@ -239,6 +240,113 @@ float3 moonletFrozen(float3 n, constant MoonletPlanetUniforms &u, thread float &
     float3 ice = mix(u.color2.rgb, u.color1.rgb, ridges);
     ice = mix(ice, u.color0.rgb, smoothstep(0.58, 0.94, ridges));
     return mix(ice, u.color2.rgb * 0.35, cracks * u.featureAmount);
+}
+
+/// The colour of fire at a temperature from 0 to 1: the palette's shadow is the coolest
+/// glowing red, then primary orange, storm yellow, and highlight the white-hot core. It
+/// comes back as emission that climbs with the heat, so the hot parts burn out to white
+/// through the tonemap while the cool ones stay a deep red.
+float3 moonletFire(float t, constant MoonletPlanetUniforms &u) {
+    t = clamp(t, 0.0, 1.0);
+    float3 color = mix(u.color2.rgb, u.color1.rgb, smoothstep(0.0, 0.4, t));
+    color = mix(color, u.color3.rgb, smoothstep(0.35, 0.7, t));
+    color = mix(color, u.color0.rgb, smoothstep(0.68, 1.0, t));
+    // A dim orange is brown, not fire, so even the coolest glow is kept bright and only the
+    // hottest is pushed far enough to burn out to white.
+    return color * (0.75 + 1.7 * t * t);
+}
+
+/// A star, drawn as a ball of fire: light it makes, not light it reflects, so what comes
+/// back is emission and the caller does not shade it.
+///
+/// The surface is plasma folded twice over by domain warping and set moving in two
+/// directions at once, so it churns rather than slides. Ridged noise on top draws the
+/// filaments — thin, white-hot veins where the flow converges — and that contrast against
+/// deep red troughs is what reads as burning rather than as a glowing ball. `stormCount`
+/// cooler, darker cells sit in it, and the limb goes redder rather than dark: a fireball is
+/// seen through its own flames at the edge.
+float3 moonletStar(float3 n, float mu, constant MoonletPlanetUniforms &u) {
+    float t = u.time * (0.2 + u.cloudSpeed);
+    float3 p = n * 2.1;
+    float3 a = float3(moonletFBM(p + float3(0.0, t * 0.05, 0.0), u.seed + 601u, u.detail),
+                      moonletFBM(p + float3(5.2, 1.3, -t * 0.04), u.seed + 607u, u.detail),
+                      moonletFBM(p + float3(-t * 0.045, 8.1, 2.4), u.seed + 613u, u.detail));
+    float3 b = p + (a - 0.5) * (1.2 + 2.4 * u.warpStrength);
+    float fire = moonletFBM(b * 1.6 + float3(t * 0.03, -t * 0.06, 0.0), u.seed + 619u, u.detail);
+    // Veins: the zero crossings of a ridged field, sharpened into filaments.
+    float ridge = 1.0 - abs(moonletNoise(b * (3.0 + 4.0 * u.turbulence) - float3(0.0, t * 0.08, 0.0), u.seed + 631u) * 2.0 - 1.0);
+    float veins = pow(ridge, mix(10.0, 3.0, u.roughness));
+    float flicker = moonletMicro(b * 14.0 + float3(0.0, 0.0, t * 0.2), u.seed + 641u) - 0.5;
+    float heat = (fire - 0.32) * 1.9 + veins * 0.55 * u.featureAmount + flicker * 0.25 * u.microDetail;
+
+    // Cooler cells, where the fire is thinnest. Their places are the seed's.
+    for (uint k = 0u; k < 5u; k++) {
+        if (float(k) + 0.5 > u.stormCount) break;
+        float3 key = float3(float(k) * 13.0, 5.0, 1.0);
+        float lon = moonletHash(key, u.seed) * 6.2831853;
+        float lat = (moonletHash(key + 7.0, u.seed) - 0.5) * 1.6;
+        float size = 0.12 + 0.12 * moonletHash(key + 31.0, u.seed);
+        float3 center = float3(cos(lat) * cos(lon), sin(lat), cos(lat) * sin(lon));
+        float d = length(n - center) + (fire - 0.5) * 0.15;
+        heat -= (1.0 - smoothstep(size * 0.3, size, d)) * 0.7 * u.stormStrength;
+    }
+
+    // The edge is seen through the flames standing on it, so it burns brighter rather than
+    // going dark, and it meets the flames outside at the same heat instead of at a seam.
+    float rim = pow(1.0 - mu, 3.0);
+    heat = heat * mix(0.75, 1.0, mu) + 0.1 + rim * 0.45;
+    // Hot all over and hottest in the middle: the troughs are orange, never black, and the
+    // centre burns through to white the way something too bright to look at does.
+    //
+    // How far is `luminosity`: 0 is the fire as it comes, 0.5 lifts it and whitens the
+    // middle, and 1 burns the texture away to a ball of light with only a trace of the
+    // flow left in it.
+    float l = clamp(u.luminosity, 0.0, 1.0);
+    float lift = l * 0.56 + max(l - 0.5, 0.0) * 0.4;
+    float gain = l <= 0.5 ? mix(1.0, 0.8, l * 2.0) : mix(0.8, 0.12, l * 2.0 - 1.0);
+    heat = lift + heat * gain + 0.28 * l * mu * mu;
+    return moonletFire(heat, u) * (1.0 + 0.5 * l * mu * mu);
+}
+
+/// Flames past the limb. Tongues of fire in polar coordinates — angle round the disc,
+/// height above it — with noise that streams outward as time passes, so they lick up and
+/// break off instead of sitting still. Under them a soft glow keeps the star from ending at
+/// a hard edge. Returned premultiplied, colour and coverage.
+float4 moonletCorona(float2 q, constant MoonletPlanetUniforms &u) {
+    float r = length(q);
+    // Under the limb as well as past it, so the disc's antialiased edge blends into the
+    // flames and not into nothing.
+    float height = max(r - 1.0, 0.0);
+    float2 dir = q / max(r, 1e-4);
+    float t = u.time * (0.2 + u.cloudSpeed);
+    float reach = 0.12 + 0.4 * u.atmosphereGlow;
+    // Fine round the disc and coarse along the height, so the noise is stretched outward
+    // into tongues rather than sitting in round blobs.
+    float3 at = float3(dir * (2.6 + 2.4 * u.turbulence), height * 2.2 - t * 0.4);
+    float tongues = moonletFBM(at + float3(0.0, 0.0, moonletNoise(float3(dir * 3.0, t * 0.1), u.seed + 659u)), u.seed + 653u, u.detail);
+    float fine = moonletNoise(float3(dir * 16.0, height * 4.0 - t * 0.9), u.seed + 661u);
+    float fuel = tongues * 1.25 + (fine - 0.5) * 0.35;
+    // How hot the flame still is at this height: it burns down with distance from the star.
+    float heat = fuel - height / reach * 0.9 - 0.18 + 0.5 * exp(-height * 25.0);
+    // A ball of light has no flames, so they burn down as luminosity goes to one, and the
+    // bloom grows in their place.
+    float l = clamp(u.luminosity, 0.0, 1.0);
+    float flame = smoothstep(0.0, 0.25, heat) * (1.0 - smoothstep(0.6, 1.0, l));
+    // Bloom: the glare a camera sees round something this bright — a tight hot core that
+    // fades to white-yellow, and a wide, faint halo past the flames.
+    float glow = exp(-height * mix(14.0, 7.0, u.atmosphereDensity));
+    // Faded out all the way across, not cut at the end, or it reads as a disc behind the star.
+    float fade = 1.0 - smoothstep(0.0, 0.6, height);
+    float halo = exp(-height * 3.2) * fade * fade;
+    float3 glare = mix(u.atmosphereColor.rgb, u.color0.rgb, glow * 0.7);
+    float bloom = l * 2.0 + max(l - 0.6, 0.0) * 3.5;
+    float3 rgb = moonletFire(heat * 1.6 + 0.4 * l, u) * flame
+               + glare * (glow * (0.6 + 0.8 * bloom) + halo * 0.7 * bloom) * u.atmosphereGlow;
+    // Gone before the edge of the canvas, which stops at `MoonletPlanetRecipe.drawnExtent`.
+    rgb *= 1.0 - smoothstep(0.45, 0.6, height);
+    rgb = 1.0 - exp(-rgb * u.exposure);
+    float a = clamp(max(rgb.r, max(rgb.g, rgb.b)) * 1.15, 0.0, 1.0);
+    return float4(rgb, a);
 }
 
 /// Craters as a height field: negative in the bowl, positive on the rim.
@@ -648,12 +756,15 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
     float stationScale = hasStations ? u.stationOrbitRadius + 0.1 : 1.0;
     // Traffic climbs to 0.2 radii above the ground and its flame reaches further; and it
     // needs ground to leave, so a gas giant has none.
-    bool gaseousWorld = u.archetype == 0u || u.archetype == 1u || u.archetype == 7u || u.archetype == 9u;
+    bool star = u.archetype == 10u;
+    bool gaseousWorld = u.archetype == 0u || u.archetype == 1u || u.archetype == 7u || u.archetype == 9u || star;
     bool hasTraffic = u.life >= 4u && !gaseousWorld;
     float trafficScale = hasTraffic ? 1.3 : 1.0;
+    // A star's flames reach 0.6 radii past the limb and are gone by then.
+    float coronaScale = star ? 1.6 : 1.0;
     float2 p = input.uv * 2.0 - 1.0;
     p.x *= u.viewportSize.x / max(u.viewportSize.y, 1.0);
-    p *= max(ringScale, max(stationScale, trafficScale));
+    p *= max(max(ringScale, coronaScale), max(stationScale, trafficScale));
 
     // The lighting works in a space where screen-up is -y, so everything geometric works
     // there too. Mixing the two is how the terminator and the ring shadow end up disagreeing
@@ -721,7 +832,8 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
             // The planet's shadow across the rings, a cylinder because the star is far away.
             float along = dot(ringPoint, light);
             float perp = length(ringPoint - along * light);
-            if (along < 0.0) ringRGB *= mix(0.09, 1.0, smoothstep(0.9, 1.3, perp));
+            // A star casts no shadow: it is the light.
+            if (along < 0.0 && !star) ringRGB *= mix(0.09, 1.0, smoothstep(0.9, 1.3, perp));
 
             ringRGB = 1.0 - exp(-ringRGB * u.exposure);
             ringInFront = !hitsPlanet || (ringPoint.z > surfaceZ);
@@ -736,6 +848,13 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
     if (!ringInFront && ringAlpha > 0.0) {
         color = ringRGB * ringAlpha;
         alpha = ringAlpha;
+    }
+
+    // Behind the star and in front of whatever ring is behind it.
+    if (star && radiusSquared > 0.95) {
+        float4 corona = moonletCorona(q, u);
+        color = corona.rgb + color * (1.0 - corona.a);
+        alpha = corona.a + alpha * (1.0 - corona.a);
     }
 
     if (hitsPlanet) {
@@ -758,7 +877,10 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
         float3 albedo;
         float elevation = 0.0;
         bool gaseous = false;
-        if (u.archetype == 0u || u.archetype == 1u || u.archetype == 7u || u.archetype == 9u) {
+        if (star) {
+            albedo = moonletStar(surfaceNormal, normal.z, u);
+            gaseous = true;
+        } else if (u.archetype == 0u || u.archetype == 1u || u.archetype == 7u || u.archetype == 9u) {
             albedo = moonletGas(surfaceNormal, u, elevation);
             gaseous = true;
         } else if (u.archetype == 2u || u.archetype == 8u) {
@@ -846,6 +968,9 @@ fragment half4 moonletPlanetFragment(MoonletPlanetVertexOut input [[stage_in]], 
         }
         planet += u.color0.rgb * specular * 0.4 * ringShade;
         planet += u.atmosphereColor.rgb * rim * u.atmosphereGlow * (0.3 + day * 0.7);
+        // A star is its own light: no terminator, no specular, nothing in its shadow. It
+        // replaces everything above rather than skipping it, which keeps one path.
+        if (star) planet = albedo;
         planet = 1.0 - exp(-planet * u.exposure);
 
         float planetAlpha = smoothstep(1.0, 0.975, radiusSquared);

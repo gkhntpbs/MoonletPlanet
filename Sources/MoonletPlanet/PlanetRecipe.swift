@@ -89,6 +89,11 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
     public var stationInclination: Double
     /// A multiplier on the station's drawn size. It never shrinks below a pixel.
     public var stationSize: Double
+    /// For a star only: how much it burns and how much it shines. 0 is a ball of fire —
+    /// churning plasma, deep red troughs and flames off the limb; 0.5 is hot and bright with
+    /// a white centre and a bloom; 1 burns it all away to a ball of light. Ignored by
+    /// every other archetype.
+    public var luminosity: Double
 
     /// How far from the disc's centre the shader draws, in planet radii — 1 for a bare
     /// planet, wider for rings or anything in orbit. A view that sizes the body against a
@@ -98,7 +103,8 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
         let rings = hasRing ? max(1, ringOuterRadius * 1.04) : 1
         let stations = life.hasOrbitalStation && stationCount > 0 ? stationOrbitRadius + 0.1 : 1
         let traffic = life.hasTraffic && archetype.hasGround ? 1.3 : 1
-        return max(rings, max(stations, traffic))
+        let corona = archetype == .star ? 1.6 : 1
+        return max(max(rings, corona), max(stations, traffic))
     }
 
     /// Whether this planet has rings at all.
@@ -153,7 +159,8 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
         stationOrbitRadius: Double = 1.085,
         stationSpeed: Double = 0.55,
         stationInclination: Double = 0.9,
-        stationSize: Double = 1
+        stationSize: Double = 1,
+        luminosity: Double = 0.5
     ) {
         self.archetype = archetype
         self.seed = seed
@@ -192,6 +199,7 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
         self.stationSpeed = stationSpeed
         self.stationInclination = stationInclination
         self.stationSize = stationSize
+        self.luminosity = luminosity
     }
 
     // Stored data again: five fields that did not exist when somebody saved their planet,
@@ -237,6 +245,7 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
         stationSpeed = try c.decodeIfPresent(Double.self, forKey: .stationSpeed) ?? 0.55
         stationInclination = try c.decodeIfPresent(Double.self, forKey: .stationInclination) ?? 0.9
         stationSize = try c.decodeIfPresent(Double.self, forKey: .stationSize) ?? 1
+        luminosity = try c.decodeIfPresent(Double.self, forKey: .luminosity) ?? 0.5
     }
 
     public static func preset(_ archetype: MoonletPlanetArchetype, seed: UInt32 = 240513) -> Self {
@@ -427,6 +436,39 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
             recipe.cloudCoverage = 1
             recipe.atmosphereDensity = 0.86
             return recipe
+        case .star:
+            // The palette is a fire ramp here, coolest to hottest: shadow deep red, primary
+            // orange, storm yellow, highlight white-hot; atmosphere is the glow round it.
+            // Storms are cooler cells, roughness how thick the burning veins are,
+            // atmosphereGlow how far the flames reach, and the light does nothing.
+            return Self(
+                archetype: archetype,
+                seed: seed,
+                palette: .init(
+                    highlight: .init(red: 1, green: 0.96, blue: 0.82),
+                    primary: .init(red: 0.95, green: 0.32, blue: 0.04),
+                    shadow: .init(red: 0.55, green: 0.04, blue: 0.01),
+                    storm: .init(red: 1, green: 0.72, blue: 0.12),
+                    atmosphere: .init(red: 1, green: 0.55, blue: 0.15)
+                ),
+                rotationSpeed: 0.04,
+                turbulence: 0.6,
+                detail: 0.78,
+                warpStrength: 0.6,
+                bandCount: 0,
+                bandSharpness: 0,
+                stormCount: 2,
+                stormStrength: 0.5,
+                cloudCoverage: 0,
+                cloudSpeed: 0.6,
+                atmosphereDensity: 0.4,
+                atmosphereGlow: 0.8,
+                roughness: 0.7,
+                featureAmount: 0.6,
+                lightAzimuth: 2.2,
+                lightElevation: 0.46,
+                exposure: 1.1
+            )
         }
     }
 
@@ -556,6 +598,11 @@ public struct MoonletPlanetRecipe: Codable, Equatable, Hashable, Sendable {
             recipe.iceCoverage = 0.55
             recipe.iceAltitude = 0.12
             recipe.polarAsymmetry = -0.24
+            return recipe
+        case .sun:
+            var recipe = Self.preset(.star, seed: 1_989_000)
+            recipe.stormCount = 2
+            recipe.axialTilt = 0.126
             return recipe
         case .custom:
             return Self.preset(.gasGiant)

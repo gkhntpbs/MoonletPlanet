@@ -19,6 +19,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -111,6 +112,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -203,6 +205,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -295,6 +298,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -387,6 +391,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -479,6 +484,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -571,6 +577,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -663,6 +670,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -755,6 +763,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -847,6 +856,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -939,6 +949,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -1031,6 +1042,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -1123,6 +1135,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -1215,6 +1228,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -1307,6 +1321,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -1399,6 +1414,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -1491,6 +1507,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -1583,6 +1600,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -1675,6 +1693,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -1767,6 +1786,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -1859,6 +1879,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -1951,6 +1972,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -2043,6 +2065,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {
@@ -2135,6 +2158,7 @@
       "life" : 0,
       "lightAzimuth" : 2.2,
       "lightElevation" : 0.46,
+      "luminosity" : 0.5,
       "microDetail" : 1,
       "palette" : {
         "atmosphere" : {

@@ -42,6 +42,7 @@ typedef struct {
     float stationSpeed;
     float stationInclination;
     float stationSize;
+    float luminosity;
     vector_float4 color0;
     vector_float4 color1;
     vector_float4 color2;

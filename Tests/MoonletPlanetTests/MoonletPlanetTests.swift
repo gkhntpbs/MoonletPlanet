@@ -355,6 +355,33 @@ import Foundation
     #expect(recipe.drawnExtent == 3.1, "whichever reaches further wins")
 }
 
+/// A star is drawn with its corona around it, and has nothing on it that needs ground.
+@Test func starsShineAndHaveNoGround() {
+    var recipe = MoonletPlanetRecipe.preset(.star)
+    #expect(recipe.archetype == .star)
+    #expect(!MoonletPlanetArchetype.star.hasGround, "nobody lives on a star")
+    #expect(recipe.drawnExtent == 1.6, "the flames must fit inside the square")
+    recipe.life = .interplanetary
+    recipe.stationCount = 0
+    #expect(recipe.drawnExtent == 1.6, "no traffic leaves a star")
+    // The shader dispatches on the raw value, so it is part of the wire format.
+    #expect(MoonletPlanetArchetype.star.rawValue == 10)
+    #expect(MoonletPlanetPreset.sun.style?.recipe.archetype == .star)
+    #expect(MoonletPlanetRecipe.preset(.star).luminosity == 0.5, "between fire and light")
+}
+
+/// A recipe saved before luminosity existed comes back at the middle of the range.
+@Test func luminosityHasADefaultAndSurvivesARoundTrip() throws {
+    var recipe = MoonletPlanetRecipe.preset(.star)
+    recipe.luminosity = 0.9
+    let data = try JSONEncoder().encode(recipe)
+    #expect(try JSONDecoder().decode(MoonletPlanetRecipe.self, from: data).luminosity == 0.9)
+    var object = try JSONSerialization.jsonObject(with: data) as! [String: Any]
+    object.removeValue(forKey: "luminosity")
+    let old = try JSONSerialization.data(withJSONObject: object)
+    #expect(try JSONDecoder().decode(MoonletPlanetRecipe.self, from: old).luminosity == 0.5)
+}
+
 /// The levels are ordered, and each is the one before it plus something.
 @Test func lifeLevelsAreOrdered() {
     #expect(MoonletPlanetLife.none < .simple)

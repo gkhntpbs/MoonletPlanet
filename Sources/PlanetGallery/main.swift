@@ -132,7 +132,7 @@ try? FileManager.default.createDirectory(at: out, withIntermediateDirectories: t
         r.axialTilt = 0.06 + Double(i) * (1.45 - 0.06) / 4
         return r
     }, cell: 300, cols: 5, gap: 12, file: "ring-tilts")
-    sheet(MoonletPlanetArchetype.allCases.map { .preset($0) }, cell: 240, cols: 5, gap: 16, file: "archetypes")
+    sheet(MoonletPlanetArchetype.allCases.map { .preset($0) }, cell: 240, cols: 6, gap: 16, file: "archetypes")
     sheet(MoonletPlanetPreset.allCases.filter { $0 != .custom }.map { $0.style!.recipe },
           cell: 240, cols: 5, gap: 16, file: "solar-system")
 

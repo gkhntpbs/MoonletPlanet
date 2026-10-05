@@ -129,6 +129,13 @@ struct StudioView: View {
                     }
                 }
 
+                if recipe.archetype == .star {
+                    section("Star") {
+                        // 0 a ball of fire, 1 nothing but light.
+                        slider("Luminosity", $recipe.luminosity, 0...1)
+                    }
+                }
+
                 section("Surface") {
                     slider("Rotation", $recipe.rotationSpeed, 0...0.6)
                     slider("Turbulence", $recipe.turbulence, 0...1)

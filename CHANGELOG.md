@@ -16,6 +16,12 @@ Changing how the shader draws a given recipe is a minor version and is noted und
 ## [Unreleased]
 
 ### Added
+- **`MoonletPlanetArchetype.star`** (raw value 10) and **`MoonletPlanetPreset.sun`** — a body
+  that makes its own light. Granulation, sunspots in the two activity belts with faculae
+  round them, limb darkening that reddens as well as dims, and a streamered corona outside
+  the disc. The light controls do nothing to it; the palette is re-read as hot gas, cooler
+  gas, spots, faculae and corona, and `stormCount` is how many spots. `drawnExtent` is 1.4
+  so the corona fits. The web port accepts archetype 10.
 - **`dayNightSpeed`** — the star sweeps around and the terminator moves, so a world runs
   through its phases. Zero holds the light still and is the default. It is a different thing
   from `rotationSpeed`, which turns the ground under a light that stays put; a world with

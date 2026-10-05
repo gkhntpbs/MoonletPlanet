@@ -199,6 +199,11 @@ section('Surface', [
   slider('Fine detail', 'microDetail', 0, 1.5),
 ])
 
+// Only stars read it; the slider stays for everything so the number is not lost.
+section('Star', [
+  slider('Luminosity', 'luminosity', 0, 1),
+])
+
 section('Air', [
   slider('Cloud cover', 'cloudCoverage', 0, 1),
   slider('Cloud speed', 'cloudSpeed', 0, 4),

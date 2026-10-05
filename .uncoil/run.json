@@ -1,0 +1,26 @@
+{
+  "configurations" : [
+    {
+      "command" : "npm run studio",
+      "cwd" : "web",
+      "default" : true,
+      "id" : "web-studio",
+      "name" : "Planet Studio (Web)",
+      "notes" : "Tarayıcıdaki workbench: archetype menüsünden Star seçilebilir. esbuild kaynak değişince yeniden bundle'lar.",
+      "ports" : [
+        8791
+      ],
+      "preview_url" : "http://127.0.0.1:8791",
+      "source" : "agent"
+    },
+    {
+      "command" : "swift run PlanetStudio",
+      "cwd" : ".",
+      "id" : "swift-studio",
+      "name" : "Planet Studio (macOS)",
+      "notes" : "Native macOS workbench (Metal). Archetype picker'dan Star seçilebilir. Shader değişince restart gerekir.",
+      "source" : "agent"
+    }
+  ],
+  "version" : 1
+}

@@ -1,0 +1,23 @@
+{
+  "suites" : [
+    {
+      "command" : "swift test",
+      "cwd" : ".",
+      "framework" : "swift",
+      "id" : "swift-test",
+      "name" : "swift test",
+      "notes" : "Detected from Package.swift",
+      "source" : "detected"
+    },
+    {
+      "command" : "npm test",
+      "cwd" : "web",
+      "framework" : "unknown",
+      "id" : "web-npm-test",
+      "name" : "web tests",
+      "notes" : "Detected from the package.json 'test' script: node --experimental-strip-types --test tests/*.test.ts — the output format is not recognised, so only the overall result is reported",
+      "source" : "detected"
+    }
+  ],
+  "version" : 1
+}

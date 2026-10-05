@@ -20,7 +20,8 @@ public struct MoonletPlanetFallback: View {
     public var body: some View {
         let palette = recipe.palette
         // Match the shader's light direction so the terminator lands in the same place.
-        let light = UnitPoint(
+        // A star lights itself, so its bright side is the middle.
+        let light = recipe.archetype == .star ? UnitPoint.center : UnitPoint(
             x: 0.5 + 0.32 * cos(recipe.lightAzimuth),
             y: 0.5 - 0.32 * sin(recipe.lightElevation)
         )

@@ -256,6 +256,7 @@ final class MoonletPlanetRenderer: NSObject, MTKViewDelegate {
         u.stationSpeed = Float(recipe.stationSpeed)
         u.stationInclination = Float(recipe.stationInclination)
         u.stationSize = Float(recipe.stationSize)
+        u.luminosity = Float(recipe.luminosity)
         u.color0 = palette.highlight.simd
         u.color1 = palette.primary.simd
         u.color2 = palette.shadow.simd
