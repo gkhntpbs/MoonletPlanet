@@ -136,6 +136,36 @@ try? FileManager.default.createDirectory(at: out, withIntermediateDirectories: t
     sheet(MoonletPlanetPreset.allCases.filter { $0 != .custom }.map { $0.style!.recipe },
           cell: 240, cols: 5, gap: 16, file: "solar-system")
 
+    // A star from a ball of fire to nothing but light — `luminosity` walked from 0 to 1.
+    sheet((0..<5).map { i -> MoonletPlanetRecipe in
+        var r = MoonletPlanetRecipe.preset(.star)
+        r.luminosity = Double(i) * 0.25
+        return r
+    }, cell: 300, cols: 5, gap: 12, file: "stars")
+
+    // A system through a real camera: orbit lines, a sky with a band in it, one orbit
+    // inclined. Square, because the snapshot is.
+    do {
+        var system = MoonletPlanetSystem.example
+        system.perspective = 0.8
+        system.viewAzimuth = 0.5
+        system.viewElevation = 0.42
+        system.showsOrbits = true
+        system.sky = .init(isVisible: true, starCount: 2200, bandStrength: 0.5, bandTilt: 0.6)
+        system.bodies[1].inclination = 0.25
+        system.bodies[1].node = 1.2
+        let side = 1000
+        guard let ctx = CGContext(data: nil, width: side, height: side, bitsPerComponent: 8, bytesPerRow: side * 4,
+                                  space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                                  bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue) else { return }
+        ctx.setFillColor(CGColor(red: 0x09 / 255, green: 0x0A / 255, blue: 0x0D / 255, alpha: 1))
+        ctx.fill(CGRect(x: 0, y: 0, width: side, height: side))
+        if let img = MoonletPlanetSnapshotRenderer.image(system: system, size: side, time: 0) {
+            ctx.draw(img, in: CGRect(x: 0, y: 0, width: side, height: side))
+        }
+        if let img = ctx.makeImage() { write(img, "system") }
+    }
+
     // What one archetype does across seeds — the argument for `randomized`.
     sheet((0..<10).map { MoonletPlanetRecipe.preset(.gasGiant).randomized(seed: UInt32(1 + $0 * 7717)) },
           cell: 240, cols: 5, gap: 16, file: "seeds")

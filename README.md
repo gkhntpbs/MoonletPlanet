@@ -24,6 +24,15 @@ createPlanetRenderer(canvas).render(solarSystem.saturn, 18, 400, 400, devicePixe
 
 <p align="center"><img src="Documentation/hero.png" alt="A gas giant" width="360"></p>
 
+And a star with worlds round it, each lit from where the star is, seen through a camera you
+can walk all the way round:
+
+```swift
+MoonletSystemView(system: .example)
+```
+
+<p align="center"><img src="Documentation/system.png" alt="A star, three worlds and their orbits" width="480"></p>
+
 ## Why this exists
 
 I was building [Moonlet](https://moonlet.gokhantopbas.com) — an app for tracking the games,
@@ -54,13 +63,37 @@ The web renderer is in [`web/`](web/) and is not on npm yet — see
 [web/README.md](web/README.md) for what it does and does not do. It needs WebGL2 and has no
 runtime dependencies either.
 
-## Ten archetypes
+## Eleven archetypes
 
-![Ten archetypes](Documentation/archetypes.png)
+![Eleven archetypes](Documentation/archetypes.png)
 
 Gas giant, ice giant, ocean, frozen, rocky, molten, desert, toxic, lush, cloud — each with
 animated weather: banded jet streams flowing in opposite directions at different latitudes,
 vortex storms, domain-warped turbulence, a soft day/night terminator and an atmospheric rim.
+And a star, which is not a planet at all but is drawn by the same shader.
+
+## Stars
+
+![A star from a ball of fire to nothing but light](Documentation/stars.png)
+
+```swift
+var star = MoonletPlanetRecipe.preset(.star)    // or MoonletPlanetPreset.sun
+star.luminosity = 0.8                           // 0 a ball of fire, 1 nothing but light
+```
+
+A star makes its own light rather than reflecting it, so the light controls do nothing to it
+and nothing on it is shaded. The surface is plasma folded twice by domain warping and set
+moving in two directions at once, so it churns rather than slides; ridged noise on top draws
+white-hot veins where the flow converges, against deep red troughs. Flames lick off the limb
+— noise in polar coordinates, streaming outward so they rise and break off — and a bloom
+sits round it.
+
+The palette is read as a fire ramp here, coolest to hottest: `shadow` deep red, `primary`
+orange, `storm` yellow, `highlight` white-hot, and `atmosphere` the glow. `stormCount` is how
+many cooler cells it has, `atmosphereGlow` how far the flames reach, `roughness` how thick the
+veins are. `luminosity` walks it from fire to light: the texture burns away, the flames go
+out and the bloom grows in their place. The flames reach past the disc, so a star's
+`drawnExtent` is 1.6.
 
 ## The recipe is the planet
 
@@ -92,6 +125,11 @@ let json = try JSONEncoder().encode(recipe)
 | `axialTilt` | the pole, and therefore the angle any rings are seen at |
 | `iceCoverage`, `iceAltitude`, `polarAsymmetry` | where it freezes (see below) |
 | `lightAzimuth`, `lightElevation`, `exposure` | the star and the tonemap |
+| `dayNightSpeed` | the star sweeping round, so the terminator moves |
+| `life`, `station…` | whether anything lives here, and what it has put in orbit (see below) |
+| `ringOpacity`, `ringInnerRadius`, `ringOuterRadius`, `ringDetail` | the rings |
+| `luminosity` | stars only: how much it burns and how much it shines |
+| `roll` | turns the drawn body on screen; a system sets it, 0 is upright |
 
 Nothing clamps these at runtime — the shader runs millions of times a frame and every guard
 costs. Values outside the documented ranges render a planet rather than crashing, just not
@@ -117,7 +155,7 @@ MoonletPlanetView(style: MoonletPlanetPreset.saturn.style!)   // rings included
 
 ![The solar system](Documentation/solar-system.png)
 
-Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Venus, Mercury, Moon, Pluto.
+Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Venus, Mercury, Moon, Pluto — and the Sun.
 
 ## Ice caps, from where it actually freezes
 
@@ -252,7 +290,7 @@ land rotates away from the star rather than switch on where they already are.
 ```swift
 var recipe = MoonletPlanetRecipe.preset(.gasGiant)
 recipe.hasRing = true
-recipe.ringTilt = 0.47        // 0 is edge-on, .pi / 2 is face-on
+recipe.axialTilt = 0.47       // the pole, and so the rings: 0 is edge-on, .pi / 2 face-on
 ```
 
 The radii are measured rather than invented. The C ring begins at 1.235 planet radii, the
@@ -275,6 +313,58 @@ everything that makes rings read as rings —
 - ringlets fade out per-pixel rather than aliasing, so near edge-on there is no moiré
 
 <p align="center"><img src="Documentation/rings.png" alt="Saturn" width="400"></p>
+
+## A system of your own
+
+```swift
+var system = MoonletPlanetSystem(star: MoonletPlanetPreset.sun.style!.recipe)
+system.bodies = [
+    .init(recipe: MoonletPlanetPreset.earth.style!.recipe, radius: 0.36, distance: 3, phase: 0.4, speed: 0.13),
+    .init(recipe: MoonletPlanetPreset.saturn.style!.recipe, radius: 0.5, distance: 4.4, speed: 0.07,
+          inclination: 0.25, node: 1.2),
+]
+system.perspective = 0.8        // a real camera; 0 is flat
+system.showsOrbits = true
+system.sky.isVisible = true
+
+MoonletSystemView(system: system)
+```
+
+A planet on its own is lit by two numbers somebody chose. In a system nobody chooses them:
+they are the direction from the planet to its star, so a world passing in front of its star
+shows its night side and one beside it is half lit. The planets' own recipes are never
+changed — `layout(at:)` hands back lit copies — so a planet taken out of a system is the same
+planet it was before it went in. Everything is in one unit, the system's own: the star's
+radius, each planet's radius and each orbit's distance.
+
+**A real camera.** With `perspective` above zero nearer worlds are larger and further ones
+smaller, orbits narrow towards the back, and the camera walks all the way round the system
+(`viewAzimuth`) and over and under it (`viewElevation`). Every body keeps its pole, its rings
+and its face fixed in the system while it does — Saturn's rings open as the camera rises and
+close as it comes level, and lean the other way from the other side. The shader can only
+lean a pole towards or away from the camera, so a sideways lean is `roll`, applied inside
+the shader with the light turned back to match. Behind it all, a sky of stars at infinity
+turns with the camera, which is what tells the eye the camera is moving and not the planets.
+
+Everything about it is a setting, and every setting defaults to what was drawn before it
+existed:
+
+| | |
+|---|---|
+| `viewAzimuth`, `viewElevation`, `perspective`, `zoom` | the camera |
+| `lightTint`, `lightFalloff` | how much the worlds take the star's colour, and dim with distance |
+| `orbitSpeed`, `showsOrbits`, `orbitStyle` | every orbit's speed at once, and the orbit lines |
+| `sky` | stars: count, `seed`, brightness, size, colour and its range, `twinkle`, and a Milky Way band |
+| each orbit's `distance`, `radius`, `phase`, `speed` | where it is and how fast it goes; speed 0 holds it still |
+| each orbit's `inclination`, `node` | tipping it out of the plane, and where it crosses it |
+
+`place(_:atX:y:time:)` puts a planet under a point on screen, which is how both workbenches
+let you drag one into place; `MoonletPlanetSnapshotRenderer.image(system:size:time:)` renders
+a system off screen.
+
+The workbenches have a **System** mode with every one of these on a slider. Drag a planet to
+move it, drag empty space to turn the camera — it coasts when you let go — and pinch or
+scroll to zoom.
 
 ## Turning it
 
@@ -320,9 +410,23 @@ and the seeded randomizer is held to Swift's output bit for bit by a generated f
 
 What the web port does not have yet is a convenience view layer — there is no equivalent of
 `MoonletPlanetView`, so a caller owns the canvas and the clock. Everything the shader draws
-is there: all ten archetypes, rings, ice, tilt.
+is there: all eleven archetypes, stars, rings, ice, tilt, life.
 
-`make web-studio` opens the same workbench in a browser, rebuilding as you edit, and
+Systems are there too, with every setting the Swift side has:
+
+```ts
+import { createPlanetRenderer, systemExample } from '@moonlet/planet'
+
+const system = { ...systemExample, perspective: 0.8, showsOrbits: true }
+createPlanetRenderer(canvas).renderSystem(system, time, width, height, devicePixelRatio, { showsStarfield: true })
+```
+
+`layoutSystem` is a port of `layout(at:)` and is held to it by a fixture the Swift side
+writes — every planet in the same place, lit from the same side, turned the same way, with
+the same sky behind it.
+
+`make web-studio` opens the same workbench in a browser, rebuilding as you edit — and
+`dev/system.html` in it is the system workbench — and
 `make web-accept` compiles the shader in real headless Chrome and reads back each canvas's
 coverage — because a shader that compiles is not a shader that draws. See
 [web/README.md](web/README.md).
